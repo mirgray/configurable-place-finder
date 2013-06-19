@@ -32,12 +32,14 @@ Esri's sample services can be used with this repository to extend the applicatio
 
 * ArcGIS for Desktop 10.1 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgis-for-desktop)
 * ArcGIS for Server 10.1 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgisserver)
-* Local Government Information Model - [About](http://www.arcgis.com/home/item.html?id=5f799e6d23d94e25b5aaaf2a58e63fb1)
+* Local Government Information Mode for Local Government Implementations - [About](http://www.arcgis.com/home/item.html?id=5f799e6d23d94e25b5aaaf2a58e63fb1)
 * Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
 ## Resources
 
-Learn more about Esri's [ArcGIS for Local Government maps and apps](http://resources.arcgis.com/en/communities/local-government/).
+Learn more about Esri's [ArcGIS for State and Local Government maps and apps]
+(http://resources.arcgis.com/en/communities/state-government/).
+(http://resources.arcgis.com/en/communities/local-government/).
 
 Show me a list of other [Local Government GitHub repositories](http://esri.github.io/#Local-Government).
 
@@ -75,5 +77,5 @@ limitations under the License.
 A copy of the license is available in the repository's
 [license.txt](https://raw.github.com/Esri/configurable-place-finder/master/license.txt) file.
 
-[](Esri Tags: Local-Government Local Government Configurable Place Finder)
+[](Esri Tags: State-Government Local-Government Local Government Configurable Place Finder)
 [](Esri Language: JavaScript)
