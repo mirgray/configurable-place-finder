@@ -3,7 +3,7 @@
 The Configurable Place Finder application is a configuration of ArcGIS for Server and a JavaScript application
 that allows citizens to locate opportunities in their community.
 
-[Image of Configurable Place Finder application](https://raw.github.com/Esri/configurable-place-finder/master/configurable-place-finder.png "Configurable Place Finder application")
+![Image of Configurable Place Finder application](https://raw.github.com/Esri/configurable-place-finder/master/configurable-place-finder.png "Configurable Place Finder application")
 
 ## Features
 
@@ -32,14 +32,12 @@ Esri's sample services can be used with this repository to extend the applicatio
 
 * ArcGIS for Desktop 10.1 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgis-for-desktop)
 * ArcGIS for Server 10.1 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgisserver)
-* Local Government Information Mode for Local Government Implementations - [About](http://www.arcgis.com/home/item.html?id=5f799e6d23d94e25b5aaaf2a58e63fb1)
+* Local Government Information Model for Local Government Implementations - [About](http://www.arcgis.com/home/item.html?id=5f799e6d23d94e25b5aaaf2a58e63fb1)
 * Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
 ## Resources
 
-Learn more about Esri's [ArcGIS for State and Local Government maps and apps]
-(http://resources.arcgis.com/en/communities/state-government/).
-(http://resources.arcgis.com/en/communities/local-government/).
+Learn more about Esri's [ArcGIS for State and Local Government maps and apps](http://resources.arcgis.com/en/communities/state-government/).
 
 Show me a list of other [Local Government GitHub repositories](http://esri.github.io/#Local-Government).
 

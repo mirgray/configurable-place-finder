@@ -1,4 +1,5 @@
-﻿/** @license
+﻿/*global dojo */
+/** @license
  | Version 10.2
  | Copyright 2012 Esri
  |
@@ -89,8 +90,7 @@ dojo.declare("js.Config", null, {
         ThumbnailSource: "images/streets.png",
         Name: "Street Map",
         MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"
-    }
-    ],
+    }],
 
     // Initial map extent. Use comma (,) to separate values and don t delete the last comma
     DefaultExtent: "-9991781.18961914, 4083344.0852194074, -9160146.321876464, 4494881.045506775",
@@ -129,15 +129,13 @@ dojo.declare("js.Config", null, {
     InfoWindowHeader: [{
         FieldName: "${Name}",
         Alias: "Facility Name"
-    }
-    ],
+    }],
 
     // Choose content/fields for the info window
     InfoWindowContent: [{
         FieldName: "${Region}",
         Alias: "Region"
-    }
-    ],
+    }],
 
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -161,8 +159,7 @@ dojo.declare("js.Config", null, {
         DisplayText: "Facility Type:",
         FieldName: "${Type}",
         Alias: "Type"
-    }
-    ],
+    }],
 
     //Activities to be displayed in info window for a feature
     Activities: [{
@@ -230,8 +227,7 @@ dojo.declare("js.Config", null, {
         FieldName: "${Fishing}",
         Alias: "Fishing",
         Image: "images/fishing.png"
-    }
-    ],
+    }],
 
     // Set size of the info-Popup - select maximum height and width in pixels (not applicable for tabbed info-Popup)
     InfoPopupHeight: 270,
@@ -289,8 +285,7 @@ dojo.declare("js.Config", null, {
             LocatorDefaultFeature: "Shelby Park"
         }, {
             DisplayText: "Activity"
-        }
-        ]
+        }]
     },
 
     // Define the database field names
@@ -345,8 +340,9 @@ dojo.declare("js.Config", null, {
 
         FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configuration%20Place%20Finder",
         TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configuration%20Place%20Finder ${0}",
-        ShareByMailLink: "mailto:%20?subject=Checkout%20this%20map!&body=${0}"
+        ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     },
+
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR INFOPODS
     // ------------------------------------------------------------------------------------------------------------------------
