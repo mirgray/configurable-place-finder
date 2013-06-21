@@ -1,4 +1,4 @@
-﻿/** @license
+﻿/*
  | Version 10.2
  | Copyright 2012 Esri
  |
@@ -59,7 +59,7 @@ function CreateBaseMapElement(baseMapLayerInfo) {
     return divContainer;
 }
 
-//Toggle Basemap
+//Toggle Basemap 
 function ChangeBaseMap(spanControl) {
     HideMapLayers();
     var key = spanControl.getAttribute("layerId");

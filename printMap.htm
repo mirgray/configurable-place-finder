@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset=utf-8>
+    <meta charset="utf-8">
     <!--
      | Version 10.2
      | Copyright 2012 Esri
@@ -22,10 +22,10 @@
     <title>Configurable Place Finder</title>
     <link rel="shortcut icon" href="images/appIcon.ico" />
     <link rel="apple-touch-icon" href="images/appIcon.png" />
-      <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css" />
     <link id="stylesheet" href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dojox/mobile/themes/iPhone/iPhone.css'
         rel='stylesheet' />
-    <link href="styles/ConfigurablePlaceFinder.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css" />
+    <link href="styles/printMap.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
 
         djConfig = (function () {
@@ -43,7 +43,7 @@
         })();
 
     </script>
-    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5compact">
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.5compact">
     </script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript">
@@ -174,7 +174,7 @@
         dojo.addOnLoad(Init);
     </script>
 </head>
-<body class="claro printMapBody">
+<body class="printMapBody">
     <div class="divFeatureName">
         <table align="center" class="divfullContainer">
             <tr>

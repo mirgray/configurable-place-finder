@@ -57,19 +57,19 @@ body, html
 }
 .divfullContainer
 {
-    width: 100%;
+    width: 100%; 
     height: 100%;
 }
-
+    
 .divMap
 {
-   width: 100%;
-   height: 100%;
+   width: 100%; 
+   height: 100%; 
 }
 
 .tblSplashScreenContent
 {
-  width: 100%;
+  width: 100%;     
     }
 /*---------------------------------------------------------------------------------------------------------*/
 /* Styles for splash screen*/
@@ -122,8 +122,8 @@ body, html
 }
 .splashOkButton
 {
-  width: 75px;
-  margin-top: 10px;
+  width: 75px; 
+  margin-top: 10px;  
 }
 .customButtonInner
 {
@@ -159,12 +159,12 @@ body, html
 }
 .tblToggle
 {
-  margin-left: 50px;
+  margin-left: 50px;  
 }
 .tblImage
 {
    width: 40px;
-    height: 100%;
+    height: 100%; 
 }
 .showContainer
 {
@@ -341,7 +341,7 @@ body, html
 /*AddressContainer Styles*/
 .tblSearchHeader
 {
-  width: 100%;
+  width: 100%;  
 }
 .trSearchHeader
 {
@@ -349,74 +349,74 @@ height: 30px;
 }
 .tdSearchHeader
 {
- padding-left: 8px;
+ padding-left: 8px;   
 }
 
 .tdSearchClose
 {
-  width: 10%;
+  width: 10%;  
 }
 .imgSearchClose
 {
  cursor: pointer;
- padding: 0px;
+ padding: 0px;  
 }
 
 .divAddressResultContainer
 {
-  margin: 0px 0px 0px 5px;
+  margin: 0px 0px 0px 5px;  
 }
 .tblAddressResultContainer
 {
-  color: #F5F5DC;
-  width: 100%;
+  color: #F5F5DC; 
+  width: 100%;  
 }
 
 .tblAddressResults
 {
-   width: 100%;
+   width: 100%; 
 }
 
 .divActivityContainer
 {
- position: relative;
- overflow: hidden;
+ position: relative; 
+ overflow: hidden;   
  }
 .tableActivityList
 {
- width: 97%;
+ width: 97%;   
 }
 .tblPodAddressSearch
 {
-   width: 100%;
+   width: 100%; 
 }
 .tdPodAddressSearch
 {
-  padding-left: 5px;
+  padding-left: 5px;  
 }
 .divDirections
 {
-  position: relative;
+  position: relative;  
 }
 .tdDirectionsHeader
 {
- padding-right: 5px;
+ padding-right: 5px;   
  }
 .divDirection
 {
  width: 95%;
  overflow: hidden;
- padding-left: 5px;
+ padding-left: 5px;    
 }
 .tblNewAddressSearch
 {
-   width: 95%;
-   padding-left: 5px;
+   width: 95%; 
+   padding-left: 5px; 
 }
 .innerTblAddressResultContainer
 {
-  width: 100%;
-  margin: 5px 5px 5px -2px;
+  width: 100%; 
+  margin: 5px 5px 5px -2px;  
  }
 .divAddressScrollContainer
 {
@@ -450,7 +450,13 @@ height: 30px;
     border-radius: 3px;
     position: relative;
 }
-
+.divRadiusPodPlaceHolder {
+    
+      -moz-border-radius: 8px !important;
+    -webkit-border-radius: 8px !important;
+    border-radius: 8px !important;
+    position: relative;  
+}
 .txtAddress
 {
     width: 100%;
@@ -589,7 +595,7 @@ height: 30px;
 
 .selectedActivity
 {
-    border: 3px solid olive !important;
+    border: 5px solid olive !important;
     cursor: pointer;
 }
 /*---------------------------------------------------------------------------------------------------------*/
@@ -630,7 +636,7 @@ height: 30px;
 /*InfoWindow Styles*/
 .divPhotoGalleryContent
 {
-   padding-left: 5px;
+   padding-left: 5px; 
 }
 .divInfoContainer
 {
@@ -649,12 +655,12 @@ height: 30px;
 
 .tblResultContent
 {
-  width: 100%;
-  padding: 1px;
+  width: 100%; 
+  padding: 1px;  
 }
 .tdResultContent
 {
- padding-left: 7px;
+ padding-left: 7px; 
  width: 98%;
 }
 .divInfoComments
@@ -676,7 +682,7 @@ height: 30px;
 }
 .divAddComment
 {
-   margin: 5px;
+   margin: 5px; 
 }
 .divDetails
 {
@@ -689,7 +695,7 @@ height: 30px;
 }
 .divPhotoGallery
 {
-  position: relative;
+  position: relative;  
 }
 .tblPodAddressResults
 {
@@ -697,7 +703,7 @@ height: 30px;
 }
 .tdLabel
 {
-  padding-left: 7px;
+  padding-left: 7px;  
 }
 .divCommentsContainer, .divInfoDetails, .divInfoDirections
 {
@@ -706,43 +712,43 @@ height: 30px;
 }
 .divCmtIpContent{
  position: absolute;
- overflow: hidden;
+ overflow: hidden; 
  width: 95%;
 }
 .commentTextArea
 {
  margin-top: 5px;
- width: 100%;
+ width: 100%;   
 }
 .commentError{
  color: Yellow;
- margin-top: 3px;
+ margin-top: 3px; 
  word-wrap: break-word;
 }
 .imgMblAttachment
 {
-   border: 1px solid #fff;
+   border: 1px solid #fff; 
 }
 .commentRating
 {
    height: 100%;
-   margin: 0px 0px 0px 0px;
-   padding-left: 0px;
+   margin: 0px 0px 0px 0px; 
+   padding-left: 0px; 
  }
 .infoHeaderTbl
 {
-  width: 100%;
+  width: 100%; 
   padding: 1px;
  }
-
+ 
  .imgClose
  {
   cursor: pointer;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 5px; 
+  right: 5px;   
   }
-
+  
   .imgPreviousImg
   {
       cursor: pointer;
@@ -758,7 +764,7 @@ height: 30px;
 }
 .tdCommentError
 {
-   height: 20px;
+   height: 20px; 
 }
 .tdInfoHeader
 {
@@ -862,7 +868,7 @@ height: 30px;
 }
 .divInfo
 {
-  position: relative;
+  position: relative;  
 }
 .imgArrow
 {
@@ -917,7 +923,7 @@ height: 30px;
 }
 .divDirectionContainer
 {
-   position: relative;
+   position: relative; 
  }
 .tdBreakWord
 {
@@ -992,7 +998,7 @@ height: 30px;
 }
 .divSearchBox
 {
- position: relative;
+ position: relative;   
 }
 .divFeatureListContentStyle
 {
@@ -1004,12 +1010,12 @@ height: 30px;
 }
 .tdCarouselArrow
 {
-  width: 37px;
+  width: 37px;  
 }
 .divCount
 {
-  font-size: 22px;
-  width: 65px;
+  font-size: 22px; 
+  width: 65px;  
 }
 .spanPhotoGallery
 {
@@ -1017,29 +1023,29 @@ height: 30px;
 }
 .tdAttachments
 {
-  vertical-align: middle;
+  vertical-align: middle;  
 }
 .divLeftArrow
 {
-   z-index: 1000;
+   z-index: 1000; 
 }
 .divClose
 {
-  position: relative;
+  position: relative;  
 }
 .tblComment
 {
-color: #fff;
+color: #fff;    
 }
 .arrowImg
 {
   cursor: pointer;
-  vertical-align: middle;
+  vertical-align: middle;    
 }
 .divRightArrow
 {
-    z-index: 1000;
-
+    z-index: 1000; 
+    
    display: block;
 }
 .divCarouselDataContent
@@ -1138,8 +1144,6 @@ color: #fff;
 {
     height: 100%;
     width: 100%;
-    display: none;
-    font-family: Verdana;
     z-index: 2000;
     position: absolute;
     bottom: 0px;
@@ -1149,7 +1153,6 @@ color: #fff;
     opacity: 0.55;
     top: 0px;
     left: 0px;
-    behavior: url("styles/PIE.htc");
 }
 
 /* Images SlideShow */
@@ -1200,8 +1203,8 @@ color: #fff;
 .imgNextImg
 {
 cursor: pointer;
-margin-right: 5px;
-margin-bottom: 25px;
+margin-right: 5px; 
+margin-bottom: 25px;    
  }
 .featureNameWidth
 {
@@ -1271,13 +1274,13 @@ margin-bottom: 25px;
 }
 .invalidSearch
 {
-  cursor: default!important;
+  cursor: default!important;  
 }
-
+    
 .mailLink
 {
   cursor: pointer;
-   word-break: break-all;
+   word-break: break-all;  
 }
 
 .imgActivitySearch
@@ -1285,10 +1288,10 @@ margin-bottom: 25px;
    cursor: pointer;
    border: 3px solid transparent;
     }
-
+    
 .tblCommentsContent
 {
-    padding-left: 5px;
+    padding-left: 5px; 
     padding-top: 5px;
 }
 
@@ -1296,62 +1299,23 @@ margin-bottom: 25px;
 
 .shareText
 {
-  color: #F5F5DC;
+  color: #F5F5DC;  
  }
-
+ 
 .tdShare
 {
     width: 30px;
 }
 .trInfoHeader
 {
-  height: 30px;
-}
-/* css for printing*/
-
-.mapPrint
-{
-   position: relative;
-   width: 665px;
-   height: 450px;
-   border: 1px solid #000;
-}
-.tblDirections{
-width: 665px;
-border: 1px solid #000;
-color: Black;
-}
-.tdFeatureName
-{
-  font-weight: bold;
-  font-size: 15px;
-  color:Black;
-}
-.printMapBody
-{
-   font-size: 11px;
-   font-family: Verdana;
-   overflow-y: auto;
-   margin-left:5px;
-}
-.divFeatureName
-{
-  width: 670px;
-  height: 50px;
+  height: 30px;  
 }
 
 .zeroHeight
 {
     height: 0px !important;
 }
-.grayBackGround
-{
-    background-color: Gray !important;
-}
-.trHeight
-{
-    height: 30px !important;
-}
+
 .colorChange
 {
     color: #fff !important;
@@ -1369,4 +1333,12 @@ color: Black;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
+}
+
+.esriSimpleSliderHomeButton
+{
+    border-bottom: 2px solid #666666;
+    background-image: url('../images/home.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }

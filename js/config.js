@@ -1,20 +1,19 @@
-﻿/*global dojo */
-/** @license
- | Version 10.2
- | Copyright 2012 Esri
- |
- | Licensed under the Apache License, Version 2.0 (the "License");
- | you may not use this file except in compliance with the License.
- | You may obtain a copy of the License at
- |
- |    http://www.apache.org/licenses/LICENSE-2.0
- |
- | Unless required by applicable law or agreed to in writing, software
- | distributed under the License is distributed on an "AS IS" BASIS,
- | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- | See the License for the specific language governing permissions and
- | limitations under the License.
- */
+﻿/*
+| Version 10.2
+| Copyright 2012 Esri
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+|    http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+*/
 dojo.provide("js.Config");
 dojo.declare("js.Config", null, {
 
@@ -62,6 +61,9 @@ dojo.declare("js.Config", null, {
     // Set application icon path
     ApplicationIcon: "images/appIcon.png",
 
+    // Set application Favicon path
+    ApplicationFavicon: "images/appIcon.ico",
+
     // Set application theme
     ApplicationTheme: "styles/blueTheme.css",
 
@@ -70,7 +72,6 @@ dojo.declare("js.Config", null, {
         Message: "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.",
         isVisibile: false
     },
-
 
     // Set URL of help page/portal
     HelpURL: "help.htm",
@@ -90,7 +91,8 @@ dojo.declare("js.Config", null, {
         ThumbnailSource: "images/streets.png",
         Name: "Street Map",
         MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"
-    }],
+    }
+    ],
 
     // Initial map extent. Use comma (,) to separate values and don t delete the last comma
     DefaultExtent: "-9991781.18961914, 4083344.0852194074, -9160146.321876464, 4494881.045506775",
@@ -105,8 +107,13 @@ dojo.declare("js.Config", null, {
     //Set the primary key attribute for features
     PrimaryKeyForFeatures: "${OBJECTID}",
 
-    //URL used for doing query task on the comments layer
-    CommentsLayer: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1",
+
+    CommentsLayer: {
+        //Set to true if comments need to be displayed , or false if not required
+        visibility: true,
+        //URL used for doing query task on the comments layer
+        url: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1"
+    },
     //Set the primary key attribute for comments
     PrimaryKeyForComments: "${id}",
 
@@ -128,15 +135,17 @@ dojo.declare("js.Config", null, {
     // Set Info-window title. Configure this with text/fields
     InfoWindowHeader: [{
         FieldName: "${Name}",
-        Alias: "Facility Name"
-    }],
+        Alias: "Facility Name",
+        InfoWindowHeaderText: "Facility Info"
+    }
+    ],
 
     // Choose content/fields for the info window
     InfoWindowContent: [{
         FieldName: "${Region}",
         Alias: "Region"
-    }],
-
+    }
+    ],
 
     // ------------------------------------------------------------------------------------------------------------------------
     // INFO-POPUP SETTINGS
@@ -159,7 +168,8 @@ dojo.declare("js.Config", null, {
         DisplayText: "Facility Type:",
         FieldName: "${Type}",
         Alias: "Type"
-    }],
+    }
+    ],
 
     //Activities to be displayed in info window for a feature
     Activities: [{
@@ -227,12 +237,12 @@ dojo.declare("js.Config", null, {
         FieldName: "${Fishing}",
         Alias: "Fishing",
         Image: "images/fishing.png"
-    }],
+    }
+    ],
 
     // Set size of the info-Popup - select maximum height and width in pixels (not applicable for tabbed info-Popup)
     InfoPopupHeight: 270,
     InfoPopupWidth: 330,
-
 
     // Set string value to be shown for null or blank values
     ShowNullValueAs: "N/A",
@@ -246,10 +256,10 @@ dojo.declare("js.Config", null, {
     //Set the locator ripple size
     LocatorRippleSize: 30,
 
-    //Set this variable to true/false to enable/disable directions for Mobile/tablet
+    //Set this variable to true/false to enable/disable directions for Mobile/tablet 
     GetDirectionsMobile: true,
 
-    //Set this variable to true/false to enable/disable directions for desktop
+    //Set this variable to true/false to enable/disable directions for desktop 
     GetDirectionsDesktop: true,
 
     //Set this variable to true/false to enable/disable directions
@@ -267,7 +277,6 @@ dojo.declare("js.Config", null, {
             width: 35,
             height: 35
         },
-        ZoomLevel: 12,
         Locators: [{
             DisplayText: "Location",
             LocatorDefaultAddress: "Lake Echo Rd, Tracy City, TN, 37387",
@@ -285,11 +294,13 @@ dojo.declare("js.Config", null, {
             LocatorDefaultFeature: "Shelby Park"
         }, {
             DisplayText: "Activity"
-        }]
+        }
+        ]
     },
-
-    // Define the database field names
-    // Note: DateFieldName refers to a date database field.
+    //Set the Zoom Level
+    ZoomLevel: 12,
+    // Define the database field names 
+    // Note: DateFieldName refers to a date database field. 
     // All other attributes refer to text database fields.
     DatabaseFields: {
         FeatureIdFieldName: "id",
@@ -342,7 +353,6 @@ dojo.declare("js.Config", null, {
         TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configuration%20Place%20Finder ${0}",
         ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     },
-
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR INFOPODS
     // ------------------------------------------------------------------------------------------------------------------------

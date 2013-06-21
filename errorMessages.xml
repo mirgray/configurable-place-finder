@@ -16,25 +16,28 @@
  | limitations under the License.
 -->
 <Messages>
-    <addressToLocate>Enter address to locate.</addressToLocate>
-    <featureToLocate>Enter facility to locate.</featureToLocate>
-    <noFeatures>No facilities found.</noFeatures>
-    <noFeaturesFound>No facilities found in the buffer area.</noFeaturesFound>
-    <selectActivities>Please select activities to search.</selectActivities>
-    <enterComment>Please enter comment.</enterComment>
-    <commentsLength>Comment should not exceed 250 characters.</commentsLength>
-    <noComment>No comments available</noComment>
-    <noAttachments>No attachments available.</noAttachments>
-    <routeCouldNotBeCalculated>Route could not be calculated from current location.</routeCouldNotBeCalculated>
-    <tinyURLEngine>Bitly API engine is not working; please try again after some time.</tinyURLEngine>
-    <geoLocation>You are currently outside the supported area.</geoLocation>
-    <geolocationTimeout>The browser is unable to supply a position at this time.</geolocationTimeout>
-    <geolocationPositionUnavailable>Position unavailable.</geolocationPositionUnavailable>
-    <geolocationPermissionDenied>Please enable permissions for current location.</geolocationPermissionDenied>
-    <geolocationUnKnownError>Unknown error.</geolocationUnKnownError>
-    <invalidSearch>No results found</invalidSearch>
-    <numberOfFeaturesFoundNearAddress>Found ${0} facility(ies) near the address</numberOfFeaturesFoundNearAddress>
-    <numberOfFeaturesFoundNearCounty>Found ${0} facility(ies) in the Searched county</numberOfFeaturesFoundNearCounty>
-    <numberOfFeaturesFoundBySearch>Found ${0} facility(ies) matching the searched criteria</numberOfFeaturesFoundBySearch>
-    <noPhotosAvailable>There are no photos available.</noPhotosAvailable>
-</Messages>
+  <addressToLocate>Enter address to Locate.</addressToLocate>
+  <featureToLocate>Enter facility to Locate.</featureToLocate>
+  <noFeatures>No facilities found.</noFeatures>
+  <noFeaturesFound>No facilities found in the buffer area.</noFeaturesFound>
+  <selectActivities>Please select activities to search.</selectActivities>
+  <enterComment>Please enter comment.</enterComment>
+  <commentsLength>Comment should not exceed 250 characters.</commentsLength>
+  <noComment>No comments available</noComment>
+  <noAttachments>No attachments available.</noAttachments>
+  <routeCouldNotBeCalculated>Route could not be calculated from current location.</routeCouldNotBeCalculated>
+  <tinyURLEngine>Bitly API engine is not working, Please try again after sometime.</tinyURLEngine>
+  <geoLocation>You are currently outside the supported area.</geoLocation>
+  <geolocationTimeout>The browser is unable to supply a position at this time.</geolocationTimeout>
+  <geolocationPositionUnavailable>Position unavailable.</geolocationPositionUnavailable>
+  <geolocationPermissionDenied>Please enable Permissions for current location.</geolocationPermissionDenied>
+  <geolocationUnKnownError>Unknown error.</geolocationUnKnownError>
+  <invalidSearch>No results found</invalidSearch>
+  <numberOfFeaturesFoundNearAddress>Found ${0} facility(s) near the address</numberOfFeaturesFoundNearAddress>
+  <numberOfFeaturesFoundNearCounty>Found ${0} facility(s) in the Searched county</numberOfFeaturesFoundNearCounty>
+  <numberOfFeaturesFoundBySearch>Found ${0} facility(s) matching the searched criteria</numberOfFeaturesFoundBySearch>
+  <noPhotosAvailable>There are no photos available</noPhotosAvailable>
+<commentsErrorMessage>Unable to add comments. Either comments table is absent or doesnot have write access</commentsErrorMessage>
+	<falseConfigParams>Either required configuration key values are null or not exactly matching with layer attributes</falseConfigParams>
+	<falseConfigParam>${0} field is null or not exactly matching with layer attributes</falseConfigParam>
+  </Messages>

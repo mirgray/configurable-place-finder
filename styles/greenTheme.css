@@ -77,8 +77,10 @@ input[placeholder], [placeholder], *[placeholder]
 {
     color: #F5F5DC;
     background-color: rgb(60, 72, 36);
+        behavior: url("styles/PIE.htc");
+        -pie-background: rgba(60, 72, 36);
 }
-
+ 
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*animations */
@@ -121,8 +123,6 @@ input[placeholder], [placeholder], *[placeholder]
 {
     color: #F5F5DC;
 }
-
-
 
 .tblHeader
 {
@@ -183,6 +183,10 @@ input[placeholder], [placeholder], *[placeholder]
     background: #3C4824; /* Old browsers */
 }
 
+.selectedActivity
+{
+    border: 5px solid #3C4824 !important;
+}
 /*---------------------------------------------------------------------------------------------------------*/
 /*Base-map Container Styles*/
 
@@ -214,6 +218,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divLayerHolder{
     background: rgba(85,107,47,0.90);
     -pie-background: rgba(85,107,47,0.90);
+       behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -228,11 +233,14 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoContent
 {
   background-color: rgba(85,107,47,0.9);
+      -pie-background: rgba(85,107,47,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(85,107,47,0.9);
+         -pie-background:rgba(85,107,47,0.9);
+         behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -374,9 +382,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divLoadingIndicator
 {
-    background: rgba(85,107,47,0.65);
-    -pie-background: rgba(85,107,47,0.65);
-    behavior: url("styles/PIE.htc");
+    background: rgb(85,107,47);
 }
 
 /* Images SlideShow */
@@ -413,11 +419,11 @@ input[placeholder], [placeholder], *[placeholder]
 
 .nodeBackgroundColor
 {
-  background-color:rgba(60, 72, 36, 1) !important;
+  background-color: #3c481f !important;
  }
 .featureNameWidth
 {
-    border-bottom:2px #3C4824 solid !important;
+    border-bottom:2px #3C4824 solid !important;   
 }
 .BufferColor
 {
@@ -427,14 +433,9 @@ input[placeholder], [placeholder], *[placeholder]
 .RippleColor
 {
    background-color:rgb(60, 72, 36);
-}
+} 
 
 .mainLoader
  {
   background-image:  url("../images/green-loader.gif");
  }
-
-   .divAddressHolder
- {
-   background-color: #849966;
-  }

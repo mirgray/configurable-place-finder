@@ -1,19 +1,19 @@
-﻿/** @license
- | Version 10.2
- | Copyright 2012 Esri
- |
- | Licensed under the Apache License, Version 2.0 (the "License");
- | you may not use this file except in compliance with the License.
- | You may obtain a copy of the License at
- |
- |    http://www.apache.org/licenses/LICENSE-2.0
- |
- | Unless required by applicable law or agreed to in writing, software
- | distributed under the License is distributed on an "AS IS" BASIS,
- | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- | See the License for the specific language governing permissions and
- | limitations under the License.
- */
+﻿/*
+| Version 10.2
+| Copyright 2012 Esri
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+|    http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+*/
 var orientationChange = false; //flag set on orientation event
 var tinyResponse; //variable to store the response getting from tiny URL API
 var tinyUrl; //variable to store the tiny URL
@@ -153,6 +153,7 @@ function ShowMyLocation() {
             dojo.replaceClass(dojo.byId("divAddressHolder"), "zeroHeight", "addressHolderHeight");
         }
     }
+
     if (!Modernizr.geolocation) {
         if (isFeatureSearched) {
             QueryLayer(null, null, true);
@@ -161,9 +162,24 @@ function ShowMyLocation() {
             }
         }
     } else {
-        navigator.geolocation.getCurrentPosition(
+        var cBackupTimeout = 16000;
+        backupTimeoutTimer = setTimeout(function () {
+            alert(messages.getElementsByTagName("geolocationTimeout")[0].childNodes[0].nodeValue);
+            if (isFeatureSearched) {
+                QueryLayer(null, null, true);
+                setTimeout(function () {
+                    if (!isMobileDevice) {
+                        map.centerAndZoom(selectedFeature, zoomLevel);
+                    }
+                }, 500);
+            }
+        }, cBackupTimeout);
 
+
+        navigator.geolocation.getCurrentPosition(
         function (position) {
+
+            clearTimeout(backupTimeoutTimer);
             ShowProgressIndicator();
             mapPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, new esri.SpatialReference({
                 wkid: 4326
@@ -183,7 +199,7 @@ function ShowMyLocation() {
                     map.getLayer(tempGraphicsLayerId).add(graphic);
                     QueryLayer(null, mapPoint, true);
                     if (!isMobileDevice) {
-                        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                        map.centerAndZoom(selectedFeature, zoomLevel);
                     }
                     isFeatureSearched = false;
                 } else {
@@ -193,6 +209,7 @@ function ShowMyLocation() {
         },
 
         function (error) {
+            clearTimeout(backupTimeoutTimer);
             HideProgressIndicator();
             switch (error.code) {
                 case error.TIMEOUT:
@@ -212,9 +229,8 @@ function ShowMyLocation() {
                 QueryLayer(null, null, true);
                 setTimeout(function () {
                     if (!isMobileDevice) {
-                        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                        map.centerAndZoom(selectedFeature, zoomLevel);
                     }
-
                 }, 500);
             }
         }, {
@@ -344,7 +360,7 @@ function ShowLocateContainer() {
             dojo.replaceClass(dojo.byId("divAddressHolder"), "zeroHeight", "addressHolderHeight");
             dojo.byId("txtAddress").blur();
         } else {
-        dojo.replaceClass(dojo.byId("txtAddress"), "onBlurColorChange",  "colorChange");
+            dojo.replaceClass(dojo.byId("txtAddress"), "onBlurColorChange", "colorChange");
             dojo.byId("txtAddress").style.color = "gray";
             dojo.addClass(dojo.byId("divAddressHolder"), "addressHolderHeight");
             setTimeout(function () {
@@ -794,10 +810,15 @@ function SetHeightImage() {
 
 function SetHeightViewDirections() {
     var height = (isMobileDevice) ? dojo.window.getBox().h : dojo.coords(dojo.byId("divInfoContent")).h;
-
-    dojo.byId("divInfoDirectionsScroll").style.height = (height - ((isBrowser) ? 55 : 65)) + "px";
+   height1= height - ((isBrowser) ? 55 : 65);
+   if (height1 < 0) {
+       height1 = -(height1);
+   }
+   if (height < 0) {
+       height = -(height);
+   }
+   dojo.byId("divInfoDirectionsScroll").style.height = height1 + "px";
     CreateScrollbar(dojo.byId("divInfoDirections"), dojo.byId("divInfoDirectionsScroll"));
-
     if (dojo.byId("divNewInfoDirectionsScroll").style.display === "block") {
         dojo.byId("divNewInfoDirectionsScroll").style.height = (height - ((isBrowser) ? 55 : 65)) + "px";
         CreateScrollbar(dojo.byId("divInfoDirections"), dojo.byId("divNewInfoDirectionsScroll"));
@@ -813,8 +834,13 @@ function ShowFeatureInfoDetails(selectedFeature, attributes) {
         dojo.byId("divInfoContent").style.width = infoWindowWidth + "px";
         dojo.byId("divInfoContent").style.height = infoWindowHeight + "px";
     }
-
-    dojo.byId("imgComments").style.display = "block";
+    if (commentLayer.visibility) {
+        dojo.byId("imgComments").style.display = "block";
+    }
+    else {
+        dojo.byId("imgComments").style.display = "none";
+        HideProgressIndicator();
+    }
     if (!isMobileDevice) {
         dojo.byId("divInfoContent").style.display = "none";
     }
@@ -911,7 +937,7 @@ function FetchComments(facilityID, isInfoView) {
         SetHeightComments();
         HideProgressIndicator();
     }, function (err) {
-        alert(err.message);
+        alert(messages.getElementsByTagName("commentsErrorMessage")[0].childNodes[0].nodeValue);
     });
 }
 
@@ -1243,7 +1269,7 @@ function DisplayInfoWindow(selectedFeature, attributes, featureSearched) {
             map.infoWindow.setContent(content);
         } else {
             dojo.byId("divInfoContent").style.display = "block";
-            dojo.byId("tdInfoHeader").innerHTML = "Facility Info";
+            dojo.byId("tdInfoHeader").innerHTML = infoWindowHeader[0].InfoWindowHeaderText;
             dojo.byId("imgDetails").style.display = "none";
             ShowInfoDetailsView();
             SetHeightViewDetails();
@@ -1260,18 +1286,20 @@ function ShowFeatureDetailContainer() {
     dojo.byId("imgMblPrevImg").style.display = "none";
     dojo.byId("imgMblNextImg").style.display = "none";
     dojo.byId("imgDetails").style.display = "none";
-    dojo.byId("imgComments").style.display = "block";
+    if (commentLayer.visibility) {
+        dojo.byId("imgComments").style.display = "block";
+    }
     dojo.byId("divInfoPhotoGalleryContainer").style.display = "none";
 
     dojo.replaceClass("divInfoContent", "showContainer", "hideContainer");
     SetHeightViewDetails();
-    dojo.byId("tdInfoHeader").innerHTML = "Facility Info";
+    dojo.byId("tdInfoHeader").innerHTML = infoWindowHeader[0].InfoWindowHeaderText;
 }
 
 //Show add-comments view
 function ShowAddCommentsView() {
     if (dojo.isIE) {
-        dojo.byId("txtComments").value = " ";
+        dojo.byId("txtComments").value = "";
     }
     dojo.byId("divAddComment").style.display = "block";
     dojo.byId("divCommentsView").style.display = "none";
@@ -1291,81 +1319,84 @@ function SetHeightCmtControls() {
 
 //Adds a new comment
 function AddComment() {
-    if (dojo.byId("txtComments").value.trim().length === 0) {
-        dojo.byId("txtComments").focus();
-        ShowSpanErrorMessage("commentError", messages.getElementsByTagName("enterComment")[0].childNodes[0].nodeValue);
-        return;
-    } else if (dojo.byId("txtComments").value.length > 250) {
-        dojo.byId("txtComments").focus();
-        ShowSpanErrorMessage("commentError", messages.getElementsByTagName("commentsLength")[0].childNodes[0].nodeValue);
-        return;
-    }
+    if (commentLayer.visibility) {
+        if (dojo.byId("txtComments").value.trim().length === 0) {
+            dojo.byId("txtComments").focus();
+            ShowSpanErrorMessage("commentError", messages.getElementsByTagName("enterComment")[0].childNodes[0].nodeValue);
+            return;
+        } else if (dojo.byId("txtComments").value.length > 250) {
+            dojo.byId("txtComments").focus();
+            ShowSpanErrorMessage("commentError", messages.getElementsByTagName("commentsLength")[0].childNodes[0].nodeValue);
+            return;
+        }
 
-    ShowProgressIndicator();
-    var commentGraphic = new esri.Graphic();
-    var referenceDate = new Date(1970, 0, 1);
-    var date = new js.date();
+        ShowProgressIndicator();
+        var commentGraphic = new esri.Graphic();
+        var referenceDate = new Date(1970, 0, 1);
+        var date = new js.date();
 
-    var attr = {};
-    attr[databaseFields.FeatureIdFieldName] = selectedFeatureID;
-    attr[databaseFields.CommentsFieldName] = dojo.byId("txtComments").value.trim();
-    attr[databaseFields.DateFieldName] = date.utcMsFromTimestamp(date.localToUtc(date.localTimestampNow()));
-    attr[databaseFields.RankFieldName] = Number(dojo.byId("commentRating").value);
-    commentGraphic.setAttributes(attr);
+        var attr = {};
+        attr[databaseFields.FeatureIdFieldName] = selectedFeatureID;
+        attr[databaseFields.CommentsFieldName] = dojo.byId("txtComments").value.trim();
+        attr[databaseFields.DateFieldName] = date.utcMsFromTimestamp(date.localToUtc(date.localTimestampNow()));
+        attr[databaseFields.RankFieldName] = Number(dojo.byId("commentRating").value);
+        commentGraphic.setAttributes(attr);
 
-    map.getLayer(commentsLayerId).applyEdits([commentGraphic], null, null, function (msg) {
-        if (!msg[0].error) {
-            var table = dojo.query("table", dojo.byId("divCommentsContent"));
-            if (table.length > 0) {
-                var x = dojo.query("tr[noComments = 'true']", table[0]);
-                if (x.length > 0) {
-                    RemoveChildren(table[0]);
-                }
-                var tr = table[0].insertRow(0);
-                var commentsCell = document.createElement("td");
-                commentsCell.className = "bottomborder";
-                var index = dojo.query("tr", table[0]).length;
-                if (index) {
-                    index = 0;
-                }
-                var controlId = "info_" + index;
-                commentsCell.appendChild(CreateCommentRecord(attr, controlId));
-                tr.appendChild(commentsCell);
-                CreateRatingWidget(dojo.byId("commentRating" + controlId));
-                SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
-                if (defaultFeature) {
-                    if (defaultFeature.facilityID === selectedFeatureID) {
-                        var commentsTable = dojo.query("table", dojo.byId("divCommentHolder"));
-                        if (commentsTable.length > 0) {
-                            var noComments = dojo.query("tr[noComments = 'true']", commentsTable[0]);
-                            if (noComments.length > 0) {
-                                RemoveChildren(commentsTable[0]);
+        map.getLayer(commentsLayerId).applyEdits([commentGraphic], null, null, function (msg) {
+            if (!msg[0].error) {
+                var table = dojo.query("table", dojo.byId("divCommentsContent"));
+                if (table.length > 0) {
+                    var x = dojo.query("tr[noComments = 'true']", table[0]);
+                    if (x.length > 0) {
+                        RemoveChildren(table[0]);
+                    }
+                    var tr = table[0].insertRow(0);
+                    var commentsCell = document.createElement("td");
+                    commentsCell.className = "bottomborder";
+                    var index = dojo.query("tr", table[0]).length;
+                    if (index) {
+                        index = 0;
+                    }
+                    var controlId = "info_" + index;
+                    commentsCell.appendChild(CreateCommentRecord(attr, controlId));
+                    tr.appendChild(commentsCell);
+                    CreateRatingWidget(dojo.byId("commentRating" + controlId));
+                    SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
+                    if (defaultFeature) {
+                        if (defaultFeature.facilityID === selectedFeatureID) {
+                            var commentsTable = dojo.query("table", dojo.byId("divCommentHolder"));
+                            if (commentsTable.length > 0) {
+                                var noComments = dojo.query("tr[noComments = 'true']", commentsTable[0]);
+                                if (noComments.length > 0) {
+                                    RemoveChildren(commentsTable[0]);
+                                }
+                                dojo.byId("divComments").style.display = "block";
+                                ResetSlideControls();
+                                var tr = commentsTable[0].insertRow(0);
+                                var commentsCell = document.createElement("td");
+                                commentsCell.className = "bottomborder";
+                                var index = dojo.query("tr", dojo.byId("tblComment")).length;
+                                if (index) {
+                                    index = 0;
+                                }
+                                var controlId = index;
+                                commentsCell.appendChild(CreateCommentRecord(attr, controlId));
+                                tr.appendChild(commentsCell);
+                                CreateRatingWidget(dojo.byId("commentRating" + controlId));
+                                SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
                             }
-                            dojo.byId("divComments").style.display = "block";
-                            ResetSlideControls();
-                            var tr = commentsTable[0].insertRow(0);
-                            var commentsCell = document.createElement("td");
-                            commentsCell.className = "bottomborder";
-                            var index = dojo.query("tr", dojo.byId("tblComment")).length;
-                            if (index) {
-                                index = 0;
-                            }
-                            var controlId = index;
-                            commentsCell.appendChild(CreateCommentRecord(attr, controlId));
-                            tr.appendChild(commentsCell);
-                            CreateRatingWidget(dojo.byId("commentRating" + controlId));
-                            SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
                         }
                     }
                 }
             }
-        }
-        ResetCommentValues();
-        HideProgressIndicator();
-        SetHeightComments();
-    }, function (err) {
-        HideProgressIndicator();
-    });
+            ResetCommentValues();
+            HideProgressIndicator();
+            SetHeightComments();
+        }, function (err) {
+            HideProgressIndicator();
+            alert(messages.getElementsByTagName("commentsErrorMessage")[0].childNodes[0].nodeValue);
+        });
+    }
 }
 
 function HideSearchResultContainer() {
@@ -1380,11 +1411,17 @@ function ShowInfoDetailsView() {
     dojo.byId("divInfoComments").style.display = "none";
     dojo.byId("divInfoDetails").style.display = "block";
     dojo.byId("divInfoDirections").style.display = "none";
-    dojo.byId("imgComments").style.display = "block";
+    if (commentLayer.visibility) {
+        dojo.byId("imgComments").style.display = "block";
+    }
+    else {
+        dojo.byId("imgComments").style.display = "none";
+        HideProgressIndicator();
+    }
     dojo.byId("imgDetails").style.display = "none";
     dojo.byId("tdImgGAllery").style.display = "none";
     dojo.byId("tdInfoHeader").style.display = "block";
-    dojo.byId("tdInfoHeader").innerHTML = "Facility Info";
+    dojo.byId("tdInfoHeader").innerHTML = infoWindowHeader[0].InfoWindowHeaderText;
     dojo.byId("tdClose").style.display = "block";
     dojo.byId("divInfoPhotoGalleryContainer").style.display = "none";
     if (isMobileDevice) {
@@ -1485,7 +1522,9 @@ function ShowInfoDirectionsView() {
         dojo.byId("divInfoDirections").style.display = "block";
         dojo.byId("imgDirections").style.display = "none";
         dojo.byId("imgDetails").style.display = "block";
-        dojo.byId("imgComments").style.display = "block";
+        if (commentLayer.visibility) {
+            dojo.byId("imgComments").style.display = "block";
+        }
         dojo.byId("tdInfoHeader").innerHTML = "Directions";
         SetHeightViewDirections();
     } else {
@@ -1533,10 +1572,6 @@ function ShowImages(img) {
         }, 500);
         ShowProgressIndicator();
         dojo.byId("imgAttachments").src = images[index];
-        dojo.byId("imgAttachments").onload = function () {
-            HideProgressIndicator();
-        };
-
     } else {
         var imgNumber = img.getAttribute("totalImages");
         dojo.byId("divCount").style.display = "block";
@@ -1591,20 +1626,15 @@ function ShowNextImg() {
         index++;
         if (isMobileDevice) {
             dojo.byId("imgMblAttachment").src = images[index];
-            dojo.byId("imgMblAttachment").onload = function () {
-                HideProgressIndicator();
-            };
             dojo.byId("divCount").innerHTML = (Number(index) + 1) + "/" + imgFiles.length;
             dojo.byId("imgMblNextImg").style.display = "none";
             dojo.byId("imgMblPrevImg").style.display = "block";
         } else {
             dojo.byId("imgNextImg").style.display = "none";
             dojo.byId("imgPreviousImg").style.display = "block";
-            dojo.byId("imgAttachments").src = images[index];
             ShowProgressIndicator();
-            dojo.byId("imgAttachments").onload = function () {
-                HideProgressIndicator();
-            };
+            dojo.byId("imgAttachments").src = images[index];
+          
         }
     } else {
         index++;
@@ -1619,11 +1649,9 @@ function ShowNextImg() {
         } else {
             dojo.byId("imgNextImg").style.display = "block";
             dojo.byId("imgPreviousImg").style.display = "block";
-            dojo.byId("imgAttachments").src = images[index];
             ShowProgressIndicator();
-            dojo.byId("imgAttachments").onload = function () {
-                HideProgressIndicator();
-            };
+            dojo.byId("imgAttachments").src = images[index];
+           
         }
     }
 }
@@ -1643,43 +1671,32 @@ function ShowPreviousImg() {
         index--;
         if (isMobileDevice) {
             dojo.byId("imgMblAttachment").src = images[index];
-            dojo.byId("imgMblAttachment").onload = function () {
-                HideProgressIndicator();
-            };
             dojo.byId("divCount").innerHTML = (Number(index) + 1) + "/" + imgFiles.length;
             dojo.byId("imgMblPrevImg").style.display = "none";
             dojo.byId("imgMblNextImg").style.display = "block";
         } else {
             dojo.byId("imgPreviousImg").style.display = "none";
             dojo.byId("imgNextImg").style.display = "block";
-            dojo.byId("imgAttachments").src = images[index];
             ShowProgressIndicator();
-            dojo.byId("imgAttachments").onload = function () {
-                HideProgressIndicator();
-            };
+            dojo.byId("imgAttachments").src = images[index];
+
         }
     } else {
         index--;
         if (isMobileDevice) {
             dojo.byId("imgMblAttachment").src = images[index];
-            dojo.byId("imgMblAttachment").onload = function () {
-                HideProgressIndicator();
-            };
             dojo.byId("divCount").innerHTML = (Number(index) + 1) + "/" + imgFiles.length;
             dojo.byId("imgMblPrevImg").style.display = "block";
             dojo.byId("imgMblNextImg").style.display = "block";
         } else {
             dojo.byId("imgNextImg").style.display = "block";
             dojo.byId("imgPreviousImg").style.display = "block";
-            dojo.byId("imgAttachments").src = images[index];
             ShowProgressIndicator();
-            dojo.byId("imgAttachments").onload = function () {
-                HideProgressIndicator();
-            };
+            dojo.byId("imgAttachments").src = images[index];
+
         }
     }
 }
-
 function CloseImages() {
     dojo.replaceClass("divImgsBlock", "opacityHideAnimation", "opacityShowAnimation");
     dojo.replaceClass("divImgs", "hideContainer", "showContainer");
@@ -1754,7 +1771,7 @@ function NewAddressSearch() {
                         clearTimeout(stagedSearch);
 
                         if (dojo.byId("txtPodAddress").value.trim().length > 0) {
-                            // Stage a new search, which will launch if no new searches show up
+                            // Stage a new search, which will launch if no new searches show up 
                             // before the timeout
                             stagedSearch = setTimeout(function () {
                                 LocateAddress();

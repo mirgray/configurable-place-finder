@@ -88,7 +88,7 @@ html, body
 {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
-    border-radius: 8px;
+    border-radius: 8px; 
     width: 100%;
     height: 100%;
 }
@@ -115,7 +115,7 @@ html, body
     height: 44px !important;
     width: 100%;
     padding: 0px !important;
-
+   
 }
  .txtPodAddress
 {
@@ -123,7 +123,16 @@ html, body
     height: 44px !important;
     width: 90%;
     padding: 0px !important;
-
+   
+}
+.divAddressPodPlaceHolder {
+    
+     height: 44px !important;
+     
+         -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    position: relative;
 }
 .selectedActivity,.imgPodSearchLocate
 {
@@ -148,7 +157,6 @@ html, body
 
 .divInfoContent
 {
-   /* background-color: rgba(85,107,47,0.90);*/
     width: 100%;
     height: 100%;
     -moz-border-radius: 8px;
@@ -183,12 +191,12 @@ html, body
 
 .tblNewAddressSearch
 {
-   width: 100% !important;
+   width: 100% !important; 
 }
 
 .tdPodAddressSearch
 {
-  padding-left: 0px !important;
+  padding-left: 0px !important;  
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /* ESRI slider style*/
@@ -199,7 +207,7 @@ html, body
 }
 .imgPodSearchLocate
 {
-     margin-right: -7px !important;
+     margin-right: -7px !important;   
 }
 .divPodSearchLocate
 {
@@ -255,7 +263,7 @@ html, body
         width:420px !important;
         height:85px !important;
     }
-
+    
     .txtAddress
     {
         height: 44px !important;
@@ -281,7 +289,7 @@ html, body
     height:95% !important;
     width:95% !important;
  }
-
+ 
  .displayBlock
  {
      display:block;
@@ -290,16 +298,16 @@ html, body
  {
    display:none;
   }
-
+  
 .tblFeatureList
 {
    width: 95%;
    padding-top: 5px;
-   padding-left: 5px;
+   padding-left: 5px; 
 }
-
-.tblInformationHolder
+    
+.tblInformationHolder   
 {
-    padding-left: 5px;
+    padding-left: 5px; 
     padding-top: 5px;
 }

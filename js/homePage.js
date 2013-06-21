@@ -1,19 +1,19 @@
-﻿/** @license
- | Version 10.2
- | Copyright 2012 Esri
- |
- | Licensed under the Apache License, Version 2.0 (the "License");
- | you may not use this file except in compliance with the License.
- | You may obtain a copy of the License at
- |
- |    http://www.apache.org/licenses/LICENSE-2.0
- |
- | Unless required by applicable law or agreed to in writing, software
- | distributed under the License is distributed on an "AS IS" BASIS,
- | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- | See the License for the specific language governing permissions and
- | limitations under the License.
- */
+﻿/*
+| Version 10.2
+| Copyright 2012 Esri
+|
+| Licensed under the Apache License, Version 2.0 (the "License");
+| you may not use this file except in compliance with the License.
+| You may obtain a copy of the License at
+|
+|    http://www.apache.org/licenses/LICENSE-2.0
+|
+| Unless required by applicable law or agreed to in writing, software
+| distributed under the License is distributed on an "AS IS" BASIS,
+| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+| See the License for the specific language governing permissions and
+| limitations under the License.
+*/
 dojo.require("esri.map");
 dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
@@ -47,7 +47,7 @@ var infoWindowWidth; //variable to store info window width
 
 var isBrowser = false; //This variable is set to true when the app is running on desktop browsers
 var isiOS = false; //This variable is set to true when the app is running on iPhone or iPad
-var isMobileDevice = false;  //This variable is set to true when the app is running on mobile device
+var isMobileDevice = false;  //This variable is set to true when the app is running on mobile device 
 var isTablet = false; //This variable is set to true when the app is running on tablets
 
 var map; //variable to store map object
@@ -75,7 +75,7 @@ var locatorRippleSize; //variable to store locator ripple size
 
 var featureName; //variable to store feature name object
 var selectedFeature; //variable to store selected feature
-var isFeatureSearched = false; //flag set true/false for the feature searched
+var isFeatureSearched = false; //flag set true/false for the feature searched 
 var searchedFeature; //variable to store searched feature
 
 var searchAddressViaPod = false; //flag set true if the address is searched through pods in the bottom panel
@@ -93,21 +93,22 @@ var loadingAttachmentsImg = "images/imgAttachmentLoader.gif"; //variable to stor
 var nameAttribute;
 var locatorSettings; //variable to store locator settings
 
-var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet
+var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet 
 var getDirectionsDesktop; //flag to enable/disable directions for desktop
 
 var primaryKeyForComments; //variable to store  primary key attribute for comments
 var facilityId; //variable to store primary key for feature layer
 
 var commentsInfoPopupFieldsCollection; //variable to store fields for adding and displaying comment
-var databaseFields; // Define the database field names
+var databaseFields; // Define the database field names 
 
 
 var lastSearchString; //variable for store the last search string
 var stagedSearch; //variable for store the time limit for search
 var lastSearchTime; //variable for store the time of last search
-
+var zoomLevel;
 var countySearch;
+var ThemeCSS;
 //This initialization function is called when the DOM elements are ready
 function Init() {
     esri.config.defaults.io.proxyUrl = "proxy.ashx"; //relative path
@@ -117,6 +118,7 @@ function Init() {
     var userAgent = window.navigator.userAgent;
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {
         isiOS = true;
+        dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divRadiusPodPlaceHolder");
     }
     if ((userAgent.indexOf("Android") >= 0 && userAgent.indexOf("Mobile") >= 0) || userAgent.indexOf("iPhone") >= 0) {
         fontSize = 15;
@@ -130,31 +132,67 @@ function Init() {
         fontSize = 11;
         isBrowser = true;
         dojo.byId("dynamicStyleSheet").href = "styles/browser.css";
-
     }
     dojo.byId("divSplashContent").style.fontSize = fontSize + "px";
 
     var responseObject = new js.Config();
+    var shr = document.createElement("link");
+    shr.rel = "shortcut icon";
+    shr.type = "image/x-icon";
+    shr.href = responseObject.ApplicationFavicon;
+    document.getElementsByTagName('head')[0].appendChild(shr);
+    if (isMobileDevice || isTablet) {
+        var ati = document.createElement("link");
+        ati.rel = "apple-touch-icon-precomposed";
+        ati.type = "image/x-icon";
+        ati.href = responseObject.ApplicationIcon;
+        document.getElementsByTagName('head')[0].appendChild(ati);
+
+        var ati = document.createElement("link");
+        ati.rel = "apple-touch-icon";
+        ati.type = "image/x-icon";
+        ati.href = responseObject.ApplicationIcon;
+        document.getElementsByTagName('head')[0].appendChild(ati);
+    }
+
     dojo.byId("Theme").href = responseObject.ApplicationTheme;
+
+    dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
+    document.title = responseObject.ApplicationName;
+    var tit = dojo.byId("Theme");
     setTimeout(function () {
-        var tit = dojo.byId("Theme");
+        if (dojo.isIE < 9) {
+            ThemeCSS = tit.styleSheet.rules;
+        }
+        else {
+            ThemeCSS = tit.sheet.cssRules;
+        }
         var image;
-        for (var i = 0; i < tit.sheet.cssRules.length; i++) {
-            if (tit.sheet.cssRules[i].selectorText == ".mainLoader") {
-                image = tit.sheet.cssRules[i].style.backgroundImage;
+
+        for (var i = 0; i < ThemeCSS.length; i++) {
+            if (ThemeCSS[i].selectorText == ".mainLoader") {
+                image = ThemeCSS[i].style.backgroundImage;
                 break;
             }
         }
+
         image = image.split('(')[1];
         image = image.split(')')[0];
-        if (dojo.isIE) {
+
+        if (!dojo.isChrome && !(dojo.isIE < 9) && isBrowser) {
             image = image.split('"')[1];
             image = image.split('../')[1];
+        }
+        else if (dojo.isIE < 9) {
+            image = image.split('../')[1];
+            AddCSSClass();
         }
         dojo.byId("mainLoader").src = image;
         dojo.byId("imgPodSearchLoader").src = image;
         dojo.byId("imgSearchLoader").src = image;
     }, 200);
+
+
 
     dojo.connect(dojo.byId("txtAddress"), "onpaste", function () {
         CutAndPasteTimeout();
@@ -217,7 +255,7 @@ function Init() {
                         clearTimeout(stagedSearch);
 
                         if (dojo.byId("txtAddress").value.trim().length > 0) {
-                            // Stage a new search, which will launch if no new searches show up
+                            // Stage a new search, which will launch if no new searches show up 
                             // before the timeout
                             stagedSearch = setTimeout(function () {
                                 LocateFeatureAndAddress();
@@ -236,31 +274,59 @@ function Init() {
     });
 
 
-    handlers.push(dojo.connect(dojo.byId("imgLocate"), "onclick", function () {
+    dojo.connect(dojo.byId("imgLocate"), "onclick", function () {
         searchAddressViaPod = false;
-        if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
+        if (dojo.hasClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress")) {
             if (dojo.byId("txtAddress").value.trim() === "") {
                 alert(messages.getElementsByTagName("addressToLocate")[0].childNodes[0].nodeValue);
                 return;
             }
             LocateAddress();
-        } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
+        } else if (dojo.hasClass(dojo.byId("tdSearchFeature"), "tdSearchByFeature")) {
             resultFound = false;
             if (dojo.byId("txtAddress").value.trim() === "") {
                 alert(messages.getElementsByTagName("featureToLocate")[0].childNodes[0].nodeValue);
                 return;
             }
             LocateFeaturebyName();
-        } else if (dojo.byId("tdSearchActivity").className === "tdSearchByActivity") {
+        } else if (dojo.hasClass(dojo.byId("tdSearchActivity"), "tdSearchByActivity")) {
             LocateFeaturebyActivity();
         }
-    }));
+    });
 
     if (!Modernizr.geolocation) {
         dojo.byId("tdGeolocation").style.display = "none";
     }
 
     Initialize(responseObject);
+}
+
+function AddCSSClass() {
+    if (dojo.hasClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress")) {
+        dojo.removeClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
+    }
+    if (dojo.hasClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature")) {
+        dojo.removeClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
+    }
+    if (dojo.hasClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity")) {
+        dojo.removeClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
+    }
+    if (dojo.hasClass(dojo.byId("txtAddress"), "txtAddress")) {
+        dojo.removeClass(dojo.byId("txtAddress"), "txtAddress");
+    }
+    if (dojo.hasClass(dojo.byId("txtPodAddress"), "txtPodAddress")) {
+        dojo.removeClass(dojo.byId("txtPodAddress"), "txtPodAddress");
+    }
+    if (dojo.hasClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder")) {
+        dojo.removeClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");  
+    }
+    dojo.addClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
+    dojo.addClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
+    dojo.addClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
+    dojo.addClass(dojo.byId("txtAddress"), "txtAddress");
+    dojo.addClass(dojo.byId("txtPodAddress"), "txtPodAddress");
+    dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
+
 }
 
 //this function is called to load the configurable parameters
@@ -304,10 +370,12 @@ function Initialize(responseObject) {
     }
 
     locatorSettings = responseObject.LocatorSettings;
+    zoomLevel = responseObject.ZoomLevel;
     devPlanLayerURL = responseObject.FacilityLayer;
     infoBoxWidth = responseObject.InfoBoxWidth;
     dojo.byId("imgApp").src = responseObject.ApplicationIcon;
-    dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
+
+
     dojo.byId("divSplashContent").innerHTML = responseObject.SplashScreen.Message;
 
     dojo.xhrGet({
@@ -325,7 +393,7 @@ function Initialize(responseObject) {
     });
 
     dojo.connect(map, "onLoad", function () {
-
+        map.disableKeyboardNavigation();
         routeParams = new esri.tasks.RouteParameters();
         routeParams.stops = new esri.tasks.FeatureSet();
         routeParams.returnRoutes = false;
@@ -340,7 +408,14 @@ function Initialize(responseObject) {
             zoomExtent = responseObject.DefaultExtent.split(",");
         }
         var startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
+
         map.setExtent(startExtent);
+        dojo.create("div", {
+            className: "esriSimpleSliderHomeButton",
+            onclick: function () {
+                map.setExtent(startExtent);
+            }
+        }, dojo.query(".esriSimpleSliderIncrementButton")[0], "after");
         MapInitFunction(responseObject.SplashScreen.isVisibile);
     });
     ShowProgressIndicator();
@@ -400,6 +475,9 @@ function Initialize(responseObject) {
             }
             if (order[i] === "comments") {
                 td.id = "tdCommentsPod";
+                if (!commentLayer.visibility) {
+                    dojo.byId("divComments").style.display = "none";
+                }
             }
             td.appendChild(node);
             node.style.width = infoBoxWidth + "px";
@@ -569,13 +647,17 @@ function MapInitFunction(splashScreenVisibility) {
         }
     });
     map.addLayer(devPlanLayer);
-
-    var commentsLayer = new esri.layers.FeatureLayer(commentLayer, {
-        mode: esri.layers.FeatureLayer.MODE_SELECTION,
-        outFields: ["*"],
-        id: commentsLayerId
-    });
-    map.addLayer(commentsLayer);
+    if (commentLayer.visibility) {
+        var commentsLayer = new esri.layers.FeatureLayer(commentLayer.url, {
+            mode: esri.layers.FeatureLayer.MODE_SELECTION,
+            outFields: ["*"],
+            id: commentsLayerId
+        });
+        map.addLayer(commentsLayer);
+    }
+    else {
+        dojo.byId("imgComments").style.display = "none";
+    }
     var gLayer = new esri.layers.GraphicsLayer();
     gLayer.id = tempGraphicsLayerId;
     map.addLayer(gLayer);
