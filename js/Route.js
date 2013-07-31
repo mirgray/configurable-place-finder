@@ -15,6 +15,7 @@
  | limitations under the License.
  */
 //Configure the route between two points
+
 function ConfigureRoute(mapPoint, feature) {
     if (!getDirections) {
         if (!isMobileDevice) {
@@ -43,8 +44,10 @@ function ConfigureRoute(mapPoint, feature) {
         if (routeParams.stops.features.length === 2) {
             if (getDirections) {
                 routeTask.solve(routeParams);
-            }
-            else {
+                setTimeout(function () {
+                    HideProgressIndicator();
+                }, 500);
+            } else {
                 HideProgressIndicator();
                 dojo.byId("imgDirections").style.display = "block";
             }
@@ -55,6 +58,7 @@ function ConfigureRoute(mapPoint, feature) {
 var drivingDirections = [];
 
 //Display the route between two points
+
 function ShowRoute(solveResult) {
     drivingDirections = [];
     RemoveChildren(dojo.byId("divDirection"));
@@ -150,12 +154,13 @@ function ShowRoute(solveResult) {
 }
 
 //Display errors caught attempting to solve the route
+
 function ErrorHandler(err) {
     mapPoint = "";
     NewAddressSearch();
     HideProgressIndicator();
     if (isMobileDevice) {
-        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+        map.centerAndZoom(selectedFeature, zoomLevel);
         setTimeout(function () {
             map.infoWindow.hide();
             var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
@@ -168,6 +173,7 @@ function ErrorHandler(err) {
 }
 
 //Format time
+
 function FormatTime(time) {
     var hr = Math.floor(time / 60); //Important to use math.floor with hours
     var min = Math.round(time % 60);
@@ -180,6 +186,7 @@ function FormatTime(time) {
 }
 
 //Round distance to nearest hundredth of a unit
+
 function FormatDistance(dist, units) {
     var d = Math.round(dist * 100) / 100;
     if (d === 0) {

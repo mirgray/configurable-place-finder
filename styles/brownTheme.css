@@ -67,7 +67,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divSplashScreenContent
 {
-    background-color: rgba(133,94,66,1);
+    background-color: #885e42;
     -webkit-box-shadow: 0 0 10px #fff;
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
@@ -80,6 +80,8 @@ input[placeholder], [placeholder], *[placeholder]
 {
     color: #F5F5DC;
     background-color: rgba(107,66,38,1);
+       -pie-background:rgba(107,66,38,1);
+           behavior: url("styles/PIE.htc");
 }
 
 
@@ -119,7 +121,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divAddressContent
 {
-    background-color: rgba(133,94,66,1);
+    background-color: #885e42;
 }
 
 .divAddressScrollContent
@@ -127,28 +129,28 @@ input[placeholder], [placeholder], *[placeholder]
     color: #F5F5DC;
 }
 
-
-
 .tblHeader
 {
-    background-color: rgba(107,66,38,1);
+    background-color: #6b4226;
     border-bottom: gray 1px solid;
     behavior: url("styles/PIE.htc");
 }
-.divAddressPlaceHolder, .divAddressPodPlaceHolder
+ .divAddressPodPlaceHolder
 {
-    border: 1px solid rgba(107,66,38,1);
-    background-color:rgba(148, 106, 82, 0.9);
+    border: 1px solid #6b4226;
+    background-color:#946a52;
 }
-
+.divAddressPlaceHolder {
+        background-color:#6b4226; 
+}
 .txtAddress
 {
-    background-color: rgba(107,66,38,1);
+    background-color: #6b4226;
 }
 
 .txtPodAddress
 {
-    background-color: rgba(107,66,38,1);
+    background-color: #6b4626;
 }
 
 .divAddressList
@@ -165,36 +167,36 @@ input[placeholder], [placeholder], *[placeholder]
 }
 .tdSearchByAddress
 {
-    background-color: #AAAAAA;
+    background-color:  #AAAAAA;
 }
 
 .tdSearchByFeature
 {
-    background-color: #AAAAAA;
+    background-color:  #AAAAAA;
 }
 .tdSearchByActivity
 {
-    background-color: #AAAAAA;
+    background-color:  #AAAAAA;
 }
 
 .tdSearchByUnSelectedActivity
 {
-    background: rgba(107,66,38,1); /* Old browsers */
+    background: #6b4626;/* Old browsers */
 }
 
 .tdSearchByUnSelectedFeature
 {
-    background: rgba(107,66,38,1); /* Old browsers */
+    background: #6b4626;/* Old browsers */
 }
 
 .tdSearchByUnSelectedAddress
 {
-    background: rgba(107,66,38,1); /* Old browsers */
+    background: #6b4626; /* Old browsers */
 }
 
 .selectedActivity
 {
-    border: 3px solid rgba(107,66,38,1) !important;
+    border: 5px solid #6b4226 !important;
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*Base-map Container Styles*/
@@ -225,6 +227,7 @@ input[placeholder], [placeholder], *[placeholder]
 {
     background: rgba(133,94,66,0.90);
     -pie-background: rgba(133,94,66,0.90);
+       behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -239,11 +242,14 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoContent
 {
   background-color: rgba(133,94,66,0.9);
+      -pie-background: rgba(133,94,66,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(133,94,66,0.9);
+         -pie-background:rgba(133,94,66,0.9);
+         behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -254,13 +260,15 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoWindowContainer
 {
     background-color: rgba(133,94,66,1);
+         -pie-background: rgba(133,94,66,1);
+              behavior: url("styles/PIE.htc");
     color: #F5F5DC;
 }
 
 .divTriangle
 {
     border: solid 20px transparent;
-    border-top-color: rgba(133,94,66,1);
+    border-top-color: #855e42;
 }
 
 
@@ -277,41 +285,41 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoWindowContainer .title
 {
     color: #F5F5DC;
-    background-color: rgba(107,66,38,1);
+    background-color: #6b4626;
     border-bottom: gray 1px solid;
     behavior: url("styles/PIE.htc");
 }
 
 .infotblHeader
 {
-    background-color: rgba(107,66,38,1);
+    background-color:#6b4626;
     border-bottom: gray 1px solid;
 }
 
 .ratingStar
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .ratingStarBig
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarBigChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .txtArea
 {
-    border: 1px solid rgba(133,94,66,1);
-    background-color: rgba(107,66,38,1);
+    border: 1px solid #855e42;
+    background-color: #6b4226;
     color: #F5F5DC;
 }
 
@@ -334,13 +342,13 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divHeader
 {
-    background-color: rgba(107,66,38,1);
+    background-color: #6b4226;
     behavior: url("styles/PIE.htc");
 }
 
 .divContentStyle
 {
-    background-color: rgba(133,94,66,1);
+    background-color: #855e42;
     behavior: url("styles/PIE.htc");
 }
 
@@ -369,9 +377,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divLoadingIndicator
 {
     filter: alpha(opacity = 55);
-    background: rgba(133,94,66,0.65);
-    -pie-background: rgba(133,94,66,0.65);
-    behavior: url("styles/PIE.htc");
+    background: #855e42;
 }
 
 /* Images SlideShow */
@@ -386,7 +392,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divImageSlide
 {
     filter: alpha(opacity=100);
-    background-color: rgba(133,94,66,1);
+    background-color: #855e42;
     -webkit-box-shadow: 0 0 10px #fff;
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
@@ -406,7 +412,7 @@ input[placeholder], [placeholder], *[placeholder]
 /*********************************************/
 .nodeBackgroundColor
 {
-    background-color: rgba(107,66,38,1) !important;
+    background-color: #6b4226 !important;
 }
 
 .featureNameWidth
@@ -423,9 +429,5 @@ input[placeholder], [placeholder], *[placeholder]
 }
  .mainLoader
  {
-  background-image:  url("../images/brown-loader.gif");
+  background-image:  url("./images/brown-loader.gif");
  }
-  .divAddressHolder
- {
-   background-color:rgba(133,94,66,1);
-  }

@@ -27,9 +27,9 @@ dojo.require("dojo.number");
 dojo.require("js.InfoWindow");
 dojo.require("esri.tasks.route");
 
-var baseMapLayers;  //Variable to store base map layers
+var baseMapLayers; //Variable to store base map layers
 var devPlanLayerURL; //Variable to store Feature layer URL
-var commentLayer;  //Variable to store feature comments layer URL
+var commentLayer; //Variable to store feature comments layer URL
 var referenceOverlayLayer; //Variable to store Reference Overlay Layer
 var geometryService; //Variable to store Geometry Service
 
@@ -40,15 +40,16 @@ var showNullValueAs; //Variable to store default value for replacing null values
 var infoActivity; //variable to store the activities for a feature
 var infoBoxWidth; //variable to store the width of the carousel pod
 var infoWindowContent; //variable to store content for info window
-var infoPopupFieldsCollection;  //variable to store info window fields
+var infoPopupFieldsCollection; //variable to store info window fields
 var infoWindowHeader; //variable to store info window header title
-var infoWindowHeight;  //variable to store info window height
+var infoWindowHeight; //variable to store info window height
 var infoWindowWidth; //variable to store info window width
 
 var isBrowser = false; //This variable is set to true when the app is running on desktop browsers
 var isiOS = false; //This variable is set to true when the app is running on iPhone or iPad
-var isMobileDevice = false;  //This variable is set to true when the app is running on mobile device
+var isMobileDevice = false; //This variable is set to true when the app is running on mobile device
 var isTablet = false; //This variable is set to true when the app is running on tablets
+var isAndroid = false;
 
 var map; //variable to store map object
 var mapPoint; //variable to store map point
@@ -69,7 +70,7 @@ var bufferDistance; //variable to store distance for drawing the buffer
 
 var rendererColor; //variable to store buffer color
 var order; //variable to store sequence of info pods
-var routeTask;  //variable to store object for route task
+var routeTask; //variable to store object for route task
 var routeSymbol; //variable to store object for route symbol
 var locatorRippleSize; //variable to store locator ripple size
 
@@ -106,10 +107,21 @@ var databaseFields; // Define the database field names
 var lastSearchString; //variable for store the last search string
 var stagedSearch; //variable for store the time limit for search
 var lastSearchTime; //variable for store the time of last search
-
+var zoomLevel;
 var countySearch;
+
+var themeCSS; //variable to store the current theme classes
+var approximateValue;
+
+var applicationName; //variable to store name of the application
+var shortcutIcon; //variable to store Favicon object
+var appleTouchIcon; //variable to store Apple touch icon object
+var androidTouchIcon; //variable to store Android touch icon object
+
 //This initialization function is called when the DOM elements are ready
+
 function Init() {
+
     esri.config.defaults.io.proxyUrl = "proxy.ashx"; //relative path
     esriConfig.defaults.io.alwaysUseProxy = false;
     esriConfig.defaults.io.timeout = 180000; // milliseconds
@@ -117,12 +129,14 @@ function Init() {
     var userAgent = window.navigator.userAgent;
     if (userAgent.indexOf("iPhone") >= 0 || userAgent.indexOf("iPad") >= 0) {
         isiOS = true;
+        dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divRadiusPodPlaceHolder");
     }
     if ((userAgent.indexOf("Android") >= 0 && userAgent.indexOf("Mobile") >= 0) || userAgent.indexOf("iPhone") >= 0) {
         fontSize = 15;
         isMobileDevice = true;
         dojo.byId("dynamicStyleSheet").href = "styles/mobile.css";
     } else if ((userAgent.indexOf("iPad") >= 0) || (userAgent.indexOf("Android") >= 0)) {
+        isAndroid = navigator.userAgent.indexOf("Android") >= 0;
         fontSize = 14;
         isTablet = true;
         dojo.byId("dynamicStyleSheet").href = "styles/tablet.css";
@@ -130,140 +144,211 @@ function Init() {
         fontSize = 11;
         isBrowser = true;
         dojo.byId("dynamicStyleSheet").href = "styles/browser.css";
-
     }
     dojo.byId("divSplashContent").style.fontSize = fontSize + "px";
 
     var responseObject = new js.Config();
-    dojo.byId("Theme").href = responseObject.ApplicationTheme;
-    setTimeout(function () {
-        var tit = dojo.byId("Theme");
+    shortcutIcon = document.createElement("link");
+    shortcutIcon.rel = "shortcut icon";
+    shortcutIcon.type = "image/x-icon";
+    shortcutIcon.href = responseObject.ApplicationFavicon;
+    document.getElementsByTagName('head')[0].appendChild(shortcutIcon);
+
+    if (isMobileDevice || isTablet) {
+        appleTouchIcon = document.createElement("link");
+        appleTouchIcon.rel = "apple-touch-icon-precomposed";
+        appleTouchIcon.type = "image/x-icon";
+        appleTouchIcon.href = responseObject.ApplicationIcon;
+        document.getElementsByTagName('head')[0].appendChild(appleTouchIcon);
+
+        androidTouchIcon = document.createElement("link");
+        androidTouchIcon.rel = "apple-touch-icon";
+        androidTouchIcon.type = "image/x-icon";
+        androidTouchIcon.href = responseObject.ApplicationIcon;
+        document.getElementsByTagName('head')[0].appendChild(androidTouchIcon);
+    }
+    applicationName = dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
+    document.title = responseObject.ApplicationName;
+    var requireObject = "dojo/text!./" + responseObject.ApplicationTheme;
+    require([requireObject], function (cssTemplete) {
+
+        var themeObj = document.createElement("style"),
+            style = cssTemplete;
+        head = document.getElementsByTagName("head")[0];
+        themeObj.href = responseObject.ApplicationTheme;
+        themeObj.type = "text/css";
+        themeObj.id = "Theme";
+        if (themeObj.styleSheet) {
+
+            themeObj.styleSheet.cssText = style;
+        } else {
+            themeObj.appendChild(document.createTextNode(style));
+        }
+        head.appendChild(themeObj);
+        if (dojo.isIE < 9) {
+            themeCSS = themeObj.styleSheet.rules;
+        } else {
+            themeCSS = themeObj.sheet.cssRules;
+        }
         var image;
-        for (var i = 0; i < tit.sheet.cssRules.length; i++) {
-            if (tit.sheet.cssRules[i].selectorText == ".mainLoader") {
-                image = tit.sheet.cssRules[i].style.backgroundImage;
+
+        for (var i = 0; i < themeCSS.length; i++) {
+            if (themeCSS[i].selectorText == ".mainLoader") {
+                image = themeCSS[i].style.backgroundImage;
                 break;
             }
         }
         image = image.split('(')[1];
         image = image.split(')')[0];
-        if (dojo.isIE) {
+
+        if (!dojo.isChrome && !(dojo.isIE < 9) && isBrowser && !dojo.isSafari) {
             image = image.split('"')[1];
-            image = image.split('../')[1];
+            image = image.split('./')[1];
+        } else if (dojo.isIE < 9) {
+            image = image.split('./')[1];
+            AddCSSClass();
         }
         dojo.byId("mainLoader").src = image;
         dojo.byId("imgPodSearchLoader").src = image;
         dojo.byId("imgSearchLoader").src = image;
-    }, 200);
 
-    dojo.connect(dojo.byId("txtAddress"), "onpaste", function () {
-        CutAndPasteTimeout();
-    });
+        dojo.connect(dojo.byId("txtAddress"), "onpaste", function () {
+            CutAndPasteTimeout();
+        });
 
-    function CutAndPasteTimeout() {
-        searchAddressViaPod = false;
-        setTimeout(function () {
-            LocateFeatureAndAddress();
-        }, 100);
-    }
-    dojo.connect(dojo.byId("txtAddress"), "oncut", function () {
-        CutAndPasteTimeout();
-    });
-
-    function LocateFeatureAndAddress() {
-        if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
-            LocateAddress();
-        } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
-            LocateFeaturebyName();
+        function CutAndPasteTimeout() {
+            searchAddressViaPod = false;
+            setTimeout(function () {
+                LocateFeatureAndAddress();
+            }, 100);
         }
-    }
+        dojo.connect(dojo.byId("txtAddress"), "oncut", function () {
+            CutAndPasteTimeout();
+        });
 
-    dojo.connect(dojo.byId("txtAddress"), "onkeyup", function (evt) {
-        searchAddressViaPod = false;
-        if (evt) {
-            var keyCode = evt.keyCode;
-            if (keyCode === 8) { // To handle backspace
-                resultFound = false;
+        function LocateFeatureAndAddress() {
+            if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
+                LocateAddress();
+            } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
+                LocateFeaturebyName();
             }
-            if (keyCode === 27) {
-                RemoveChildren(dojo.byId("tblAddressResults"));
-                RemoveScrollBar(dojo.byId("divAddressScrollContainer"));
-                return;
-            }
+        }
 
-            if (evt.keyCode == dojo.keys.ENTER) {
-                if (dojo.byId("txtAddress").value != '') {
-                    LocateFeatureAndAddress();
+        dojo.connect(dojo.byId("txtAddress"), "onkeyup", function (evt) {
+            searchAddressViaPod = false;
+            if (evt) {
+                var keyCode = evt.keyCode;
+                if (keyCode === 8) { // To handle backspace
+                    resultFound = false;
+                }
+                if (keyCode === 27) {
+                    RemoveChildren(dojo.byId("tblAddressResults"));
+                    RemoveScrollBar(dojo.byId("divAddressScrollContainer"));
                     return;
                 }
-            }
 
-            //validations for auto complete search
-            if ((!((evt.keyCode >= 46 && evt.keyCode < 58) || (evt.keyCode > 64 && evt.keyCode < 91) || (evt.keyCode > 95 && evt.keyCode < 106) || evt.keyCode === 8 || evt.keyCode === 110 || evt.keyCode === 188)) || (evt.keyCode === 86 && evt.ctrlKey) || (evt.keyCode === 88 && evt.ctrlKey)) {
-                evt = (evt) ? evt : event;
-                evt.cancelBubble = true;
-                if (evt.stopPropagation) {
-                    evt.stopPropagation();
-                }
-                return;
-            }
-            if (dojo.coords("divAddressContent").h > 0) {
-                if (dojo.byId("txtAddress").value.trim() !== "") {
-                    if (lastSearchString !== dojo.byId("txtAddress").value.trim()) {
-                        lastSearchString = dojo.byId("txtAddress").value.trim();
-                        RemoveChildren(dojo.byId("tblAddressResults"));
-
-                        // Clear any staged search
-                        clearTimeout(stagedSearch);
-
-                        if (dojo.byId("txtAddress").value.trim().length > 0) {
-                            // Stage a new search, which will launch if no new searches show up
-                            // before the timeout
-                            stagedSearch = setTimeout(function () {
-                                LocateFeatureAndAddress();
-                            }, 500);
-                        }
+                if (evt.keyCode == dojo.keys.ENTER) {
+                    if (dojo.byId("txtAddress").value != '') {
+                        LocateFeatureAndAddress();
+                        return;
                     }
-                } else {
-                    lastSearchString = dojo.byId("txtAddress").value.trim();
-                    dojo.byId("imgSearchLoader").style.display = "none";
-                    RemoveChildren(dojo.byId("tblAddressResults"));
-                    CreateScrollbar(dojo.byId("divAddressScrollContainer"), dojo.byId("divAddressScrollContent"));
+                }
+
+                //validations for auto complete search
+                if ((!((evt.keyCode >= 46 && evt.keyCode < 58) || (evt.keyCode > 64 && evt.keyCode < 91) || (evt.keyCode > 95 && evt.keyCode < 106) || evt.keyCode === 8 || evt.keyCode === 110 || evt.keyCode === 188)) || (evt.keyCode === 86 && evt.ctrlKey) || (evt.keyCode === 88 && evt.ctrlKey)) {
+                    evt = (evt) ? evt : event;
+                    evt.cancelBubble = true;
+                    if (evt.stopPropagation) {
+                        evt.stopPropagation();
+                    }
+                    return;
+                }
+                if (dojo.coords("divAddressContent").h > 0) {
+                    if (dojo.byId("txtAddress").value.trim() !== "") {
+                        if (lastSearchString !== dojo.byId("txtAddress").value.trim()) {
+                            lastSearchString = dojo.byId("txtAddress").value.trim();
+                            RemoveChildren(dojo.byId("tblAddressResults"));
+
+                            // Clear any staged search
+                            clearTimeout(stagedSearch);
+
+                            if (dojo.byId("txtAddress").value.trim().length > 0) {
+                                // Stage a new search, which will launch if no new searches show up
+                                // before the timeout
+                                stagedSearch = setTimeout(function () {
+                                    LocateFeatureAndAddress();
+                                }, 500);
+                            }
+                        }
+                    } else {
+                        lastSearchString = dojo.byId("txtAddress").value.trim();
+                        dojo.byId("imgSearchLoader").style.display = "none";
+                        RemoveChildren(dojo.byId("tblAddressResults"));
+                        CreateScrollbar(dojo.byId("divAddressScrollContainer"), dojo.byId("divAddressScrollContent"));
+                    }
                 }
             }
+        });
 
+
+        dojo.connect(dojo.byId("imgLocate"), "onclick", function () {
+            searchAddressViaPod = false;
+            if (dojo.hasClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress")) {
+                if (dojo.byId("txtAddress").value.trim() === "") {
+                    alert(messages.getElementsByTagName("addressToLocate")[0].childNodes[0].nodeValue);
+                    return;
+                }
+                LocateAddress();
+            } else if (dojo.hasClass(dojo.byId("tdSearchFeature"), "tdSearchByFeature")) {
+                resultFound = false;
+                if (dojo.byId("txtAddress").value.trim() === "") {
+                    alert(messages.getElementsByTagName("featureToLocate")[0].childNodes[0].nodeValue);
+                    return;
+                }
+                LocateFeaturebyName();
+            } else if (dojo.hasClass(dojo.byId("tdSearchActivity"), "tdSearchByActivity")) {
+                LocateFeaturebyActivity();
+            }
+        });
+
+        if (!Modernizr.geolocation) {
+            dojo.byId("tdGeolocation").style.display = "none";
         }
+
+        Initialize(responseObject);
     });
+}
 
-
-    handlers.push(dojo.connect(dojo.byId("imgLocate"), "onclick", function () {
-        searchAddressViaPod = false;
-        if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
-            if (dojo.byId("txtAddress").value.trim() === "") {
-                alert(messages.getElementsByTagName("addressToLocate")[0].childNodes[0].nodeValue);
-                return;
-            }
-            LocateAddress();
-        } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
-            resultFound = false;
-            if (dojo.byId("txtAddress").value.trim() === "") {
-                alert(messages.getElementsByTagName("featureToLocate")[0].childNodes[0].nodeValue);
-                return;
-            }
-            LocateFeaturebyName();
-        } else if (dojo.byId("tdSearchActivity").className === "tdSearchByActivity") {
-            LocateFeaturebyActivity();
-        }
-    }));
-
-    if (!Modernizr.geolocation) {
-        dojo.byId("tdGeolocation").style.display = "none";
+function AddCSSClass() {
+    if (dojo.hasClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress")) {
+        dojo.removeClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
     }
+    if (dojo.hasClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature")) {
+        dojo.removeClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
+    }
+    if (dojo.hasClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity")) {
+        dojo.removeClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
+    }
+    if (dojo.hasClass(dojo.byId("txtAddress"), "txtAddress")) {
+        dojo.removeClass(dojo.byId("txtAddress"), "txtAddress");
+    }
+    if (dojo.hasClass(dojo.byId("txtPodAddress"), "txtPodAddress")) {
+        dojo.removeClass(dojo.byId("txtPodAddress"), "txtPodAddress");
+    }
+    if (dojo.hasClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder")) {
+        dojo.removeClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
+    }
+    dojo.addClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
+    dojo.addClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
+    dojo.addClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
+    dojo.addClass(dojo.byId("txtAddress"), "txtAddress");
+    dojo.addClass(dojo.byId("txtPodAddress"), "txtPodAddress");
+    dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
 
-    Initialize(responseObject);
 }
 
 //this function is called to load the configurable parameters
+
 function Initialize(responseObject) {
 
     var infoWindow = new js.InfoWindow({
@@ -304,10 +389,12 @@ function Initialize(responseObject) {
     }
 
     locatorSettings = responseObject.LocatorSettings;
+    zoomLevel = responseObject.ZoomLevel;
     devPlanLayerURL = responseObject.FacilityLayer;
     infoBoxWidth = responseObject.InfoBoxWidth;
     dojo.byId("imgApp").src = responseObject.ApplicationIcon;
-    dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
+
+
     dojo.byId("divSplashContent").innerHTML = responseObject.SplashScreen.Message;
 
     dojo.xhrGet({
@@ -325,7 +412,7 @@ function Initialize(responseObject) {
     });
 
     dojo.connect(map, "onLoad", function () {
-
+        map.disableKeyboardNavigation();
         routeParams = new esri.tasks.RouteParameters();
         routeParams.stops = new esri.tasks.FeatureSet();
         routeParams.returnRoutes = false;
@@ -340,8 +427,15 @@ function Initialize(responseObject) {
             zoomExtent = responseObject.DefaultExtent.split(",");
         }
         var startExtent = new esri.geometry.Extent(parseFloat(zoomExtent[0]), parseFloat(zoomExtent[1]), parseFloat(zoomExtent[2]), parseFloat(zoomExtent[3]), map.spatialReference);
+
         map.setExtent(startExtent);
-        MapInitFunction(responseObject.SplashScreen.isVisibile);
+        dojo.create("div", {
+            className: "esriSimpleSliderHomeButton",
+            onclick: function () {
+                map.setExtent(startExtent);
+            }
+        }, dojo.query(".esriSimpleSliderIncrementButton")[0], "after");
+        MapInitFunction(responseObject.SplashScreen.isVisible);
     });
     ShowProgressIndicator();
 
@@ -373,7 +467,7 @@ function Initialize(responseObject) {
     locatorRippleSize = responseObject.LocatorRippleSize;
     getDirections = responseObject.GetDirections;
     referenceOverlayLayer = responseObject.ReferenceOverlayLayer;
-
+    approximateValue = responseObject.ApproximateValue;
     if (isTablet) {
         dojo.addClass(dojo.byId("tdPreviousImg"), "tdPreviousImg");
         dojo.addClass(dojo.byId("tdNextImg"), "tdNextImg");
@@ -400,6 +494,9 @@ function Initialize(responseObject) {
             }
             if (order[i] === "comments") {
                 td.id = "tdCommentsPod";
+                if (!commentLayer.Visibility) {
+                    dojo.byId("divComments").style.display = "none";
+                }
             }
             td.appendChild(node);
             node.style.width = infoBoxWidth + "px";
@@ -408,9 +505,7 @@ function Initialize(responseObject) {
 
     CreateBaseMapComponent();
 
-    var routeLayer = new esri.layers.GraphicsLayer();
-    routeLayer.id = routeLayerId;
-    map.addLayer(routeLayer);
+
 
     if (!isMobileDevice) {
         TouchEvent();
@@ -445,6 +540,9 @@ function Initialize(responseObject) {
     dojo.connect(dojo.byId("txtAddress"), "onblur", ReplaceDefaultText);
     dojo.connect(dojo.byId("txtAddress"), "onfocus", function () {
         dojo.addClass(this, "colorChange");
+        if ((dojo.coords("divAddressHolder").h > 0) && isAndroid && isTablet && window.matchMedia("(orientation: landscape)").matches) {
+            WipeOutResults();
+        }
     });
 
     dojo.connect(dojo.byId("txtPodAddress"), "ondblclick", ClearDefaultText);
@@ -459,6 +557,7 @@ function Initialize(responseObject) {
 }
 
 //Function to create graphics and feature layer
+
 function MapInitFunction(splashScreenVisibility) {
     if (dojo.query(".logo-med", dojo.byId("map")).length > 0) {
         dojo.query(".esriControlsBR", dojo.byId("map"))[0].id = "imgesriLogo";
@@ -485,6 +584,42 @@ function MapInitFunction(splashScreenVisibility) {
     });
 
 
+    if (referenceOverlayLayer.DisplayOnLoad && referenceOverlayLayer.ServiceUrl) {
+        var layerType = referenceOverlayLayer.ServiceUrl.substring(((referenceOverlayLayer.ServiceUrl.lastIndexOf("/")) + 1), (referenceOverlayLayer.ServiceUrl.length));
+        if (!isNaN(layerType) && (layerType != "")) {
+            var overlaymap = new esri.layers.FeatureLayer(referenceOverlayLayer.ServiceUrl, {
+                mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+                outFields: ["*"]
+            });
+            overlaymap.setMaxAllowableOffset(10)
+            map.addLayer(overlaymap);
+
+        } else {
+            var url1 = referenceOverlayLayer.ServiceUrl + "?f=json";
+            esri.request({
+                url: url1,
+                handleAs: "json",
+                load: function (data) {
+                    if (!data.tileInfo) {
+                        var imageParameters = new esri.layers.ImageParameters();
+                        //Takes a URL to a non cached map service.
+                        var overlaymap = new esri.layers.ArcGISDynamicMapServiceLayer(referenceOverlayLayer.ServiceUrl, {
+                            "imageParameters": imageParameters
+                        });
+                        map.addLayer(overlaymap);
+
+                    } else {
+                        var overlaymap = new esri.layers.ArcGISTiledMapServiceLayer(referenceOverlayLayer.ServiceUrl);
+                        map.addLayer(overlaymap);
+                    }
+                },
+                error: function (err) {
+                    alert(messages.getElementsByTagName("RefrenceOverlayError")[0].childNodes[0].nodeValue);
+                }
+            });
+        }
+    }
+
     var graphicLayer = new esri.layers.GraphicsLayer();
     graphicLayer.id = tempBufferLayer;
     map.addLayer(graphicLayer);
@@ -493,11 +628,16 @@ function MapInitFunction(splashScreenVisibility) {
     gLayer.id = highlightLayerId;
     map.addLayer(gLayer);
 
+    var routeLayer = new esri.layers.GraphicsLayer();
+    routeLayer.id = routeLayerId;
+    map.addLayer(routeLayer);
+
     var devPlanLayer = new esri.layers.FeatureLayer(devPlanLayerURL, {
         mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
         outFields: ["*"],
         id: devPlanLayerID
     });
+    map.addLayer(devPlanLayer);
 
     var facilityID;
     facilityId.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
@@ -524,36 +664,7 @@ function MapInitFunction(splashScreenVisibility) {
             });
         }
     });
-    if (referenceOverlayLayer.DisplayOnLoad) {
-        var layerType = referenceOverlayLayer.ServiceUrl.substring(((referenceOverlayLayer.ServiceUrl.lastIndexOf("/")) + 1), (referenceOverlayLayer.ServiceUrl.length));
-        if (!isNaN(layerType)) {
-            var overlaymap = new esri.layers.FeatureLayer(referenceOverlayLayer.ServiceUrl, {
-                mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
-                outFields: ["*"]
-            });
-            map.addLayer(overlaymap);
 
-        } else {
-            var url1 = referenceOverlayLayer.ServiceUrl + "?f=json";
-            esri.request({
-                url: url1,
-                handleAs: "json",
-                load: function (data) {
-                    if (!data.singleFusedMapCache) {
-                        var imageParameters = new esri.layers.ImageParameters();
-                        //Takes a URL to a non cached map service.
-                        var overlaymap = new esri.layers.ArcGISDynamicMapServiceLayer(referenceOverlayLayer.ServiceUrl, {
-                            "imageParameters": imageParameters
-                        });
-                        map.addLayer(overlaymap);
-                    } else {
-                        var overlaymap = new esri.layers.ArcGISTiledMapServiceLayer(referenceOverlayLayer.ServiceUrl);
-                        map.addLayer(overlaymap);
-                    }
-                }
-            });
-        }
-    }
     dojo.connect(devPlanLayer, "onClick", function (evtArgs) {
 
         searchFlag = false;
@@ -568,14 +679,17 @@ function MapInitFunction(splashScreenVisibility) {
             evtArgs.stopPropagation();
         }
     });
-    map.addLayer(devPlanLayer);
 
-    var commentsLayer = new esri.layers.FeatureLayer(commentLayer, {
-        mode: esri.layers.FeatureLayer.MODE_SELECTION,
-        outFields: ["*"],
-        id: commentsLayerId
-    });
-    map.addLayer(commentsLayer);
+    if (commentLayer.Visibility) {
+        var commentsLayer = new esri.layers.FeatureLayer(commentLayer.URL, {
+            mode: esri.layers.FeatureLayer.MODE_SELECTION,
+            outFields: ["*"],
+            id: commentsLayerId
+        });
+        map.addLayer(commentsLayer);
+    } else {
+        dojo.byId("imgComments").style.display = "none";
+    }
     var gLayer = new esri.layers.GraphicsLayer();
     gLayer.id = tempGraphicsLayerId;
     map.addLayer(gLayer);
@@ -584,8 +698,7 @@ function MapInitFunction(splashScreenVisibility) {
         dojo.byId("divSplashScreenContainer").style.display = "block";
         dojo.replaceClass("divSplashScreenContent", "showContainer", "hideContainer");
         SetHeightSplashScreen();
-    }
-    else {
+    } else {
         dojo.byId("divSplashScreenContainer").style.display = "none";
     }
     CreateRatingWidget(dojo.byId("commentRating"));

@@ -20,8 +20,8 @@ var activityQueryString = "";
 var searchFlag = false;
 var addressFlag = true;
 
-
 //Get candidate results for searched address
+
 function LocateAddress() {
     searchFlag = true;
 
@@ -78,7 +78,6 @@ function LocateAddress() {
         content: params,
         callbackParamName: "callback",
         load: function (candidates) {
-            //    locator.addressToLocations(address, [locatorSettings.Locators[0].CandidateFields], function (candidates) {
             // Discard searches made obsolete by new typing from user
             if (thisSearchTime < lastSearchTime) {
                 return;
@@ -104,11 +103,12 @@ function LocateAddress() {
         }
     }
 
-  );
+    );
 }
 
 //Populate candidate address list in address container
-function ShowLocatedAddress(candidates,error) {
+
+function ShowLocatedAddress(candidates, error) {
     if (!searchAddressViaPod) {
         RemoveChildren(dojo.byId("tblAddressResults"));
         RemoveScrollBar(dojo.byId("divAddressScrollContainer"));
@@ -161,12 +161,10 @@ function ShowLocatedAddress(candidates,error) {
                         if (candidates[i].feature.attributes[locatorSettings.Locators[0].LocatorFieldName].toUpperCase() == locatorSettings.Locators[0].CountyFields.LocatorFieldValue.toUpperCase()) {
                             if (candidates[i].feature.attributes[locatorSettings.Locators[0].CountyFields.FieldName].toUpperCase() != locatorSettings.Locators[0].CountyFields.Value.toUpperCase()) {
                                 validResult = false;
-                            }
-                            else {
+                            } else {
                                 validResult = true;
                             }
-                        }
-                        else {
+                        } else {
                             validResult = true;
                         }
                         if (validResult) {
@@ -174,27 +172,31 @@ function ShowLocatedAddress(candidates,error) {
                             var tr = document.createElement("tr");
                             tBody.appendChild(tr);
                             var td1 = document.createElement("td");
-                            td1.innerHTML = dojo.string.substitute(locatorSettings.Locators[0].DisplayField, candidate.attributes);
-                            td1.align = "left";
-                            td1.className = "bottomborder";
-                            td1.style.cursor = "pointer";
-                            td1.height = 20;
-                            if (candidate.attributes.Type == "county") {
-                                td1.setAttribute("countyExtentxmin", candidates[i].extent.xmin);
-                                td1.setAttribute("countyExtentymin", candidates[i].extent.ymin);
-                                td1.setAttribute("countyExtentxmax", candidates[i].extent.xmax);
-                                td1.setAttribute("countyExtentymax", candidates[i].extent.ymax);
+                            try {
+                                td1.innerHTML = dojo.string.substitute(locatorSettings.Locators[0].DisplayField, candidate.attributes);
+
+                                td1.align = "left";
+                                td1.className = "bottomborder";
+                                td1.style.cursor = "pointer";
+                                td1.height = 20;
+                                if (candidate.attributes.Type == "county") {
+                                    td1.setAttribute("countyExtentxmin", candidates[i].extent.xmin);
+                                    td1.setAttribute("countyExtentymin", candidates[i].extent.ymin);
+                                    td1.setAttribute("countyExtentxmax", candidates[i].extent.xmax);
+                                    td1.setAttribute("countyExtentymax", candidates[i].extent.ymax);
+                                }
+                                td1.setAttribute("x", candidate.geometry.x);
+                                td1.setAttribute("y", candidate.geometry.y);
+                                td1.setAttribute("address", dojo.string.substitute(locatorSettings.Locators[0].DisplayField, candidate.attributes));
+                            } catch (err) {
+                                alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
                             }
-                            td1.setAttribute("x", candidate.geometry.x);
-                            td1.setAttribute("y", candidate.geometry.y);
-                            td1.setAttribute("address", dojo.string.substitute(locatorSettings.Locators[0].DisplayField, candidate.attributes));
                             td1.onclick = function () {
                                 if (this.getAttribute("countyExtentxmin")) {
                                     var countyExtent = new esri.geometry.Extent(parseFloat(this.getAttribute("countyExtentxmin")), parseFloat(this.getAttribute("countyExtentymin")), parseFloat(this.getAttribute("countyExtentxmax")), parseFloat(this.getAttribute("countyExtentymax")), map.spatialReference);
                                     map.setExtent(countyExtent);
                                     countySearch = true;
-                                }
-                                else {
+                                } else {
                                     countySearch = false;
                                 }
                                 if (!isMobileDevice) {
@@ -213,7 +215,9 @@ function ShowLocatedAddress(candidates,error) {
                                     dojo.byId("spanFeatureListContainer").innerHTML = "";
                                 } else {
                                     addressFlag = false;
-                                    ShowProgressIndicator();
+                                    setTimeout(function () {
+                                        ShowProgressIndicator();
+                                    }, 200);
                                     dojo.byId("txtPodAddress").value = this.innerHTML;
                                     lastPodSearchString = dojo.byId("txtPodAddress").value;
                                     dojo.byId("txtPodAddress").setAttribute("defaultAddress", this.innerHTML);
@@ -269,8 +273,7 @@ function ShowLocatedAddress(candidates,error) {
         var td1 = document.createElement("td");
         if (!error) {
             td1.innerHTML = messages.getElementsByTagName("invalidSearch")[0].childNodes[0].nodeValue;
-        }
-        else {
+        } else {
             td1.innerHTML = error;
         }
         td1.align = "left";
@@ -282,6 +285,7 @@ function ShowLocatedAddress(candidates,error) {
 }
 
 //Locate searched address on map with pushpin graphic
+
 function LocateAddressOnMap(countySearch, countyExtent) {
     map.infoWindow.hide();
     map.getLayer(tempGraphicsLayerId).clear();
@@ -309,8 +313,7 @@ function LocateAddressOnMap(countySearch, countyExtent) {
     if (!countySearch) {
         DoBuffer(bufferDistance, mapPoint);
         var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.DefaultLocatorSymbol, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
-    }
-    else {
+    } else {
         if (isMobileDevice) {
             mapPoint = null;
         }
@@ -341,7 +344,9 @@ function LocateAddressOnMap(countySearch, countyExtent) {
     }
     HideAddressContainer();
 }
+
 //Draw the buffer
+
 function DoBuffer(bufferDistance, mapPoint) {
     if (mapPoint && bufferDistance) {
         var params = new esri.tasks.BufferParameters();
@@ -354,37 +359,38 @@ function DoBuffer(bufferDistance, mapPoint) {
         features = [];
     }
 }
-function getStylesSheet(type) {
-    var tit = dojo.byId("Theme");
-    var Color
-    for (var i = 0; i < tit.sheet.cssRules.length; i++) {
-        if (tit.sheet.cssRules[i].selectorText == type) {
-            Color = tit.sheet.cssRules[i].style.backgroundColor;
+
+function GetStylesSheet(type) {
+    var color;
+    for (var i = 0; i < themeCSS.length; i++) {
+        if (themeCSS[i].selectorText == type) {
+            color = themeCSS[i].style.backgroundColor;
             break;
         }
     }
-    return Color;
+    return color;
 }
 
 //Display the buffer
+
 function ShowBuffer(geometries) {
     ClearBuffer();
-    var bufferColor = getStylesSheet(".BufferColor");
-
-
+    imgArray = [];
+    var bufferColor = GetStylesSheet(".BufferColor");
     var lineColor = new dojo.colorFromRgb(bufferColor);
     var fillColor = new dojo.colorFromRgb(bufferColor);
     fillColor.a = 0.45;
     var bufferSymbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
-    new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
-    lineColor, 2),
-    fillColor);
+        new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+            lineColor, 2),
+        fillColor);
     AddGraphic(map.getLayer(tempBufferLayer), bufferSymbol, geometries[0]);
     map.setExtent(geometries[0].getExtent().expand(1.6));
     QueryLayer(geometries[0], mapPoint);
 }
 
 //Getting the features and their length with in the buffer region
+
 function QueryLayer(geometry, mapPoint, isFeatureSearched) {
     map.getLayer(routeLayerId).clear();
     newLeft = 0;
@@ -404,11 +410,19 @@ function QueryLayer(geometry, mapPoint, isFeatureSearched) {
             activityQueryString = "";
             var featureSet = new esri.tasks.FeatureSet();
             var features = [];
-            for (var i in relatedRecords.features) {
-                features.push(relatedRecords.features[i]);
+            if (relatedRecords.features.length > 0) {
+
+                for (var i in relatedRecords.features) {
+                    features.push(relatedRecords.features[i]);
+                }
+                featureSet.features = features;
+                ExecuteQueryForFeatures(featureSet, geometry, mapPoint, isFeatureSearched);
+            } else {
+                HideProgressIndicator();
+                selectedFeatureID = null;
+                WipeOutResults();
+                dojo.byId("imgToggleResults").setAttribute("disable", true);
             }
-            featureSet.features = features;
-            ExecuteQueryForFeatures(featureSet, geometry, mapPoint, isFeatureSearched);
         });
     } else {
         var qTask = new esri.tasks.QueryTask(devPlanLayerURL);
@@ -419,6 +433,10 @@ function QueryLayer(geometry, mapPoint, isFeatureSearched) {
             query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_CONTAINS;
             query.where = "1=1";
         } else {
+            if (searchedFeature.match("'")) {
+                searchedFeature = searchedFeature.split("'");
+                searchedFeature = searchedFeature[0] + "''" + searchedFeature[1];
+            }
             query.where = nameAttribute + " ='" + searchedFeature.trim() + "'";
         }
         query.outFields = ["*"];
@@ -447,6 +465,7 @@ function QueryLayer(geometry, mapPoint, isFeatureSearched) {
 
 function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearched) {
     if (!isMobileDevice) {
+        dojo.byId("imgToggleResults").setAttribute("disable", false);
         WipeInResults();
     }
     var featureSet = [];
@@ -461,14 +480,18 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
         if (mapPoint) {
             dist = GetDistance(mapPoint, featureset.features[i].geometry);
         }
-        featureSet.push({
-            facilityID: dojo.string.substitute(facilityId, featureset.features[i].attributes),
-            name: dojo.string.substitute(featureName, featureset.features[i].attributes),
-            address: dojo.string.substitute(infoWindowContent[0].FieldName, featureset.features[i].attributes),
-            distance: dist,
-            geometry: featureset.features[i].geometry,
-            attributes: featureset.features[i].attributes
-        });
+        try {
+            featureSet.push({
+                facilityID: dojo.string.substitute(facilityId, featureset.features[i].attributes),
+                name: dojo.string.substitute(featureName, featureset.features[i].attributes),
+                address: dojo.string.substitute(infoWindowContent[0].FieldName, featureset.features[i].attributes),
+                distance: dist,
+                geometry: featureset.features[i].geometry,
+                attributes: featureset.features[i].attributes
+            });
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+        }
     }
     featureSet.sort(function (a, b) {
         return parseFloat(a.distance) - parseFloat(b.distance);
@@ -477,23 +500,27 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
         if (dojo.byId("spanFeatureActivityContainer")) {
             dojo.byId("spanFeatureActivityContainer").style.display = "none";
         }
-        if (!isFeatureSearched) {
-            if (!countySearch) {
-                dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearAddress")[0].childNodes[0].nodeValue, [featureset.features.length]);
+        try {
+            if (!isFeatureSearched) {
+                if (!countySearch) {
+                    dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearAddress")[0].childNodes[0].nodeValue, [featureset.features.length]);
+                } else {
+                    dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearCounty")[0].childNodes[0].nodeValue, [featureset.features.length]);
+                }
+            } else {
+                dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundBySearch")[0].childNodes[0].nodeValue, [featureset.features.length]);
             }
-            else {
-                dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearCounty")[0].childNodes[0].nodeValue, [featureset.features.length]);
-            }
-        } else {
-            dojo.byId("spanFeatureListContainer").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundBySearch")[0].childNodes[0].nodeValue, [featureset.features.length]);
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
         }
-
-        var table = dojo.create("table", { "className": "tblFeatureList",
+        var table = dojo.create("table", {
+            "className": "tblFeatureList",
             "cellspacing": "0"
         }, dojo.byId("divFeatureList"));
 
     } else {
-        var table = dojo.create("table", { "className": "tblFeatureList",
+        var table = dojo.create("table", {
+            "className": "tblFeatureList",
             "cellspacing": "0"
         }, dojo.byId("divResultDataContent"));
     }
@@ -511,13 +538,18 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
 
         td.className = "selectedFeature";
         if (featureSet[i].distance) {
-            td.innerHTML = featureSet[i].name + " (" + dojo.number.format(featureSet[i].distance.toFixed(2)) + " miles)";
+            if (approximateValue) {
+                td.innerHTML = featureSet[i].name + " (" + dojo.number.format(featureSet[i].distance.toFixed(2)) + " miles " + approximateValue + ")";
+            } else {
+                td.innerHTML = featureSet[i].name + " (" + dojo.number.format(featureSet[i].distance.toFixed(2)) + " miles)";
+            }
         } else {
             td.innerHTML = featureSet[i].name;
         }
         td.onclick = function () {
             searchFlag = true;
 
+            imgArray = [];
             for (var i = 0; i < handlersPod.length; i++) {
                 dojo.disconnect(handlersPod[i]);
             }
@@ -533,7 +565,7 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
             dojo.byId("spanDirectionHeader").setAttribute("featureName", featureSet[point].name);
             defaultFeature = featureSet[point];
             map.getLayer(highlightLayerId).clear();
-            var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(getStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
+            var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(GetStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
             AddGraphic(map.getLayer(highlightLayerId), symbol, featureSet[point].geometry);
             dojo.query(".nodeBackgroundColor", table).forEach(dojo.hitch(this, function (node) {
                 dojo.removeClass(node, "nodeBackgroundColor");
@@ -547,9 +579,8 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
                         setTimeout(function () {
                             map.setExtent(GetBrowserMapExtent(selectedFeature));
                         }, 500);
-                    }
-                    else {
-                        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                    } else {
+                        map.centerAndZoom(selectedFeature, zoomLevel);
                     }
                 }
                 RelationshipQuery(selectedFeature, featureID, featureSet[point].attributes);
@@ -580,36 +611,46 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
 
         };
     }
-    map.getLayer(highlightLayerId).clear();
-    if (geometry) {
-        defaultFeature = featureSet[0];
-    } else {
-        for (var i in featureSet) {
-            if (dojo.string.substitute(featureName, featureSet[i].attributes) === dojo.byId("txtAddress").value) {
-                defaultFeature = featureSet[i];
+    try {
+        map.getLayer(highlightLayerId).clear();
+        if (geometry) {
+            defaultFeature = featureSet[0];
+        } else {
+
+            for (var i in featureSet) {
+                if (dojo.string.substitute(featureName, featureSet[i].attributes) === dojo.byId("txtAddress").value) {
+                    defaultFeature = featureSet[i];
+                }
+            }
+
+        }
+
+        if (!defaultFeature || isFeatureSearched) {
+            defaultFeature = featureSet[0];
+            selectedFeature = featureSet[0].geometry;
+            if (!isMobileDevice) {
+                map.centerAndZoom(selectedFeature, zoomLevel);
             }
         }
-    }
 
-    if (!defaultFeature || isFeatureSearched) {
-        for (var i in featureSet) {
-            if (dojo.string.substitute(featureName, featureSet[i].attributes) === searchedFeature) {
-                defaultFeature = featureSet[i];
-            }
-        }
+        var featureID = defaultFeature.attributes[map.getLayer(devPlanLayerID).objectIdField];
+        map.getLayer(highlightLayerId).clear();
+        dojo.byId("spanDirectionHeader").setAttribute("featureName", dojo.string.substitute(featureName, defaultFeature.attributes));
+    } catch (err) {
+        alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
     }
-
-    var featureID = defaultFeature.attributes[map.getLayer(devPlanLayerID).objectIdField];
-    map.getLayer(highlightLayerId).clear();
-    dojo.byId("spanDirectionHeader").setAttribute("featureName", dojo.string.substitute(featureName, defaultFeature.attributes));
     if (!isMobileDevice) {
         fromInfoWindow = false;
         RelationshipQuery(selectedFeature, featureID, defaultFeature.attributes);
         map.getLayer(highlightLayerId).clear();
-        var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(getStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
+        var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(GetStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
         AddGraphic(map.getLayer(highlightLayerId), symbol, defaultFeature.geometry);
-        dojo.byId("spanDirectionHeader").innerHTML = "Directions to " + dojo.string.substitute(featureName, defaultFeature.attributes);
-        dojo.byId("spanFeatureInfo").innerHTML = dojo.string.substitute(featureName, defaultFeature.attributes);
+        try {
+            dojo.byId("spanDirectionHeader").innerHTML = "Directions to " + dojo.string.substitute(featureName, defaultFeature.attributes);
+            dojo.byId("spanFeatureInfo").innerHTML = dojo.string.substitute(featureName, defaultFeature.attributes);
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+        }
         if (mapPoint) {
             if (isBrowser) {
                 ConfigureRoute(mapPoint, defaultFeature.geometry);
@@ -621,43 +662,50 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
         } else {
             NewAddressSearch();
         }
-        dojo.addClass(dojo.query("[fName = " + dojo.string.substitute(facilityId, defaultFeature.attributes) + " ]", dojo.byId("divFeatureList"))[0], "nodeBackgroundColor");
+        try {
+            dojo.addClass(dojo.query("[fName = " + dojo.string.substitute(facilityId, defaultFeature.attributes) + " ]", dojo.byId("divFeatureList"))[0], "nodeBackgroundColor");
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+        }
 
     } else {
-        fromInfoWindow = true;
-        HideProgressIndicator();
-        map.infoWindow.resize(225, 60);
-        if (!isFeatureSearched) {
-            if (mapPoint) {
-                selectedGraphic = mapPoint;
-                var screenPoint = map.toScreen(selectedGraphic);
-                screenPoint.y = map.height - screenPoint.y;
-                map.infoWindow.show(screenPoint);
-                map.setExtent(GetInfoWindowMobileMapExtent(mapPoint));
-                map.infoWindow.setTitle(dojo.byId("txtAddress").value.trimString(18), function () {
+        try {
+            fromInfoWindow = true;
+            HideProgressIndicator();
+            map.infoWindow.resize(225, 60);
+            if (!isFeatureSearched) {
+                if (mapPoint) {
+                    selectedGraphic = mapPoint;
+                    var screenPoint = map.toScreen(selectedGraphic);
+                    screenPoint.y = map.height - screenPoint.y;
+                    map.infoWindow.show(screenPoint);
+                    map.setExtent(GetInfoWindowMobileMapExtent(mapPoint));
+                    map.infoWindow.setTitle(dojo.byId("txtAddress").value.trimString(18), function () {
+                        ShowSearchResultsContainer();
+                    });
+                    map.infoWindow.setContent("");
+                } else {
                     ShowSearchResultsContainer();
-                });
-                map.infoWindow.setContent("");
-            }
-            else {
-                ShowSearchResultsContainer();
-            }
-        } else {
-            RelationshipQuery(selectedFeature, featureID, defaultFeature.attributes, true);
-            dojo.query("[fName = " + dojo.string.substitute(facilityId, defaultFeature.attributes) + " ]", dojo.byId("divResultDataContent")).forEach(function (node) {
-                dojo.addClass(node, "nodeBackgroundColor");
-            });
-        }
-        if (!isFeatureSearched) {
-            if (!countySearch) {
-                dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearAddress")[0].childNodes[0].nodeValue, [featureset.features.length]);
-            }
-            else {
-                dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearCounty")[0].childNodes[0].nodeValue, [featureset.features.length]);
-            }
+                }
+            } else {
+                RelationshipQuery(selectedFeature, featureID, defaultFeature.attributes, true);
 
-        } else {
-            dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundBySearch")[0].childNodes[0].nodeValue, [featureset.features.length]);
+                dojo.query("[fName = " + dojo.string.substitute(facilityId, defaultFeature.attributes) + " ]", dojo.byId("divResultDataContent")).forEach(function (node) {
+                    dojo.addClass(node, "nodeBackgroundColor");
+                });
+            }
+            if (!isFeatureSearched) {
+                if (!countySearch) {
+                    dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearAddress")[0].childNodes[0].nodeValue, [featureset.features.length]);
+                } else {
+                    dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundNearCounty")[0].childNodes[0].nodeValue, [featureset.features.length]);
+                }
+
+            } else {
+                dojo.byId("spanTitle").innerHTML = dojo.string.substitute(messages.getElementsByTagName("numberOfFeaturesFoundBySearch")[0].childNodes[0].nodeValue, [featureset.features.length]);
+            }
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
         }
     }
 
@@ -666,6 +714,7 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
 }
 
 //Show the result list of features found in the buffered area  for mobile
+
 function ShowSearchResultsContainer() {
     dojo.byId("divInfoContainer").style.display = "none";
     dojo.byId("divResults").style.display = "block";
@@ -674,16 +723,26 @@ function ShowSearchResultsContainer() {
 }
 
 function RelationshipQuery(selectedFeature, featureID, attributes, isFeatureSearched) {
-    facilityID = dojo.string.substitute(facilityId, attributes);
-    FetchComments(dojo.string.substitute(facilityId, attributes), fromInfoWindow);
+    try {
+        facilityID = dojo.string.substitute(facilityId, attributes);
+        if (commentLayer.Visibility) {
+            FetchComments(dojo.string.substitute(facilityId, attributes), fromInfoWindow);
+        }
+    } catch (err) {
+        alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+    }
     CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched);
+    if (!commentLayer.Visibility) {
+        HideProgressIndicator();
+    }
 }
 
 function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
     if (!fromInfoWindow) {
         RemoveChildren(dojo.byId("divInformationHolder"));
         RemoveChildren(dojo.byId("divPhotoGalleryContent"));
-        var table = dojo.create("table", { "className": "tblInformationHolder",
+        var table = dojo.create("table", {
+            "className": "tblInformationHolder",
             "cellspacing": "0"
         }, dojo.byId("divInformationHolder"));
     } else {
@@ -710,8 +769,13 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
         var tdFName = dojo.create("td", {
             "id": "tdFName"
         }, trFName);
-        tdFName.setAttribute("featureName", dojo.string.substitute(featureName, attributes));
-        tdFName.innerHTML = dojo.string.substitute(featureName, attributes);
+
+        try {
+            tdFName.setAttribute("featureName", dojo.string.substitute(featureName, attributes));
+            tdFName.innerHTML = dojo.string.substitute(featureName, attributes);
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+        }
     }
 
     for (var i = 0; i < infoPopupFieldsCollection.length; i++) {
@@ -722,21 +786,29 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
             "cellspacing": "0"
         }, td);
         tbl.className = "tdbreakword";
-        dojo.addClass(tbl, "tbl")
+        dojo.addClass(tbl, "tbl");
         var trData = tbl.insertRow(0);
-
         var tdDisplayText = dojo.create("td", {}, trData);
         var fieldValue;
-        dojo.addClass(tdDisplayText, "tdDisplayText")
-        if (infoPopupFieldsCollection[i].DisplayText) {
+        dojo.addClass(tdDisplayText, "tdDisplayText");
+        if (infoPopupFieldsCollection[i].DisplayText && (infoPopupFieldsCollection[i].DisplayText != "")) {
             tdDisplayText.innerHTML = infoPopupFieldsCollection[i].DisplayText + " ";
-        }
-        else {
-            tdDisplayText.innerHTML = infoPopupFieldsCollection[i].Alias + ": ";
+        } else {
+            var tempValue = infoPopupFieldsCollection[i].FieldName.split("{");
+            var fieldName = tempValue[1].split("}");
+            for (var j = 0; j < map.getLayer("devPlanLayerID").fields.length; j++) {
+                if (map.getLayer("devPlanLayerID").fields[j].alias == fieldName[0]) {
+                    tdDisplayText.innerHTML = map.getLayer("devPlanLayerID").fields[j].alias + ": ";
+                    break;
+                }
+            }
         }
         var tdFieldName = dojo.create("td", {}, trData);
-
-        fieldValue = dojo.string.substitute(infoPopupFieldsCollection[i].FieldName, attributes);
+        try {
+            fieldValue = dojo.string.substitute(infoPopupFieldsCollection[i].FieldName, attributes);
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+        }
         if ((fieldValue) && (fieldValue !== "-")) {
             tdFieldName.innerHTML = fieldValue;
         }
@@ -823,7 +895,7 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
             tblAttachment.style.width = "95%";
             var tbodyAttachment = dojo.create("tbody", {}, tblAttachment);
             var trAttachmentText = dojo.create("tr", {}, tbodyAttachment);
-            imgArray = [];
+
             imgFiles = [];
             var counterPdf = 0;
             var counterImg = 0;
@@ -889,20 +961,23 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
                 div.style.width = infoWindowWidth - 20 + "px";
             }
         }
+        try {
+            for (var j = 0; j < infoActivity.length; j++) {
 
-        for (var j = 0; j < infoActivity.length; j++) {
+                if (dojo.string.substitute(infoActivity[j].FieldName, attributes) === "Yes") {
 
-            if (dojo.string.substitute(infoActivity[j].FieldName, attributes) === "Yes") {
+                    var imgActivity = dojo.create("img", {
+                        "src": infoActivity[j].Image,
+                        "style": "padding:2px;",
+                        "class": "imgOptions",
+                        "title": infoActivity[j].Alias
+                    }, div);
+                    dojo.addClass(imgActivity, "imgActivity");
 
-                var imgActivity = dojo.create("img", {
-                    "src": infoActivity[j].Image,
-                    "style": "padding:2px;",
-                    "class": "imgOptions",
-                    "title": infoActivity[j].Alias
-                }, div);
-                dojo.addClass(imgActivity, "imgActivity");
-
+                }
             }
+        } catch (err) {
+            alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
         }
         CreateScrollbar(dojo.byId("divInformationContainer"), dojo.byId("divInformationHolder"));
         CreateScrollbar(dojo.byId("divPhotoGalleryContentHolder"), dojo.byId("divPhotoGalleryContent"));
@@ -915,6 +990,7 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
 }
 
 //Add attachments coming from the layers
+
 function AddImage(index, pdfCount, imageURL, divPhoto, totalImages) {
     var imgGallery = dojo.create("img", {
         "src": loadingAttachmentsImg
@@ -927,16 +1003,25 @@ function AddImage(index, pdfCount, imageURL, divPhoto, totalImages) {
         imgGallery.src = imageURL;
         dojo.addClass(imgGallery, "imgGallery");
     };
+    if (fromInfoWindow) {
+        imgGallery.id = "infoImgAttach" + index;
+    }
     imgGallery.setAttribute("index", (index - pdfCount));
     imgGallery.setAttribute("totalImages", totalImages);
     imgGallery.onclick = function (evt) {
         if (imgGallery.src === imageURL) {
+            if (!this.id) {
+                fromInfoWindow = false;
+            } else {
+                fromInfoWindow = true;
+            }
             ShowImages(this);
         }
     };
 }
 
 //Calculate distance between two mapPoints
+
 function GetDistance(startPoint, endPoint) {
     var sPoint = esri.geometry.webMercatorToGeographic(startPoint);
     var ePoint = esri.geometry.webMercatorToGeographic(endPoint);
@@ -953,16 +1038,19 @@ function GetDistance(startPoint, endPoint) {
 }
 
 //Convert the degrees to radians
+
 function Deg2Rad(deg) {
     return (deg * Math.PI) / 180.0;
 }
 
 //Convert the radians to degrees
+
 function Rad2Deg(rad) {
     return (rad / Math.PI) * 180.0;
 }
 
 //Clear the buffer graphics
+
 function ClearBuffer() {
     var layer = map.getLayer(tempBufferLayer);
     if (layer) {
@@ -977,6 +1065,7 @@ function ClearBuffer() {
 }
 
 //Get the extent based on the map-point
+
 function GetExtent(point) {
     var xmin = point.x;
     var ymin = (point.y) - 30;
@@ -986,6 +1075,7 @@ function GetExtent(point) {
 }
 
 //Locate feature by name
+
 function LocateFeaturebyName() {
     searchFlag = true;
     addressFlag = false;
@@ -1012,6 +1102,7 @@ function LocateFeaturebyName() {
     query.where = "UPPER" + "(" + nameAttribute + ")" + " LIKE '%" + dojo.byId("txtAddress").value.trim().toUpperCase() + "%'";
     query.outFields = ["*"];
     query.returnGeometry = true;
+    query.outSpatialReference = map.spatialReference;
     dojo.byId("imgSearchLoader").style.display = "block";
     qTask.execute(query, function (featureset) {
         if (thisSearchTime < lastSearchTime) {
@@ -1044,8 +1135,12 @@ function LocateFeaturebyName() {
                 map.infoWindow.hide();
                 selectedGraphic = null;
                 selectedFeature = null;
-                dojo.byId("txtAddress").value = dojo.string.substitute(featureName, featureset.features[0].attributes);
-                dojo.byId("txtAddress").setAttribute("defaultFeatureName", dojo.string.substitute(featureName, featureset.features[0].attributes));
+                try {
+                    dojo.byId("txtAddress").value = dojo.string.substitute(featureName, featureset.features[0].attributes);
+                    dojo.byId("txtAddress").setAttribute("defaultFeatureName", dojo.string.substitute(featureName, featureset.features[0].attributes));
+                } catch (err) {
+                    alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+                }
                 dojo.byId("txtAddress").setAttribute("defaultFeatureTitle", "");
                 dojo.addClass(dojo.byId("txtAddress"), "colorChange");
                 searchedFeature = dojo.byId("txtAddress").value;
@@ -1059,14 +1154,17 @@ function LocateFeaturebyName() {
                 table.cellSpacing = 0;
                 table.cellPadding = 0;
                 var featureSet = [];
-                for (var i = 0; i < featureset.features.length; i++) {
-                    featureSet.push({
-                        name: dojo.string.substitute(featureName, featureset.features[i].attributes),
-                        geometry: featureset.features[i].geometry,
-                        attributes: featureset.features[i].attributes
-                    });
+                try {
+                    for (var i = 0; i < featureset.features.length; i++) {
+                        featureSet.push({
+                            name: dojo.string.substitute(featureName, featureset.features[i].attributes),
+                            geometry: featureset.features[i].geometry,
+                            attributes: featureset.features[i].attributes
+                        });
+                    }
+                } catch (err) {
+                    alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
                 }
-
                 featureSet.sort(function (a, b) {
                     var nameA = a.name.toLowerCase(),
                         nameB = b.name.toLowerCase();
@@ -1083,14 +1181,19 @@ function LocateFeaturebyName() {
                     var tr = document.createElement("tr");
                     tBody.appendChild(tr);
                     var td1 = document.createElement("td");
-                    td1.innerHTML = dojo.string.substitute(featureName, feature.attributes);
-                    td1.align = "left";
-                    td1.className = "bottomborder";
-                    dojo.addClass(td1, "cursorPointer");
-                    td1.height = 20;
-                    td1.setAttribute("x", feature.geometry.x);
-                    td1.setAttribute("y", feature.geometry.y);
-                    td1.setAttribute("name", dojo.string.substitute(featureName, feature.attributes));
+                    try {
+                        td1.innerHTML = dojo.string.substitute(featureName, feature.attributes);
+
+                        td1.align = "left";
+                        td1.className = "bottomborder";
+                        dojo.addClass(td1, "cursorPointer");
+                        td1.height = 20;
+                        td1.setAttribute("x", feature.geometry.x);
+                        td1.setAttribute("y", feature.geometry.y);
+                        td1.setAttribute("name", dojo.string.substitute(featureName, feature.attributes));
+                    } catch (err) {
+                        alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+                    }
                     td1.onclick = function () {
                         map.getLayer(routeLayerId).clear();
                         RemoveChildren(dojo.byId("divFeatureList"));
@@ -1160,7 +1263,7 @@ function LocateFeatureOnMap() {
     isFeatureSearched = true;
     map.getLayer(highlightLayerId).clear();
 
-    var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(getStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
+    var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_CIRCLE, locatorRippleSize, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.colorFromRgb(GetStylesSheet(".RippleColor")), 4), new dojo.Color([0, 0, 0, 0]));
     AddGraphic(map.getLayer(highlightLayerId), symbol, selectedFeature);
     if (getDirections) {
         if (!isBrowser) {
@@ -1170,7 +1273,7 @@ function LocateFeatureOnMap() {
                 if (isFeatureSearched) {
                     QueryLayer(null, null, true);
                     if (!isMobileDevice) {
-                        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                        map.centerAndZoom(selectedFeature, zoomLevel);
                     }
                     isFeatureSearched = false;
                 }
@@ -1183,7 +1286,7 @@ function LocateFeatureOnMap() {
                 if (isFeatureSearched) {
                     QueryLayer(null, null, true);
                     if (!isMobileDevice) {
-                        map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                        map.centerAndZoom(selectedFeature, zoomLevel);
                     }
                     isFeatureSearched = false;
                 }
@@ -1192,7 +1295,7 @@ function LocateFeatureOnMap() {
     } else {
         if (!isMobileDevice) {
             if (selectedFeature) {
-                map.centerAndZoom(selectedFeature, locatorSettings.ZoomLevel);
+                map.centerAndZoom(selectedFeature, zoomLevel);
             }
             if (dojo.coords("divAddressHolder").h > 0) {
                 dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
@@ -1209,6 +1312,7 @@ function LocateFeatureOnMap() {
 }
 
 //Display the view to search by feature name
+
 function ShowFeatureSearchView() {
     if (dojo.byId("imgSearchLoader").style.display === "block") {
         return;
@@ -1226,6 +1330,7 @@ function ShowFeatureSearchView() {
 }
 
 //Display the view to search by address
+
 function ShowAddressSearchView() {
     if (dojo.byId("imgSearchLoader").style.display === "block") {
         return;
@@ -1243,6 +1348,7 @@ function ShowAddressSearchView() {
 }
 
 //Display the view to search by Activity
+
 function ShowActivitySearchView() {
     if (dojo.byId("imgSearchLoader").style.display === "block") {
         return;
@@ -1289,6 +1395,7 @@ function ShowActivitySearchView() {
 }
 
 //display the available activities in the activity search container
+
 function CreateActivityCell(td, activity, index) {
     if (activity) {
         var table = dojo.create("table", {}, td);
@@ -1332,6 +1439,7 @@ function CreateActivityCell(td, activity, index) {
 }
 
 //Get feature results for searched activities
+
 function LocateFeaturebyActivity() {
     searchFlag = true;
     addressFlag = false;
@@ -1380,17 +1488,26 @@ function LocateFeaturebyActivity() {
                 selectedFeature = null;
                 isFeatureSearched = true;
                 selectedFeature = relatedRecords.features[0].geometry;
-                searchedFeature = dojo.string.substitute(featureName, relatedRecords.features[0].attributes);
+                try {
+                    searchedFeature = dojo.string.substitute(featureName, relatedRecords.features[0].attributes);
+                } catch (err) {
+                    alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+                }
                 LocateFeatureOnMap();
                 ShowActivitySearchView();
             } else {
                 var featureSet = [];
-                for (var i = 0; i < objectIds.length; i++) {
-                    featureSet.push({
-                        name: dojo.string.substitute(featureName, relatedRecords.features[i].attributes),
-                        geometry: relatedRecords.features[i].geometry,
-                        attributes: relatedRecords.features[i].attributes
-                    });
+                try {
+                    for (var i = 0; i < objectIds.length; i++) {
+                        featureSet.push({
+                            name: dojo.string.substitute(featureName, relatedRecords.features[i].attributes),
+                            geometry: relatedRecords.features[i].geometry,
+                            attributes: relatedRecords.features[i].attributes
+                        });
+
+                    }
+                } catch (err) {
+                    alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
                 }
                 map.getLayer(routeLayerId).clear();
                 dojo.query(".selectedActivity", dojo.byId("tableActivityList")).forEach(function (node) {
@@ -1407,13 +1524,17 @@ function LocateFeaturebyActivity() {
                 selectedFeature = null;
                 isFeatureSearched = true;
                 selectedFeature = featureSet[0].geometry;
-                searchedFeature = dojo.string.substitute(featureName, featureSet[0].attributes);
+                try {
+                    searchedFeature = dojo.string.substitute(featureName, featureSet[0].attributes);
+                } catch (err) {
+                    alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
+                }
                 LocateFeatureOnMap();
                 ShowActivitySearchView();
             }
         } else {
             HideProgressIndicator();
-            isFeatureSearched = true;
+            isFeatureSearched = false;
             selectedFeature = null;
             dojo.byId("imgSearchLoader").style.display = "none";
             alert(messages.getElementsByTagName("invalidSearch")[0].childNodes[0].nodeValue);

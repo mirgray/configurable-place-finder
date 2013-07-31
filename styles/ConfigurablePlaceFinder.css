@@ -287,6 +287,11 @@ body, html
     right: 15px;
 }
 
+.fullHeight
+{
+ height: 100%;
+}
+
 .divAppHolder
 {
     -moz-border-radius: 5px;
@@ -450,7 +455,13 @@ height: 30px;
     border-radius: 3px;
     position: relative;
 }
+.divRadiusPodPlaceHolder {
 
+      -moz-border-radius: 8px !important;
+    -webkit-border-radius: 8px !important;
+    border-radius: 8px !important;
+    position: relative;
+}
 .txtAddress
 {
     width: 100%;
@@ -589,7 +600,7 @@ height: 30px;
 
 .selectedActivity
 {
-    border: 3px solid olive !important;
+    border: 5px solid olive !important;
     cursor: pointer;
 }
 /*---------------------------------------------------------------------------------------------------------*/
@@ -1138,8 +1149,6 @@ color: #fff;
 {
     height: 100%;
     width: 100%;
-    display: none;
-    font-family: Verdana;
     z-index: 2000;
     position: absolute;
     bottom: 0px;
@@ -1149,7 +1158,6 @@ color: #fff;
     opacity: 0.55;
     top: 0px;
     left: 0px;
-    behavior: url("styles/PIE.htc");
 }
 
 /* Images SlideShow */
@@ -1307,51 +1315,12 @@ margin-bottom: 25px;
 {
   height: 30px;
 }
-/* css for printing*/
-
-.mapPrint
-{
-   position: relative;
-   width: 665px;
-   height: 450px;
-   border: 1px solid #000;
-}
-.tblDirections{
-width: 665px;
-border: 1px solid #000;
-color: Black;
-}
-.tdFeatureName
-{
-  font-weight: bold;
-  font-size: 15px;
-  color:Black;
-}
-.printMapBody
-{
-   font-size: 11px;
-   font-family: Verdana;
-   overflow-y: auto;
-   margin-left:5px;
-}
-.divFeatureName
-{
-  width: 670px;
-  height: 50px;
-}
 
 .zeroHeight
 {
     height: 0px !important;
 }
-.grayBackGround
-{
-    background-color: Gray !important;
-}
-.trHeight
-{
-    height: 30px !important;
-}
+
 .colorChange
 {
     color: #fff !important;
@@ -1369,4 +1338,12 @@ color: Black;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
+}
+
+.esriSimpleSliderHomeButton
+{
+    border-bottom: 2px solid #666666;
+    background-image: url('../images/home.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }

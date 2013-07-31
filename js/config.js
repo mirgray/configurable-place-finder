@@ -60,7 +60,10 @@ dojo.declare("js.Config", null, {
     ApplicationName: "Configurable Place Finder",
 
     // Set application icon path
-    ApplicationIcon: "images/appIcon.png",
+    ApplicationIcon: "images/i_hydro.png",
+
+    // Set application Favicon path
+    ApplicationFavicon: "images/i_hydro.ico",
 
     // Set application theme
     ApplicationTheme: "styles/blueTheme.css",
@@ -68,9 +71,8 @@ dojo.declare("js.Config", null, {
     // Set splash window content - Message that appears when the application starts
     SplashScreen: {
         Message: "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.",
-        isVisibile: false
+        isVisible: false
     },
-
 
     // Set URL of help page/portal
     HelpURL: "help.htm",
@@ -105,8 +107,13 @@ dojo.declare("js.Config", null, {
     //Set the primary key attribute for features
     PrimaryKeyForFeatures: "${OBJECTID}",
 
-    //URL used for doing query task on the comments layer
-    CommentsLayer: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1",
+
+    CommentsLayer: {
+        //Set to true if comments need to be displayed , or false if not required
+        Visibility: true,
+        //URL used for doing query task on the comments layer
+        URL: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1"
+    },
     //Set the primary key attribute for comments
     PrimaryKeyForComments: "${id}",
 
@@ -117,7 +124,7 @@ dojo.declare("js.Config", null, {
     // DisplayOnLoad setting is used to show or hide the reference overlay layer. Reference overlay will be shown when it is set to true
 
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://arcgis-two-1334003536.us-west-1.elb.amazonaws.com/arcgis/rest/services/TrailsOnlyDynamic/MapServer",
+        ServiceUrl: "http://50.18.115.76:6080/arcgis/rest/services/HuntableLands/MapServer/0",
         DisplayOnLoad: true
     },
 
@@ -128,7 +135,8 @@ dojo.declare("js.Config", null, {
     // Set Info-window title. Configure this with text/fields
     InfoWindowHeader: [{
         FieldName: "${Name}",
-        Alias: "Facility Name"
+        Alias: "Facility Name",
+        InfoWindowHeaderText: "Facility Info"
     }],
 
     // Choose content/fields for the info window
@@ -137,7 +145,6 @@ dojo.declare("js.Config", null, {
         Alias: "Region"
     }],
 
-
     // ------------------------------------------------------------------------------------------------------------------------
     // INFO-POPUP SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
@@ -145,20 +152,16 @@ dojo.declare("js.Config", null, {
     // Set the content to be displayed on the info-Popup. Define labels, field values, field types and field formats
     InfoPopupFieldsCollection: [{
         DisplayText: "Region:",
-        FieldName: "${Region}",
-        Alias: "Region"
+        FieldName: "${Region}"
     }, {
         DisplayText: "Hours Open For:",
-        FieldName: "${Hours_Open}",
-        Alias: "Hours Open For"
+        FieldName: "${Hours_Open}"
     }, {
         DisplayText: "Owner:",
-        FieldName: "${Owner}",
-        Alias: "Owner"
+        FieldName: "${Owner}"
     }, {
         DisplayText: "Facility Type:",
-        FieldName: "${Type}",
-        Alias: "Type"
+        FieldName: "${Type}"
     }],
 
     //Activities to be displayed in info window for a feature
@@ -170,7 +173,7 @@ dojo.declare("js.Config", null, {
     }, {
         FieldName: "${HandicapPark}",
         Alias: "Handicap Parking Available",
-        Image: "images/handicapparks.png"
+        Image: "images/HandicapParking.png"
     }, {
         FieldName: "${LightedPark}",
         Alias: "Lighted Park",
@@ -233,7 +236,6 @@ dojo.declare("js.Config", null, {
     InfoPopupHeight: 270,
     InfoPopupWidth: 330,
 
-
     // Set string value to be shown for null or blank values
     ShowNullValueAs: "N/A",
 
@@ -244,7 +246,7 @@ dojo.declare("js.Config", null, {
     BufferDistance: "2",
 
     //Set the locator ripple size
-    LocatorRippleSize: 30,
+    LocatorRippleSize: 40,
 
     //Set this variable to true/false to enable/disable directions for Mobile/tablet
     GetDirectionsMobile: true,
@@ -255,6 +257,9 @@ dojo.declare("js.Config", null, {
     //Set this variable to true/false to enable/disable directions
     //if this master variable is set to false directions cannot be enabled for any of the devices
     GetDirections: true,
+
+    //Set this value to display text besides calculated distances in search results
+    ApproximateValue: "approx",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // ADDRESS SEARCH SETTINGS
@@ -267,18 +272,31 @@ dojo.declare("js.Config", null, {
             width: 35,
             height: 35
         },
-        ZoomLevel: 12,
         Locators: [{
             DisplayText: "Location",
-            LocatorDefaultAddress: "Lake Echo Rd, Tracy City, TN, 37387",
-            LocatorParamaters: { SearchField: "text", SearchResultField: "outFields", SearchCountField: "maxLocations", SearchBoundaryField: "bbox", SpatialReferenceField: "outSR" },
+            LocatorDefaultAddress: "Lake Echo Rd Tracy City TN 37387",
+            LocatorParamaters: {
+                SearchField: "text",
+                SearchResultField: "outFields",
+                SearchCountField: "maxLocations",
+                SearchBoundaryField: "bbox",
+                SpatialReferenceField: "outSR"
+            },
             LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find",
             CandidateFields: "Addr_type,Type,Score, Match_addr",
             DisplayField: "${Match_addr}",
-            AddressMatchScore: { Field: "Score", Value: 80 },
+            AddressMatchScore: {
+                Field: "Score",
+                Value: 80
+            },
             LocatorFieldName: 'Addr_type',
             LocatorFieldValues: ["StreetAddress", "StreetName", "PointAddress"],
-            CountyFields: { LocatorFieldValue: 'POI', FieldName: 'Type', Value: 'county', countySearch: true },
+            CountyFields: {
+                LocatorFieldValue: 'POI',
+                FieldName: 'Type',
+                Value: 'county',
+                countySearch: true
+            },
             MaxResults: 200
         }, {
             DisplayText: "Name",
@@ -287,7 +305,8 @@ dojo.declare("js.Config", null, {
             DisplayText: "Activity"
         }]
     },
-
+    //Set the Zoom Level
+    ZoomLevel: 12,
     // Define the database field names
     // Note: DateFieldName refers to a date database field.
     // All other attributes refer to text database fields.
@@ -337,12 +356,10 @@ dojo.declare("js.Config", null, {
     MapSharingOptions: {
         TinyURLServiceURL: "http://api.bit.ly/v3/shorten?login=esri&apiKey=R_65fd9891cd882e2a96b99d4bda1be00e&uri=${0}&format=json",
         TinyURLResponseAttribute: "data.url",
-
-        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configuration%20Place%20Finder",
-        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configuration%20Place%20Finder ${0}",
+        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configurable%20Place%20Finder",
+        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configurable%20Place%20Finder ${0}",
         ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     },
-
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR INFOPODS
     // ------------------------------------------------------------------------------------------------------------------------

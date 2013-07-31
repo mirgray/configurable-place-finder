@@ -72,7 +72,6 @@ html, body
 .divAddressContent
 {
     height: 310px;
-    /*background-color: rgba(132, 153, 102,.95);*/
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
@@ -150,7 +149,6 @@ html, body
 .divLayerHolder
 {
     width: 225px;
-   /* background: rgba(85,107,47,0.90);*/
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -186,6 +184,7 @@ html, body
 {
     z-index: 1001;
     background-color: transparent;
+      border-radius: 10px;
 }
 .infoOptions
 {
@@ -221,7 +220,6 @@ html, body
 
 .transparentBackground
 {
-   /* background: rgba(85,107,47,0.90);*/
     vertical-align: middle;
 }
 
@@ -280,10 +278,6 @@ html, body
     bottom: 0px !important;
 }
 
-.addressHolderHeight
-{
-    height: 310px !important;
-}
 .bottomPanelHeight
 {
     height: 220px !important;

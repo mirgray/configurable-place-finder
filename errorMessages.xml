@@ -37,4 +37,7 @@
     <numberOfFeaturesFoundNearCounty>Found ${0} facility(ies) in the Searched county</numberOfFeaturesFoundNearCounty>
     <numberOfFeaturesFoundBySearch>Found ${0} facility(ies) matching the searched criteria</numberOfFeaturesFoundBySearch>
     <noPhotosAvailable>There are no photos available.</noPhotosAvailable>
+	<commentsErrorMessage>Unable to add comments. Either comments table is absent or doesnot have write access.</commentsErrorMessage>
+	<falseConfigParams>Either required configuration key values are null or not exactly matching with layer attributes.</falseConfigParams>
+	<RefrenceOverlayError>Unable to load reference overlay layer.</RefrenceOverlayError>
 </Messages>

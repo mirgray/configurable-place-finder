@@ -67,18 +67,17 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divSplashScreenContent
 {
-    background-color: rgba(55,96,146,1);
+    background-color:  #376092;
     -webkit-box-shadow: 0 0 10px #fff;
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
     box-shadow: 0 0 10px #fff;
-    behavior: url("styles/PIE.htc");
 }
 
 .customButton
 {
     color: #F5F5DC;
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
 }
 
 
@@ -116,7 +115,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divAddressContent
 {
-       background-color: rgba(55,96,146,1);
+       background-color: #376092;
     }
 
 .divAddressScrollContent
@@ -124,28 +123,30 @@ input[placeholder], [placeholder], *[placeholder]
     color: #F5F5DC;
 }
 
-
-
 .tblHeader
 {
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
     border-bottom: gray 1px solid;
     behavior: url("styles/PIE.htc");
 }
-.divAddressPlaceHolder, .divAddressPodPlaceHolder
+ .divAddressPodPlaceHolder
 {
-    border: 1px solid rgba(0,34,102,1);
-    background-color: rgba(72, 134, 179, 0.9);
+    border: 1px solid #002266;
+    background-color: #4886b3;
 }
-
+.divAddressPlaceHolder { 
+   background-color: rgba(0, 34, 102,1);
+    -pie-background:rgba(0, 34, 102,1);
+    behavior: url("styles/PIE.htc");
+}
 .txtAddress
 {
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
 }
 
 .txtPodAddress
 {
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
 }
 
 .divAddressList
@@ -153,7 +154,7 @@ input[placeholder], [placeholder], *[placeholder]
     color: #F5F5DC;
     background-color: transparent;
     border: none;
-    behavior: url("styles/PIE.htc");
+     behavior: url("styles/PIE.htc");
 }
 
 .bottomborder
@@ -176,22 +177,22 @@ input[placeholder], [placeholder], *[placeholder]
 
 .tdSearchByUnSelectedActivity
 {
-    background: rgba(0,34,102,1); /* Old browsers */
+    background:  #002266; /* Old browsers */    
 }
 
 .tdSearchByUnSelectedFeature
 {
-    background: rgba(0,34,102,1); /* Old browsers */
+    background:  #002266; /* Old browsers */
 }
 
 .tdSearchByUnSelectedAddress
 {
-    background: rgba(0,34,102,1); /* Old browsers */
+    background:  #002266; /* Old browsers */
 }
 
 .selectedActivity
 {
-    border: 3px solid rgba(0,34,102,1)!important;
+    border: 5px solid #002266 !important;
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*Base-map Container Styles*/
@@ -221,6 +222,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divLayerHolder{
     background: rgba(55,96,146,0.90);
     -pie-background: rgba(55,96,146,0.90);
+       behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -233,12 +235,15 @@ input[placeholder], [placeholder], *[placeholder]
 }
 .divInfoContent
 {
-  background-color: rgba(55,96,146,0.90);
+  background: rgba(55,96,146,0.9);
+    -pie-background: rgba(55,96,146,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(55,96,146,0.90);
+     -pie-background:rgba(55,96,146,0.90);
+         behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -249,14 +254,14 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divInfoWindowContainer
 {
-    background-color: rgba(55,96,146,1);
+    background: #376092;
     color: #F5F5DC;
 }
 
 .divTriangle
 {
     border: solid 20px transparent;
-    border-top-color: rgba(55,96,146,1);
+    border-top-color: #376092;
 }
 
 .dj_ie .divInfoWindowContainer
@@ -272,41 +277,41 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoWindowContainer .title
 {
     color: #F5F5DC;
-    background-color: rgba(0,34,102,1);
+    background-color:  #002266;
     border-bottom: gray 1px solid;
-    behavior: url("styles/PIE.htc");
+       behavior: url("styles/PIE.htc");
 }
 
 .infotblHeader
 {
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
     border-bottom: gray 1px solid;
 }
 
 .ratingStar
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .ratingStarBig
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarBigChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .txtArea
 {
-    border: 1px solid rgba(55,96,146,1);
-    background-color: rgba(0,34,102,1);
+    border: 1px solid #002266;
+    background-color: #002266;
     color: #F5F5DC;
 }
 
@@ -329,14 +334,14 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divHeader
 {
-    background-color: rgba(0,34,102,1);
+    background-color: #002266;
     behavior: url("styles/PIE.htc");
 }
 
 .divContentStyle
 {
-    background-color: rgba(55,96,146,1);
-    behavior: url("styles/PIE.htc");
+    background-color: #376092;
+      behavior: url("styles/PIE.htc");
 }
 
 
@@ -371,9 +376,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divLoadingIndicator
 {
-    background: rgba(65,105,225,.65);
-    -pie-background: rgba(65,105,225,.65);
-    behavior: url("styles/PIE.htc");
+    background: #4169e1;
 }
 
 /* Images SlideShow */
@@ -389,12 +392,12 @@ input[placeholder], [placeholder], *[placeholder]
 {
     filter: alpha(opacity=100);
     z-index: 1010 !important;
-    background-color: rgba(55,96,146,1);
+    background-color: #376092;
     -webkit-box-shadow: 0 0 10px #fff;
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
     box-shadow: 0 0 10px #fff;
-    behavior: url("styles/PIE.htc");
+        behavior: url("styles/PIE.htc");
 }
 
 .text
@@ -409,11 +412,11 @@ input[placeholder], [placeholder], *[placeholder]
 
 .nodeBackgroundColor
 {
-  background-color:rgba(0, 34, 102, 1) !important;
+  background-color: #002266 !important;
  }
  .featureNameWidth
 {
-    border-bottom:2px #002266 solid !important;
+    border-bottom:2px #002266 solid !important;   
 }
 .BufferColor
 {
@@ -423,12 +426,8 @@ input[placeholder], [placeholder], *[placeholder]
 {
   background-color:rgb(0, 34, 102);
  }
-
+ 
  .mainLoader
  {
-  background-image:  url("../images/blue-loader.gif");
+  background-image:  url("./images/blue-loader.gif");
  }
- .divAddressHolder
- {
-   background-color:rgba(55, 96, 146, 1);
-  }
