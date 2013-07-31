@@ -75,20 +75,19 @@ html, body
     z-index: 1008;
     width: 100%;
     height: 100%;
-       -webkit-box-shadow: 0 0 10px #fff;
+    -webkit-box-shadow: 0 0 10px #fff;
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
     box-shadow: 0 0 10px #fff;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
-
 }
 .divAddressContent
 {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
-    border-radius: 8px; 
+    border-radius: 8px;
     width: 100%;
     height: 100%;
 }
@@ -115,26 +114,23 @@ html, body
     height: 44px !important;
     width: 100%;
     padding: 0px !important;
-   
 }
- .txtPodAddress
+.txtPodAddress
 {
     font-size: 15px !important;
     height: 44px !important;
     width: 90%;
     padding: 0px !important;
-   
 }
-.divAddressPodPlaceHolder {
-    
-     height: 44px !important;
-     
-         -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
+.divAddressPodPlaceHolder
+{
+    height: 44px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: px;
+    border-radius: 5px;
     position: relative;
 }
-.selectedActivity,.imgPodSearchLocate
+.selectedActivity, .imgPodSearchLocate
 {
     height: 44px;
     width: 44px;
@@ -163,7 +159,6 @@ html, body
     -webkit-border-radius: 8px;
     border-radius: 8px;
     z-index: 1006;
-
 }
 
 .divInfoContainer
@@ -191,12 +186,12 @@ html, body
 
 .tblNewAddressSearch
 {
-   width: 100% !important; 
+    width: 100% !important;
 }
 
 .tdPodAddressSearch
 {
-  padding-left: 0px !important;  
+    padding-left: 0px !important;
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /* ESRI slider style*/
@@ -207,12 +202,12 @@ html, body
 }
 .imgPodSearchLocate
 {
-     margin-right: -7px !important;   
+    margin-right: -7px !important;
 }
 .divPodSearchLocate
 {
     width: 20%;
-    }
+}
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*Styles for text area control*/
 
@@ -236,7 +231,7 @@ html, body
         width: 100% !important;
         padding: 0px !important;
     }
-     .txtPodAddress
+    .txtPodAddress
     {
         height: 44px !important;
         font-size: 15px !important;
@@ -260,10 +255,10 @@ html, body
     }
     .txtArea
     {
-        width:420px !important;
-        height:85px !important;
+        width: 420px !important;
+        height: 85px !important;
     }
-    
+
     .txtAddress
     {
         height: 44px !important;
@@ -286,28 +281,28 @@ html, body
 
 .splashScreenSize
 {
-    height:95% !important;
-    width:95% !important;
- }
- 
- .displayBlock
- {
-     display:block;
-  }
- .displayNone
- {
-   display:none;
-  }
-  
+    height: 95% !important;
+    width: 95% !important;
+}
+
+.displayBlock
+{
+    display: block;
+}
+.displayNone
+{
+    display: none;
+}
+
 .tblFeatureList
 {
-   width: 95%;
-   padding-top: 5px;
-   padding-left: 5px; 
+    width: 95%;
+    padding-top: 5px;
+    padding-left: 5px;
 }
-    
-.tblInformationHolder   
+
+.tblInformationHolder
 {
-    padding-left: 5px; 
+    padding-left: 5px;
     padding-top: 5px;
 }

@@ -295,22 +295,22 @@ input[placeholder], [placeholder], *[placeholder]
 
 .ratingStar
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .ratingStarBig
 {
-    background-image: url("../images/rating_empty.png");
+    background-image: url("./images/rating_empty.png");
 }
 
 .ratingStarBigChecked
 {
-    background-image: url("../images/rating_full.png");
+    background-image: url("./images/rating_full.png");
 }
 
 .txtArea
@@ -437,5 +437,5 @@ input[placeholder], [placeholder], *[placeholder]
 
 .mainLoader
  {
-  background-image:  url("../images/green-loader.gif");
+  background-image:  url("./images/green-loader.gif");
  }

@@ -1,4 +1,4 @@
-﻿/*
+﻿/** @license
 | Version 10.2
 | Copyright 2012 Esri
 |
@@ -21,7 +21,7 @@ var touchStart = false; //flag for setting the touch events
 //Show animation for touch event
 function TouchEvent() {
     dojo.connect(dojo.byId("divCarouselDataContainer"), "touchstart", function (e) {
-        hosizontalPosition = e.touches[0].pageX;
+        horizontalPosition = e.touches[0].pageX;
         touchStart = true;
     });
 
@@ -32,12 +32,12 @@ function TouchEvent() {
             e.cancelBubble = true;
             if (e.stopPropagation) { e.stopPropagation(); }
             e.preventDefault();
-            if (touch.pageX - hosizontalPosition >= 2) {
+            if (touch.pageX - horizontalPosition >= 2) {
                 setTimeout(function () {
                     SlideLeft();
                 }, 100);
             }
-            if (hosizontalPosition - touch.pageX >= 2) {
+            if (horizontalPosition - touch.pageX >= 2) {
                 setTimeout(function () {
                     SlideRight();
                 }, 100);
@@ -46,7 +46,7 @@ function TouchEvent() {
     });
 
     dojo.connect(dojo.byId("divCarouselDataContainer"), "touchend", function () {
-        hosizontalPosition = 0;
+        horizontalPosition = 0;
         touchStart = false;
     });
 }
@@ -54,9 +54,9 @@ function TouchEvent() {
 //Show animation for touch event for images
 function TouchImage() {
     dojo.connect(dojo.byId("divMblImage"), "touchstart", function (e) {
-      
-        hosizontalPosition = e.touches[0].pageX;
-      
+
+        horizontalPosition = e.touches[0].pageX;
+
         touchStart = true;
     });
 
@@ -67,14 +67,14 @@ function TouchImage() {
             e.cancelBubble = true;
             if (e.stopPropagation) { e.stopPropagation(); }
             e.preventDefault();
-            if (touch.pageX - hosizontalPosition >= 2) {
+            if (touch.pageX - horizontalPosition >= 2) {
 
                 ShowProgressIndicator();
                 setTimeout(function () {
                     ShowPreviousImg();
                 }, 100);
             }
-            if (hosizontalPosition - touch.pageX >= 2) {
+            if (horizontalPosition - touch.pageX >= 2) {
                 ShowProgressIndicator();
                 setTimeout(function () {
                     ShowNextImg();
@@ -84,7 +84,7 @@ function TouchImage() {
     });
 
     dojo.connect(dojo.byId("divMblImage"), "touchend", function () {
-        hosizontalPosition = 0;
+        horizontalPosition = 0;
         touchStart = false;
     });
 

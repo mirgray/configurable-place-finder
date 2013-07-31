@@ -24,7 +24,6 @@
     <link id="stylesheet" href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dojox/mobile/themes/iPhone/iPhone.css'
         rel='stylesheet' />
     <link href="styles/ConfigurablePlaceFinder.css" rel="stylesheet" type="text/css" />
-    <link id="Theme" href="" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" id="dynamicStyleSheet" />
     <script type="text/javascript">
 
@@ -150,7 +149,7 @@
                                         <td>
                                             <table class="innerTblAddressResultContainer">
                                                 <tr>
-                                                    <td id="tdSearchAddress" class="tdSearchByAddress"onclick="ShowAddressSearchView();">
+                                                    <td id="tdSearchAddress" class="tdSearchByAddress" onclick="ShowAddressSearchView();">
                                                     </td>
                                                     <td id="tdSearchFeature" class="tdSearchByUnSelectedFeature" onclick="ShowFeatureSearchView();">
                                                     </td>
@@ -351,7 +350,7 @@
                                             <tr>
                                                 <td>
                                                     <textarea placeholder="Enter comment" maxlength="250" class="txtArea" id="txtComments"
-                                                              onkeypress="if(dojo.isIE){return imposeMaxLength(this, 249);}else{return imposeMaxLength(this, 250);}"></textarea>
+                                                        onkeypress="if(dojo.isIE){return imposeMaxLength(this, 249);}else{return imposeMaxLength(this, 250);}"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -503,7 +502,7 @@
         <table class="divfullContainer">
             <tr align="center" valign="middle">
                 <td>
-                    <img id="mainLoader"/>
+                    <img id="mainLoader" />
                 </td>
             </tr>
         </table>
@@ -595,9 +594,9 @@
                                     </td>
                                     <td class="tdPodAddressSearch">
                                         <div id="divAddressPodPlaceHolder" class="divAddressPodPlaceHolder" align="left">
-                                            <input type="text" id="txtPodAddress" class="txtPodAddress"  onfocus="if(this.setSelectionRange)this.setSelectionRange(this.value.length, this.value.length);" />
+                                            <input type="text" id="txtPodAddress" class="txtPodAddress" onfocus="if(this.setSelectionRange)this.setSelectionRange(this.value.length, this.value.length);" />
                                             <div class="divPodSearchLocate">
-                                            <img id="imgPodSearchLocate" src="images/locate.png" title="Locate" class="imgPodSearchLocate" />
+                                                <img id="imgPodSearchLocate" src="images/locate.png" title="Locate" class="imgPodSearchLocate" />
                                             </div>
                                         </div>
                                     </td>

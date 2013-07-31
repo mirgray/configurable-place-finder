@@ -184,6 +184,7 @@ html, body
 {
     z-index: 1001;
     background-color: transparent;
+      border-radius: 10px;
 }
 .infoOptions
 {
@@ -277,10 +278,6 @@ html, body
     bottom: 0px !important;
 }
 
-.addressHolderHeight
-{
-    height: 310px !important;
-}
 .bottomPanelHeight
 {
     height: 220px !important;

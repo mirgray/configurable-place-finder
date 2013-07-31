@@ -287,6 +287,11 @@ body, html
     right: 15px;
 }
 
+.fullHeight
+{
+ height: 100%;   
+}
+    
 .divAppHolder
 {
     -moz-border-radius: 5px;
