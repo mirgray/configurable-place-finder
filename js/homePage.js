@@ -1,19 +1,19 @@
 ﻿/** @license
-| Version 10.2
-| Copyright 2012 Esri
-|
-| Licensed under the Apache License, Version 2.0 (the "License");
-| you may not use this file except in compliance with the License.
-| You may obtain a copy of the License at
-|
-|    http://www.apache.org/licenses/LICENSE-2.0
-|
-| Unless required by applicable law or agreed to in writing, software
-| distributed under the License is distributed on an "AS IS" BASIS,
-| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-| See the License for the specific language governing permissions and
-| limitations under the License.
-*/
+ | Version 10.2
+ | Copyright 2012 Esri
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |    http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ */
 dojo.require("esri.map");
 dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
@@ -47,7 +47,7 @@ var infoWindowWidth; //variable to store info window width
 
 var isBrowser = false; //This variable is set to true when the app is running on desktop browsers
 var isiOS = false; //This variable is set to true when the app is running on iPhone or iPad
-var isMobileDevice = false; //This variable is set to true when the app is running on mobile device 
+var isMobileDevice = false; //This variable is set to true when the app is running on mobile device
 var isTablet = false; //This variable is set to true when the app is running on tablets
 var isAndroid = false;
 
@@ -76,7 +76,7 @@ var locatorRippleSize; //variable to store locator ripple size
 
 var featureName; //variable to store feature name object
 var selectedFeature; //variable to store selected feature
-var isFeatureSearched = false; //flag set true/false for the feature searched 
+var isFeatureSearched = false; //flag set true/false for the feature searched
 var searchedFeature; //variable to store searched feature
 
 var searchAddressViaPod = false; //flag set true if the address is searched through pods in the bottom panel
@@ -94,14 +94,14 @@ var loadingAttachmentsImg = "images/imgAttachmentLoader.gif"; //variable to stor
 var nameAttribute;
 var locatorSettings; //variable to store locator settings
 
-var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet 
+var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet
 var getDirectionsDesktop; //flag to enable/disable directions for desktop
 
 var primaryKeyForComments; //variable to store  primary key attribute for comments
 var facilityId; //variable to store primary key for feature layer
 
 var commentsInfoPopupFieldsCollection; //variable to store fields for adding and displaying comment
-var databaseFields; // Define the database field names 
+var databaseFields; // Define the database field names
 
 
 var lastSearchString; //variable for store the last search string
@@ -273,7 +273,7 @@ function Init() {
                             clearTimeout(stagedSearch);
 
                             if (dojo.byId("txtAddress").value.trim().length > 0) {
-                                // Stage a new search, which will launch if no new searches show up 
+                                // Stage a new search, which will launch if no new searches show up
                                 // before the timeout
                                 stagedSearch = setTimeout(function () {
                                     LocateFeatureAndAddress();
@@ -338,13 +338,36 @@ function AddCSSClass() {
     if (dojo.hasClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder")) {
         dojo.removeClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
     }
+    if (dojo.hasClass(dojo.byId("divCarouselContentInfo"), "transparentBackground")) {
+        dojo.removeClass(dojo.byId("divCarouselContentInfo"), "transparentBackground");
+    }
+    if (dojo.hasClass(dojo.byId("divSearchHeader"), "divHeader")) {
+        dojo.removeClass(dojo.byId("divSearchHeader"), "divHeader");
+    }
+    if (dojo.hasClass(dojo.byId("divPodContentStyle"), "divContentStyle")) {
+        dojo.removeClass(dojo.byId("divPodContentStyle"), "divContentStyle");
+    }
+    if (dojo.hasClass(dojo.byId("divImageBackground"), "divImageBackground")) {
+        dojo.removeClass(dojo.byId("divImageBackground"), "divImageBackground");
+    }
+    if (dojo.hasClass(dojo.byId("divApplicationHeader"), "divApplicationHeader")) {
+        dojo.removeClass(dojo.byId("divApplicationHeader"), "divApplicationHeader");
+    }
+    if (dojo.hasClass(dojo.byId("divAppHolder"), "divAppHolder")) {
+        dojo.removeClass(dojo.byId("divAppHolder"), "divAppHolder");
+    }
     dojo.addClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
     dojo.addClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
     dojo.addClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
     dojo.addClass(dojo.byId("txtAddress"), "txtAddress");
     dojo.addClass(dojo.byId("txtPodAddress"), "txtPodAddress");
     dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
-
+    dojo.addClass(dojo.byId("divCarouselContentInfo"), "transparentBackground");
+    dojo.addClass(dojo.byId("divSearchHeader"), "divHeader");
+    dojo.addClass(dojo.byId("divPodContentStyle"), "divContentStyle");
+    dojo.addClass(dojo.byId("divImageBackground"), "divImageBackground");
+    dojo.addClass(dojo.byId("divApplicationHeader"), "divApplicationHeader");
+    dojo.addClass(dojo.byId("divAppHolder"), "divAppHolder");
 }
 
 //this function is called to load the configurable parameters
@@ -403,6 +426,16 @@ function Initialize(responseObject) {
         preventCache: true,
         load: function (xmlResponse) {
             messages = xmlResponse;
+            var baseMapURLCount=0;
+            for (var i = 0; i < baseMapLayers.length; i++) {
+                if (baseMapLayers[i].MapURL) {
+                    baseMapURLCount++;
+                }
+            }
+            if (baseMapURLCount == 0) {
+                alert(messages.getElementsByTagName("noBaseMapURL")[0].childNodes[0].nodeValue);
+                HideProgressIndicator();
+            }
         }
     });
 
@@ -614,7 +647,7 @@ function MapInitFunction(splashScreenVisibility) {
                     }
                 },
                 error: function (err) {
-                    alert(messages.getElementsByTagName("RefrenceOverlayError")[0].childNodes[0].nodeValue);
+                    alert(messages.getElementsByTagName("referenceOverlayError")[0].childNodes[0].nodeValue);
                 }
             });
         }
@@ -631,55 +664,57 @@ function MapInitFunction(splashScreenVisibility) {
     var routeLayer = new esri.layers.GraphicsLayer();
     routeLayer.id = routeLayerId;
     map.addLayer(routeLayer);
+    if (devPlanLayerURL) {
+        var devPlanLayer = new esri.layers.FeatureLayer(devPlanLayerURL, {
+            mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+            outFields: ["*"],
+            id: devPlanLayerID
+        });
+        map.addLayer(devPlanLayer);
 
-    var devPlanLayer = new esri.layers.FeatureLayer(devPlanLayerURL, {
-        mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
-        outFields: ["*"],
-        id: devPlanLayerID
-    });
-    map.addLayer(devPlanLayer);
+        var facilityID;
+        facilityId.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
+            facilityID = key;
+        });
 
-    var facilityID;
-    facilityId.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
-        facilityID = key;
-    });
+        var handle = dojo.connect(devPlanLayer, "onUpdateEnd", function () {
+            HideProgressIndicator();
+            dojo.disconnect(handle);
+            var featureId = GetQuerystring("selectedFeatureID");
+            if (featureId !== "") {
+                var query = new esri.tasks.Query();
+                query.where = facilityID + "= '" + featureId + "'";
+                devPlanLayer.queryFeatures(query, function (results) {
+                    if (results.features.length > 0) {
+                        setTimeout(function () {
+                            searchFlag = true;
+                            addressFlag = false;
+                            defaultFeature = results.features[0];
+                            selectedFeature = results.features[0].geometry;
+                            ExecuteQueryForFeatures(results, null, null, true);
+                        }, 500);
+                    }
+                });
+            }
+        });
 
-    var handle = dojo.connect(devPlanLayer, "onUpdateEnd", function () {
-        HideProgressIndicator();
-        dojo.disconnect(handle);
-        var featureId = GetQuerystring("selectedFeatureID");
-        if (featureId !== "") {
-            var query = new esri.tasks.Query();
-            query.where = facilityID + "= '" + featureId + "'";
-            devPlanLayer.queryFeatures(query, function (results) {
-                if (results.features.length > 0) {
-                    setTimeout(function () {
-                        searchFlag = true;
-                        addressFlag = false;
-                        defaultFeature = results.features[0];
-                        selectedFeature = results.features[0].geometry;
-                        ExecuteQueryForFeatures(results, null, null, true);
-                    }, 500);
-                }
-            });
-        }
-    });
-
-    dojo.connect(devPlanLayer, "onClick", function (evtArgs) {
-
-        searchFlag = false;
-        selectedFeature = evtArgs.graphic.geometry;
-        isFeatureSearched = false;
-        selectedGraphic = null;
-        map.infoWindow.hide();
-        ShowFeatureInfoDetails(evtArgs.graphic.geometry, evtArgs.graphic.attributes);
-        evtArgs = (evtArgs) ? evtArgs : event;
-        evtArgs.cancelBubble = true;
-        if (evtArgs.stopPropagation) {
-            evtArgs.stopPropagation();
-        }
-    });
-
+        dojo.connect(devPlanLayer, "onClick", function (evtArgs) {
+            searchFlag = false;
+            selectedFeature = evtArgs.graphic.geometry;
+            isFeatureSearched = false;
+            selectedGraphic = null;
+            map.infoWindow.hide();
+            ShowFeatureInfoDetails(evtArgs.graphic.geometry, evtArgs.graphic.attributes);
+            evtArgs = (evtArgs) ? evtArgs : event;
+            evtArgs.cancelBubble = true;
+            if (evtArgs.stopPropagation) {
+                evtArgs.stopPropagation();
+            }
+        });
+    }
+    else {
+        alert(messages.getElementsByTagName("missingFacilityLayerURL")[0].childNodes[0].nodeValue);
+    }
     if (commentLayer.Visibility) {
         var commentsLayer = new esri.layers.FeatureLayer(commentLayer.URL, {
             mode: esri.layers.FeatureLayer.MODE_SELECTION,

@@ -1,19 +1,19 @@
 ﻿/** @license
-| Version 10.2
-| Copyright 2012 Esri
-|
-| Licensed under the Apache License, Version 2.0 (the "License");
-| you may not use this file except in compliance with the License.
-| You may obtain a copy of the License at
-|
-|    http://www.apache.org/licenses/LICENSE-2.0
-|
-| Unless required by applicable law or agreed to in writing, software
-| distributed under the License is distributed on an "AS IS" BASIS,
-| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-| See the License for the specific language governing permissions and
-| limitations under the License.
-*/
+ | Version 10.2
+ | Copyright 2012 Esri
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |    http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ */
 var orientationChange = false; //flag set on orientation event
 var tinyResponse; //variable to store the response getting from tiny URL API
 var tinyUrl; //variable to store the tiny URL
@@ -151,7 +151,7 @@ function ShowSpanErrorMessage(controlId, message) {
 //Displaying the current location of the user
 
 function ShowMyLocation() {
-    map.getLayer(tempGraphicsLayerId).clear();
+
     if (dojo.coords("divLayerContainer").h > 0) {
         dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
         dojo.replaceClass(dojo.byId("divLayerContainer"), "zeroHeight", "addressHolderHeight");
@@ -187,7 +187,7 @@ function ShowMyLocation() {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-
+                map.getLayer(tempGraphicsLayerId).clear();
                 clearTimeout(backupTimeoutTimer);
                 ShowProgressIndicator();
                 mapPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, new esri.SpatialReference({
@@ -236,7 +236,17 @@ function ShowMyLocation() {
                     imgArray = [];
                     QueryLayer(null, null, true);
                     setTimeout(function () {
-                        if (!isMobileDevice) {
+                        if (isMobileDevice) {
+                            map.centerAndZoom(selectedFeature, zoomLevel);
+                            setTimeout(function () {
+                                map.infoWindow.hide();
+                                var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
+                                var ycenter = (map.extent.ymin + map.extent.ymax) / 2;
+                                selectedFeature = new esri.geometry.Point(xcenter, ycenter, map.spatialReference);
+                                map.setExtent(GetInfoWindowMobileMapExtent(selectedFeature));
+                            }, 1000);
+                        }
+                        else {
                             map.centerAndZoom(selectedFeature, zoomLevel);
                         }
                     }, 500);
@@ -763,9 +773,19 @@ function CreateScrollbar(container, content) {
         pxTop = scrollbar_handle.offsetTop;
         var y;
         if (startPos > touch.pageY) {
-            y = pxTop + 10;
+            if (isTablet) {
+                y = pxTop + 5;
+            }
+            else {
+                y = pxTop + 10;
+            }
         } else {
-            y = pxTop - 10;
+            if (isTablet) {
+                y = pxTop - 5;
+            }
+            else {
+                y = pxTop - 10;
+            }
         }
 
         //setting scrollbar handle
@@ -986,7 +1006,14 @@ function FetchComments(facilityID, isInfoView) {
             ResetSlideControls();
         }
         SetHeightComments();
-        HideProgressIndicator();
+        if (routeDrawn && isMobileDevice) {
+            ShowProgressIndicator();
+        }
+        else {
+            setTimeout(function () {
+                HideProgressIndicator();
+            }, 1000);
+        }
     }, function (err) {
         alert(messages.getElementsByTagName("commentsErrorMessage")[0].childNodes[0].nodeValue);
     });
@@ -1271,7 +1298,7 @@ function DisplayInfoWindow(selectedFeature, attributes, featureSearched) {
                     }
                 }
 
-                HideProgressIndicator();
+
 
                 map.infoWindow.setTitle(header, function () {
                     if (!getDirections) {
@@ -1839,7 +1866,7 @@ function NewAddressSearch() {
                         clearTimeout(stagedSearch);
 
                         if (dojo.byId("txtPodAddress").value.trim().length > 0) {
-                            // Stage a new search, which will launch if no new searches show up 
+                            // Stage a new search, which will launch if no new searches show up
                             // before the timeout
                             stagedSearch = setTimeout(function () {
                                 LocateAddress();

@@ -1,20 +1,20 @@
 ﻿/*global dojo */
 /** @license
-| Version 10.2
-| Copyright 2012 Esri
-|
-| Licensed under the Apache License, Version 2.0 (the "License");
-| you may not use this file except in compliance with the License.
-| You may obtain a copy of the License at
-|
-|    http://www.apache.org/licenses/LICENSE-2.0
-|
-| Unless required by applicable law or agreed to in writing, software
-| distributed under the License is distributed on an "AS IS" BASIS,
-| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-| See the License for the specific language governing permissions and
-| limitations under the License.
-*/
+ | Version 10.2
+ | Copyright 2012 Esri
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |    http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ */
 dojo.provide("js.Config");
 dojo.declare("js.Config", null, {
 
@@ -248,10 +248,10 @@ dojo.declare("js.Config", null, {
     //Set the locator ripple size
     LocatorRippleSize: 40,
 
-    //Set this variable to true/false to enable/disable directions for Mobile/tablet 
+    //Set this variable to true/false to enable/disable directions for Mobile/tablet
     GetDirectionsMobile: true,
 
-    //Set this variable to true/false to enable/disable directions for desktop 
+    //Set this variable to true/false to enable/disable directions for desktop
     GetDirectionsDesktop: true,
 
     //Set this variable to true/false to enable/disable directions
@@ -307,8 +307,8 @@ dojo.declare("js.Config", null, {
     },
     //Set the Zoom Level
     ZoomLevel: 12,
-    // Define the database field names 
-    // Note: DateFieldName refers to a date database field. 
+    // Define the database field names
+    // Note: DateFieldName refers to a date database field.
     // All other attributes refer to text database fields.
     DatabaseFields: {
         FeatureIdFieldName: "id",

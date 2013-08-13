@@ -56,9 +56,9 @@ body, html
 }
 .upAndDownarrow
 {
-      height: 30px !important;
+    height: 30px !important;
     width: 30px !important;
-    }
+}
 .tdHeader
 {
     width: 50px;
@@ -103,7 +103,12 @@ body, html
     height: 30px !important;
     font-size: 11px !important;
     line-height: 30px;
-    width: 300px;
+    width: 85%;
+}
+
+.tdPodAddressSearch
+{
+    width: 90%;
 }
 
 .imgLocate
@@ -286,11 +291,7 @@ body, html
     width: 40px !important;
     height: 40px !important;
 }
-.activitySearchMpobile
-{
-    width: 55px;
-    height: 55px;
-}
+
 
 /* ***********for color change*/
 

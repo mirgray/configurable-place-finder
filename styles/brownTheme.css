@@ -79,9 +79,7 @@ input[placeholder], [placeholder], *[placeholder]
 .customButton
 {
     color: #F5F5DC;
-    background-color: rgba(107,66,38,1);
-       -pie-background:rgba(107,66,38,1);
-           behavior: url("styles/PIE.htc");
+    background-color: #6b4226;
 }
 
 
@@ -135,13 +133,14 @@ input[placeholder], [placeholder], *[placeholder]
     border-bottom: gray 1px solid;
     behavior: url("styles/PIE.htc");
 }
- .divAddressPodPlaceHolder
+.divAddressPodPlaceHolder
 {
     border: 1px solid #6b4226;
     background-color:#946a52;
 }
-.divAddressPlaceHolder {
-        background-color:#6b4226; 
+.divAddressPlaceHolder
+{
+    background-color: #6b4226;
 }
 .txtAddress
 {
@@ -227,7 +226,7 @@ input[placeholder], [placeholder], *[placeholder]
 {
     background: rgba(133,94,66,0.90);
     -pie-background: rgba(133,94,66,0.90);
-       behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -241,15 +240,15 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divInfoContent
 {
-  background-color: rgba(133,94,66,0.9);
-      -pie-background: rgba(133,94,66,0.9);
+    background-color: rgba(133,94,66,0.9);
+    -pie-background: rgba(133,94,66,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(133,94,66,0.9);
-         -pie-background:rgba(133,94,66,0.9);
-         behavior: url("styles/PIE.htc");
+    -pie-background: rgba(133,94,66,0.9);
+    behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -260,8 +259,8 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoWindowContainer
 {
     background-color: rgba(133,94,66,1);
-         -pie-background: rgba(133,94,66,1);
-              behavior: url("styles/PIE.htc");
+    -pie-background: rgba(133,94,66,1);
+    behavior: url("styles/PIE.htc");
     color: #F5F5DC;
 }
 
@@ -335,7 +334,7 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divImageBackground
 {
-  background: rgba(133,94,66,0.90);
+    background: rgba(133,94,66,0.90);
     -pie-background: rgba(133,94,66,0.90);
     behavior: url("styles/PIE.htc");
 }
@@ -427,7 +426,56 @@ input[placeholder], [placeholder], *[placeholder]
 {
    background-color:rgb(107, 66, 38);
 }
- .mainLoader
- {
-  background-image:  url("./images/brown-loader.gif");
- }
+.mainLoader
+{
+    background-image: url("./images/brown-loader.gif");
+}
+
+.tblAddressResultContainer
+{
+    color: #F5F5DC;
+}
+
+.divInfoDetails
+{
+    color: #F5F5DC;
+}
+
+.divInfoComments
+{
+    color: #F5F5DC;
+}
+
+.commentError
+{
+    color: Yellow;
+}
+.divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
+{
+    color: #F5F5DC;
+}
+
+.divInfoWindowContainer
+{
+    color: #F5F5DC;
+}
+
+.tblComment
+{
+    color: #fff;
+}
+
+.shareText
+{
+    color: #F5F5DC;
+}
+
+.colorChange
+{
+    color: #fff !important;
+}
+
+.onBlurColorChange
+{
+    color: Gray;
+}

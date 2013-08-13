@@ -1,19 +1,19 @@
 ﻿/** @license
-| Version 10.2
-| Copyright 2012 Esri
-|
-| Licensed under the Apache License, Version 2.0 (the "License");
-| you may not use this file except in compliance with the License.
-| You may obtain a copy of the License at
-|
-|    http://www.apache.org/licenses/LICENSE-2.0
-|
-| Unless required by applicable law or agreed to in writing, software
-| distributed under the License is distributed on an "AS IS" BASIS,
-| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-| See the License for the specific language governing permissions and
-| limitations under the License.
-*/
+ | Version 10.2
+ | Copyright 2012 Esri
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |    http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ */
 var imgArray = []; //array defined for images
 var defaultFeature;
 var activityQueryString = "";
@@ -62,8 +62,10 @@ function LocateAddress() {
 
     var params = {};
     for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
-        if (map.getLayer(baseMapLayers[bMap].Key).visible) {
-            var baseMapExtent = map.getLayer(baseMapLayers[bMap].Key).fullExtent;
+        if (baseMapLayers[bMap].MapURL) {
+            if (map.getLayer(baseMapLayers[bMap].Key).visible) {
+                var baseMapExtent = map.getLayer(baseMapLayers[bMap].Key).fullExtent;
+            }
         }
     }
 
@@ -191,29 +193,16 @@ function ShowLocatedAddress(candidates, error) {
                             } catch (err) {
                                 alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
                             }
-                            td1.onclick = function () {
-                                if (this.getAttribute("countyExtentxmin")) {
-                                    var countyExtent = new esri.geometry.Extent(parseFloat(this.getAttribute("countyExtentxmin")), parseFloat(this.getAttribute("countyExtentymin")), parseFloat(this.getAttribute("countyExtentxmax")), parseFloat(this.getAttribute("countyExtentymax")), map.spatialReference);
-                                    map.setExtent(countyExtent);
-                                    countySearch = true;
-                                } else {
+                            if (searchAddressViaPod) {
+                                td1.onclick = function () {
+
                                     countySearch = false;
-                                }
-                                if (!isMobileDevice) {
-                                    map.infoWindow.hide();
-                                    selectedGraphic = null;
-                                }
-                                mapPoint = new esri.geometry.Point(Number(this.getAttribute("x")), Number(this.getAttribute("y")), map.spatialReference);
-                                if (!searchAddressViaPod) {
-                                    addressFlag = true;
-                                    dojo.byId("txtAddress").setAttribute("defaultAddress", this.innerHTML);
-                                    dojo.byId("txtAddress").setAttribute("defaultAddressTitle", "");
-                                    dojo.addClass(dojo.byId("txtAddress"), "colorChange");
-                                    dojo.byId("txtAddress").value = this.innerHTML;
-                                    lastSearchString = dojo.byId("txtAddress").value.trim();
-                                    LocateAddressOnMap(countySearch, countyExtent);
-                                    dojo.byId("spanFeatureListContainer").innerHTML = "";
-                                } else {
+
+                                    if (!isMobileDevice) {
+                                        map.infoWindow.hide();
+                                        selectedGraphic = null;
+                                    }
+                                    mapPoint = new esri.geometry.Point(Number(this.getAttribute("x")), Number(this.getAttribute("y")), map.spatialReference);
                                     addressFlag = false;
                                     setTimeout(function () {
                                         ShowProgressIndicator();
@@ -234,7 +223,31 @@ function ShowLocatedAddress(candidates, error) {
 
                                     HideInfoContainer();
                                 }
-                            };
+                            }
+                            else {
+                                td1.onclick = function () {
+                                    if (this.getAttribute("countyExtentxmin")) {
+                                        var countyExtent = new esri.geometry.Extent(parseFloat(this.getAttribute("countyExtentxmin")), parseFloat(this.getAttribute("countyExtentymin")), parseFloat(this.getAttribute("countyExtentxmax")), parseFloat(this.getAttribute("countyExtentymax")), map.spatialReference);
+                                        map.setExtent(countyExtent);
+                                        countySearch = true;
+                                    } else {
+                                        countySearch = false;
+                                    }
+                                    if (!isMobileDevice) {
+                                        map.infoWindow.hide();
+                                        selectedGraphic = null;
+                                    }
+                                    mapPoint = new esri.geometry.Point(Number(this.getAttribute("x")), Number(this.getAttribute("y")), map.spatialReference);
+                                    addressFlag = true;
+                                    dojo.byId("txtAddress").setAttribute("defaultAddress", this.innerHTML);
+                                    dojo.byId("txtAddress").setAttribute("defaultAddressTitle", "");
+                                    dojo.addClass(dojo.byId("txtAddress"), "colorChange");
+                                    dojo.byId("txtAddress").value = this.innerHTML;
+                                    lastSearchString = dojo.byId("txtAddress").value.trim();
+                                    LocateAddressOnMap(countySearch, countyExtent);
+                                    dojo.byId("spanFeatureListContainer").innerHTML = "";
+                                };
+                            }
                             tr.appendChild(td1);
                             hasValidRecords = true;
                         }
@@ -284,14 +297,16 @@ function ShowLocatedAddress(candidates, error) {
     }
 }
 
-//Locate searched address on map with pushpin graphic  
+//Locate searched address on map with pushpin graphic
 
 function LocateAddressOnMap(countySearch, countyExtent) {
     map.infoWindow.hide();
     map.getLayer(tempGraphicsLayerId).clear();
     for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
-        if (map.getLayer(baseMapLayers[bMap].Key).visible) {
-            var bmap = baseMapLayers[bMap].Key;
+        if (baseMapLayers[bMap].MapURL) {
+            if (map.getLayer(baseMapLayers[bMap].Key).visible) {
+                var bmap = baseMapLayers[bMap].Key;
+            }
         }
     }
 
@@ -386,7 +401,9 @@ function ShowBuffer(geometries) {
         fillColor);
     AddGraphic(map.getLayer(tempBufferLayer), bufferSymbol, geometries[0]);
     map.setExtent(geometries[0].getExtent().expand(1.6));
-    QueryLayer(geometries[0], mapPoint);
+    setTimeout(function () {
+        QueryLayer(geometries[0], mapPoint);
+    }, 500);
 }
 
 //Getting the features and their length with in the buffer region
@@ -455,7 +472,7 @@ function QueryLayer(geometry, mapPoint, isFeatureSearched) {
             }
         }, function (err) {
             HideProgressIndicator();
-            alert(err.message);
+            alert(messages.getElementsByTagName("serviceError")[0].childNodes[0].nodeValue);
             selectedFeatureID = null;
             WipeOutResults();
             dojo.byId("imgToggleResults").setAttribute("disable", true);
@@ -493,9 +510,11 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
             alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
         }
     }
-    featureSet.sort(function (a, b) {
-        return parseFloat(a.distance) - parseFloat(b.distance);
-    });
+    if (dist) {
+        featureSet.sort(function (a, b) {
+            return parseFloat(a.distance) - parseFloat(b.distance);
+        });
+    }
     if (!isMobileDevice) {
         if (dojo.byId("spanFeatureActivityContainer")) {
             dojo.byId("spanFeatureActivityContainer").style.display = "none";
@@ -528,9 +547,7 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
 
     for (var i = 0; i < featureSet.length; i++) {
         var tr = dojo.create("tr", {}, tbody);
-        var td = dojo.create("td", {
-            "style": "cursor:pointer;"
-        }, tr);
+        var td = dojo.create("td", {}, tr);
 
         td.setAttribute("count", i);
         td.setAttribute("address", featureSet[i].address);
@@ -548,7 +565,7 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
         }
         td.onclick = function () {
             searchFlag = true;
-
+            ShowProgressIndicator();
             imgArray = [];
             for (var i = 0; i < handlersPod.length; i++) {
                 dojo.disconnect(handlersPod[i]);
@@ -837,6 +854,10 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
                 tdFieldName.style.wordBreak = "break-all";
             }
         }
+    }
+    if (infoPopupFieldsCollection.length == 0) {
+        map.infoWindow.hide();
+        alert(messages.getElementsByTagName("blankInfoPopupFields")[0].childNodes[0].nodeValue);
     }
     if (isMobileDevice || fromInfoWindow) {
         var tablePhoto = dojo.create("table", {
@@ -1270,9 +1291,30 @@ function LocateFeatureOnMap() {
             if (getDirectionsMobile) {
                 ShowMyLocation();
             } else {
+                if (dojo.coords("divLayerContainer").h > 0) {
+                    dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
+                    dojo.replaceClass(dojo.byId("divLayerContainer"), "zeroHeight", "addressHolderHeight");
+                }
+                if (!isMobileDevice) {
+                    if (dojo.coords("divAddressHolder").h > 0) {
+                        dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
+                        dojo.replaceClass(dojo.byId("divAddressHolder"), "zeroHeight", "addressHolderHeight");
+                    }
+                }
+
                 if (isFeatureSearched) {
                     QueryLayer(null, null, true);
-                    if (!isMobileDevice) {
+                    if (isMobileDevice) {
+                        map.centerAndZoom(selectedFeature, zoomLevel);
+                        setTimeout(function () {
+                            map.infoWindow.hide();
+                            var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
+                            var ycenter = (map.extent.ymin + map.extent.ymax) / 2;
+                            selectedFeature = new esri.geometry.Point(xcenter, ycenter, map.spatialReference);
+                            map.setExtent(GetInfoWindowMobileMapExtent(selectedFeature));
+                        }, 1000);
+                    }
+                    else {
                         map.centerAndZoom(selectedFeature, zoomLevel);
                     }
                     isFeatureSearched = false;
@@ -1283,6 +1325,18 @@ function LocateFeatureOnMap() {
             if (getDirectionsDesktop) {
                 ShowMyLocation();
             } else {
+
+                if (dojo.coords("divLayerContainer").h > 0) {
+                    dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
+                    dojo.replaceClass(dojo.byId("divLayerContainer"), "zeroHeight", "addressHolderHeight");
+                }
+                if (!isMobileDevice) {
+                    if (dojo.coords("divAddressHolder").h > 0) {
+                        dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
+                        dojo.replaceClass(dojo.byId("divAddressHolder"), "zeroHeight", "addressHolderHeight");
+                    }
+                }
+
                 if (isFeatureSearched) {
                     QueryLayer(null, null, true);
                     if (!isMobileDevice) {
@@ -1407,7 +1461,7 @@ function CreateActivityCell(td, activity, index) {
         if (isBrowser) {
             dojo.addClass(td, "activitySearchBrowser");
         } else {
-            dojo.addClass(td, "activitySearchMpobile");
+            dojo.addClass(td, "activitySearchMobile");
         }
         var tdText = dojo.create("td", {
             "style": "cursor:pointer;"

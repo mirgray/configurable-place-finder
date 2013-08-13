@@ -57,20 +57,21 @@ body, html
 }
 .divfullContainer
 {
-    width: 100%; 
+    width: 100%;
     height: 100%;
 }
-    
+
 .divMap
 {
-   width: 100%; 
-   height: 100%; 
+    padding: 0;
+    margin: 0;
+    height: 100%;
 }
 
 .tblSplashScreenContent
 {
-  width: 100%;     
-    }
+    width: 100%;
+}
 /*---------------------------------------------------------------------------------------------------------*/
 /* Styles for splash screen*/
 
@@ -122,8 +123,8 @@ body, html
 }
 .splashOkButton
 {
-  width: 75px; 
-  margin-top: 10px;  
+    width: 75px;
+    margin-top: 10px;
 }
 .customButtonInner
 {
@@ -159,12 +160,12 @@ body, html
 }
 .tblToggle
 {
-  margin-left: 50px;  
+    margin-left: 50px;
 }
 .tblImage
 {
-   width: 40px;
-    height: 100%; 
+    width: 40px;
+    height: 100%;
 }
 .showContainer
 {
@@ -289,9 +290,9 @@ body, html
 
 .fullHeight
 {
- height: 100%;   
+    height: 100%;
 }
-    
+
 .divAppHolder
 {
     -moz-border-radius: 5px;
@@ -346,83 +347,84 @@ body, html
 /*AddressContainer Styles*/
 .tblSearchHeader
 {
-  width: 100%;  
+    width: 100%;
 }
 .trSearchHeader
 {
-height: 30px;
+    height: 30px;
 }
 .tdSearchHeader
 {
- padding-left: 8px;   
+    padding-left: 8px;
 }
 
 .tdSearchClose
 {
-  width: 10%;  
+    width: 10%;
 }
 .imgSearchClose
 {
- cursor: pointer;
- padding: 0px;  
+    cursor: pointer;
+    padding: 0px;
 }
 
 .divAddressResultContainer
 {
-  margin: 0px 0px 0px 5px;  
+    margin: 0px 0px 0px 5px;
 }
 .tblAddressResultContainer
 {
-  color: #F5F5DC; 
-  width: 100%;  
+    width: 100%;
 }
 
 .tblAddressResults
 {
-   width: 100%; 
+    width: 100%;
 }
 
 .divActivityContainer
 {
- position: relative; 
- overflow: hidden;   
- }
+    position: relative;
+    overflow: hidden;
+}
+
 .tableActivityList
 {
- width: 97%;   
+    width: 97%;
 }
 .tblPodAddressSearch
 {
-   width: 100%; 
+    width: 100%;
 }
+
 .tdPodAddressSearch
 {
-  padding-left: 5px;  
+    padding-left: 5px;
 }
 .divDirections
 {
-  position: relative;  
+    position: relative;
 }
 .tdDirectionsHeader
 {
- padding-right: 5px;   
- }
+    padding-right: 5px;
+}
 .divDirection
 {
- width: 95%;
- overflow: hidden;
- padding-left: 5px;    
+    width: 95%;
+    overflow: hidden;
+    padding-left: 5px;
 }
 .tblNewAddressSearch
 {
-   width: 95%; 
-   padding-left: 5px; 
+    width: 95%;
+    padding-left: 5px;
 }
 .innerTblAddressResultContainer
 {
-  width: 100%; 
-  margin: 5px 5px 5px -2px;  
- }
+    width: 100%;
+    margin: 5px 5px 5px -2px;
+}
 .divAddressScrollContainer
 {
     overflow: hidden;
@@ -455,12 +457,12 @@ height: 30px;
     border-radius: 3px;
     position: relative;
 }
-.divRadiusPodPlaceHolder {
-    
-      -moz-border-radius: 8px !important;
+.divRadiusPodPlaceHolder
+{
+    -moz-border-radius: 8px !important;
     -webkit-border-radius: 8px !important;
     border-radius: 8px !important;
-    position: relative;  
+    position: relative;
 }
 .txtAddress
 {
@@ -556,6 +558,11 @@ height: 30px;
     cursor: pointer;
 }
 
+.selectedFeature
+{
+    cursor: pointer;
+}
+
 .tdSearchByUnSelectedFeature
 {
     margin-left: 10px;
@@ -641,7 +648,7 @@ height: 30px;
 /*InfoWindow Styles*/
 .divPhotoGalleryContent
 {
-   padding-left: 5px; 
+    padding-left: 5px;
 }
 .divInfoContainer
 {
@@ -653,33 +660,26 @@ height: 30px;
     height: 100%;
     behavior: url("styles/PIE.htc");
 }
-.divInfoDetails
-{
-    color: #F5F5DC;
-}
 
 .tblResultContent
 {
-  width: 100%; 
-  padding: 1px;  
+    width: 100%;
+    padding: 1px;
 }
 .tdResultContent
 {
- padding-left: 7px; 
- width: 98%;
+    padding-left: 7px;
+    width: 98%;
 }
-.divInfoComments
-{
-    color: #F5F5DC;
-}
+
 .tblCommentView
 {
     height: 35px;
     cursor: pointer;
- }
+}
 .tdCommentView
 {
-   width: 37px;
+    width: 37px;
 }
 .btnsComments
 {
@@ -687,7 +687,7 @@ height: 30px;
 }
 .divAddComment
 {
-   margin: 5px; 
+    margin: 5px;
 }
 .divDetails
 {
@@ -700,7 +700,7 @@ height: 30px;
 }
 .divPhotoGallery
 {
-  position: relative;  
+    position: relative;
 }
 .tblPodAddressResults
 {
@@ -708,68 +708,68 @@ height: 30px;
 }
 .tdLabel
 {
-  padding-left: 7px;  
+    padding-left: 7px;
 }
 .divCommentsContainer, .divInfoDetails, .divInfoDirections
 {
     overflow: hidden;
     position: relative;
 }
-.divCmtIpContent{
- position: absolute;
- overflow: hidden; 
- width: 95%;
+.divCmtIpContent
+{
+    position: absolute;
+    overflow: hidden;
+    width: 95%;
 }
 .commentTextArea
 {
- margin-top: 5px;
- width: 100%;   
+    margin-top: 5px;
+    width: 100%;
 }
-.commentError{
- color: Yellow;
- margin-top: 3px; 
- word-wrap: break-word;
+.commentError
+{
+    margin-top: 3px;
+    word-wrap: break-word;
 }
 .imgMblAttachment
 {
-   border: 1px solid #fff; 
+    border: 1px solid #fff;
 }
 .commentRating
 {
-   height: 100%;
-   margin: 0px 0px 0px 0px; 
-   padding-left: 0px; 
- }
+    height: 100%;
+    margin: 0px 0px 0px 0px;
+    padding-left: 0px;
+}
 .infoHeaderTbl
 {
-  width: 100%; 
-  padding: 1px;
- }
- 
- .imgClose
- {
-  cursor: pointer;
-  position: absolute;
-  top: 5px; 
-  right: 5px;   
-  }
-  
-  .imgPreviousImg
-  {
-      cursor: pointer;
-      margin-left: 4px;
-      margin-bottom: 25px;
-  }
+    width: 100%;
+    padding: 1px;
+}
+
+.imgClose
+{
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.imgPreviousImg
+{
+    cursor: pointer;
+    margin-left: 4px;
+    margin-bottom: 25px;
+}
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
 {
     overflow: hidden;
     width: 95%;
     position: relative;
-    color: #F5F5DC;
 }
 .tdCommentError
 {
-   height: 20px; 
+    height: 20px;
 }
 .tdInfoHeader
 {
@@ -790,7 +790,6 @@ height: 30px;
 {
     z-index: 1002;
     position: absolute;
-    color: #F5F5DC;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -870,10 +869,11 @@ height: 30px;
     -webkit-border-bottom-left-radius: 0px;
     -webkit-border-bottom-right-radius: 0px;
     border-radius: 10px 10px 0px 0px;
+    behavior: url("styles/PIE.htc");
 }
 .divInfo
 {
-  position: relative;  
+    position: relative;
 }
 .imgArrow
 {
@@ -928,8 +928,8 @@ height: 30px;
 }
 .divDirectionContainer
 {
-   position: relative; 
- }
+    position: relative;
+}
 .tdBreakWord
 {
     display: inline-block;
@@ -1003,7 +1003,7 @@ height: 30px;
 }
 .divSearchBox
 {
- position: relative;   
+    position: relative;
 }
 .divFeatureListContentStyle
 {
@@ -1015,43 +1015,39 @@ height: 30px;
 }
 .tdCarouselArrow
 {
-  width: 37px;  
+    width: 37px;
 }
 .divCount
 {
-  font-size: 22px; 
-  width: 65px;  
+    font-size: 22px;
+    width: 65px;
 }
 .spanPhotoGallery
 {
-  font-size : 12px;
+    font-size: 12px;
 }
 .tdAttachments
 {
-  vertical-align: middle;  
+    vertical-align: middle;
 }
 .divLeftArrow
 {
-   z-index: 1000; 
+    z-index: 1000;
 }
 .divClose
 {
-  position: relative;  
+    position: relative;
 }
-.tblComment
-{
-color: #fff;    
-}
+
 .arrowImg
 {
-  cursor: pointer;
-  vertical-align: middle;    
+    cursor: pointer;
+    vertical-align: middle;
 }
 .divRightArrow
 {
-    z-index: 1000; 
-    
-   display: block;
+    z-index: 1000;
+    display: block;
 }
 .divCarouselDataContent
 {
@@ -1207,10 +1203,10 @@ color: #fff;
 }
 .imgNextImg
 {
-cursor: pointer;
-margin-right: 5px; 
-margin-bottom: 25px;    
- }
+    cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 25px;
+}
 .featureNameWidth
 {
     width: 95% !important;
@@ -1279,41 +1275,37 @@ margin-bottom: 25px;
 }
 .invalidSearch
 {
-  cursor: default!important;  
+    cursor: default !important;
 }
-    
+
 .mailLink
 {
-  cursor: pointer;
-   word-break: break-all;  
+    cursor: pointer;
+    word-break: break-all;
 }
 
 .imgActivitySearch
 {
-   cursor: pointer;
-   border: 3px solid transparent;
-    }
-    
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
 .tblCommentsContent
 {
-    padding-left: 5px; 
+    padding-left: 5px;
     padding-top: 5px;
 }
 
 /* styles for share container */
 
-.shareText
-{
-  color: #F5F5DC;  
- }
- 
+
 .tdShare
 {
     width: 30px;
 }
 .trInfoHeader
 {
-  height: 30px;  
+    height: 30px;
 }
 
 .zeroHeight
@@ -1321,19 +1313,11 @@ margin-bottom: 25px;
     height: 0px !important;
 }
 
-.colorChange
-{
-    color: #fff !important;
-}
-.onBlurColorChange
-{
-    color: Gray;
-}
 .tdRating
 {
     width: 100%;
 }
-   .divAddressHolder
+.divAddressHolder
 {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;

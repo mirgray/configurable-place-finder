@@ -16,25 +16,35 @@
  */
 //Create base-map components
 function CreateBaseMapComponent() {
+    var baseMapURL = 0;
+    var baseMapURLCount = 0;
     for (var i = 0; i < baseMapLayers.length; i++) {
-        map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL, baseMapLayers[i].Key, (i === 0) ? true : false));
+        if (baseMapLayers[i].MapURL) {
+            map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL, baseMapLayers[i].Key, (i === 0) ? true : false));
+            if (baseMapURLCount == 0) {
+                baseMapURL = i;
+            }
+            baseMapURLCount++;
+        }
     }
 
     var layerList = dojo.byId("layerList");
 
     for (var i = 0; i < Math.ceil(baseMapLayers.length / 2); i++) {
-
-        if (baseMapLayers[(i * 2) + 0]) {
+        if (baseMapLayers[(i * 2) + 0] && baseMapLayers[(i * 2) + 0].MapURL) {
             var layerInfo = baseMapLayers[(i * 2) + 0];
             layerList.appendChild(CreateBaseMapElement(layerInfo));
         }
-
-        if (baseMapLayers[(i * 2) + 1]) {
+        if (baseMapLayers[(i * 2) + 1] && baseMapLayers[(i * 2) + 1].MapURL) {
             var layerInfo = baseMapLayers[(i * 2) + 1];
             layerList.appendChild(CreateBaseMapElement(layerInfo));
         }
     }
-    dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[0].Key), "selectedBaseMap");
+
+ if (baseMapURLCount >= 1) {
+     dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[baseMapURL].Key), "selectedBaseMap");
+     map.getLayer(baseMapLayers[baseMapURL].Key).show();
+    }
 }
 
 //Create elements to toggle the maps
@@ -59,21 +69,23 @@ function CreateBaseMapElement(baseMapLayerInfo) {
     return divContainer;
 }
 
-//Toggle Basemap 
+//Toggle Basemap
 function ChangeBaseMap(spanControl) {
     HideMapLayers();
     var key = spanControl.getAttribute("layerId");
 
     for (var i = 0; i < baseMapLayers.length; i++) {
-        dojo.removeClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
-        if (dojo.isIE) {
-            dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "thumbNailStyle");
-            dojo.addClass(dojo.byId("spanBaseMapText" + baseMapLayers[i].Key), "spanBaseMapTextStyle");
-        }
-        if (baseMapLayers[i].Key === key) {
-            dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
-            var layer = map.getLayer(baseMapLayers[i].Key);
-            layer.show();
+        if (baseMapLayers[i].MapURL) {
+            dojo.removeClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
+            if (dojo.isIE) {
+                dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "thumbNailStyle");
+                dojo.addClass(dojo.byId("spanBaseMapText" + baseMapLayers[i].Key), "spanBaseMapTextStyle");
+            }
+            if (baseMapLayers[i].Key === key) {
+                dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
+                var layer = map.getLayer(baseMapLayers[i].Key);
+                layer.show();
+            }
         }
     }
 }
@@ -86,9 +98,11 @@ function CreateBaseMapLayer(layerURL, layerId, isVisible) {
 
 function HideMapLayers() {
     for (var i = 0; i < baseMapLayers.length; i++) {
-        var layer = map.getLayer(baseMapLayers[i].Key);
-        if (layer) {
-            layer.hide();
+        if (baseMapLayers[i].MapURL) {
+            var layer = map.getLayer(baseMapLayers[i].Key);
+            if (layer) {
+                layer.hide();
+            }
         }
     }
 }
