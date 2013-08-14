@@ -75,5 +75,5 @@ limitations under the License.
 A copy of the license is available in the repository's
 [LICENSE.txt](https://raw.github.com/Esri/configurable-place-finder/master/LICENSE.txt) file.
 
-[](Esri Tags: State-Government Local-Government Local Government Configurable Place Finder)
+[](Esri Tags: State-Government Local-Government State Local Government Configurable Place Finder)
 [](Esri Language: JavaScript)
