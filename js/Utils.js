@@ -795,13 +795,15 @@ function CreateScrollbar(container, content) {
         if (y < 0) {
             y = 0;
         } // Limit vertical movement
-        scrollbar_handle.style.top = y + "px";
+        setTimeout(function () {
+            scrollbar_handle.style.top = y + "px";
+            //setting content position
+            content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
 
-        //setting content position
-        content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
+            scrolling = true;
 
-        scrolling = true;
-        startPos = touch.pageY;
+            startPos = touch.pageY;
+        }, 100);
     }
 
     function touchEndHandler(e) {
@@ -931,7 +933,7 @@ function FetchComments(facilityID, isInfoView) {
     selectedFeatureID = facilityID;
     var query = new esri.tasks.Query();
     var facId;
-    primaryKeyForComments.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
+    foreignKeyforComments.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
         facId = key;
     });
 

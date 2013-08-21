@@ -97,7 +97,7 @@ var locatorSettings; //variable to store locator settings
 var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet
 var getDirectionsDesktop; //flag to enable/disable directions for desktop
 
-var primaryKeyForComments; //variable to store  primary key attribute for comments
+var foreignKeyforComments; //variable to store  foreign key attribute for comments
 var facilityId; //variable to store primary key for feature layer
 
 var commentsInfoPopupFieldsCollection; //variable to store fields for adding and displaying comment
@@ -489,7 +489,7 @@ function Initialize(responseObject) {
     infoWindowWidth = responseObject.InfoPopupWidth;
     commentLayer = responseObject.CommentsLayer;
     facilityId = responseObject.PrimaryKeyForFeatures;
-    primaryKeyForComments = responseObject.PrimaryKeyForComments;
+    foreignKeyforComments = responseObject.ForeignKeyforComments;
     bufferDistance = responseObject.BufferDistance;
     order = responseObject.Order;
     routeTask = new esri.tasks.RouteTask(responseObject.RouteServiceURL);

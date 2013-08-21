@@ -39,7 +39,7 @@ function LocateAddress() {
             return;
         }
         dojo.byId("txtPodAddress").blur();
-        address[locatorSettings.Locators[0].LocatorParamaters] = dojo.byId("txtAddress").value;
+        address[locatorSettings.Locators[0].LocatorParameters] = dojo.byId("txtAddress").value;
         txtAddressValue = dojo.byId('txtAddress').value;
     } else {
         RemoveChildren(dojo.byId("tblPodAddressResults"));
@@ -48,7 +48,7 @@ function LocateAddress() {
             dojo.byId("txtPodAddress").focus();
             return;
         }
-        address[locatorSettings.Locators[0].LocatorParamaters] = dojo.byId("txtPodAddress").value;
+        address[locatorSettings.Locators[0].LocatorParameters] = dojo.byId("txtPodAddress").value;
         txtAddressValue = dojo.byId('txtPodAddress').value;
     }
     var locator = new esri.tasks.Locator(locatorSettings.Locators[0].LocatorURL);
@@ -70,11 +70,11 @@ function LocateAddress() {
     }
 
     params["f"] = "json";
-    params[locatorSettings.Locators[0].LocatorParamaters.SearchField] = txtAddressValue;
-    params[locatorSettings.Locators[0].LocatorParamaters.SpatialReferenceField] = ((map.spatialReference.wkid) ? ("{wkid:" + map.spatialReference.wkid + "}") : ("{wkt:" + map.spatialReference.wkt + "}"));
-    params[locatorSettings.Locators[0].LocatorParamaters.SearchResultField] = locatorSettings.Locators[0].CandidateFields;
-    params[locatorSettings.Locators[0].LocatorParamaters.SearchCountField] = locatorSettings.Locators[0].MaxResults;
-    params[locatorSettings.Locators[0].LocatorParamaters.SearchBoundaryField] = dojo.toJson(baseMapExtent);
+    params[locatorSettings.Locators[0].LocatorParameters.SearchField] = txtAddressValue;
+    params[locatorSettings.Locators[0].LocatorParameters.SpatialReferenceField] = ((map.spatialReference.wkid) ? ("{wkid:" + map.spatialReference.wkid + "}") : ("{wkt:" + map.spatialReference.wkt + "}"));
+    params[locatorSettings.Locators[0].LocatorParameters.SearchResultField] = locatorSettings.Locators[0].CandidateFields;
+    params[locatorSettings.Locators[0].LocatorParameters.SearchCountField] = locatorSettings.Locators[0].MaxResults;
+    params[locatorSettings.Locators[0].LocatorParameters.SearchBoundaryField] = dojo.toJson(baseMapExtent);
     esri.request({
         url: locatorSettings.Locators[0].LocatorURL,
         content: params,
@@ -150,7 +150,7 @@ function ShowLocatedAddress(candidates, error) {
         for (var s in locatorSettings.Locators[0].LocatorFieldValues) {
             searchFields.push(locatorSettings.Locators[0].LocatorFieldValues[s]);
         }
-        if (locatorSettings.Locators[0].CountyFields.countySearch) {
+        if (locatorSettings.Locators[0].CountyFields.CountySearch) {
             if (!searchAddressViaPod) {
                 searchFields.push(locatorSettings.Locators[0].CountyFields.LocatorFieldValue);
             }
