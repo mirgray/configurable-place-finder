@@ -151,7 +151,7 @@ function ShowSpanErrorMessage(controlId, message) {
 //Displaying the current location of the user
 
 function ShowMyLocation() {
-    map.getLayer(tempGraphicsLayerId).clear();
+
     if (dojo.coords("divLayerContainer").h > 0) {
         dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
         dojo.replaceClass(dojo.byId("divLayerContainer"), "zeroHeight", "addressHolderHeight");
@@ -187,7 +187,7 @@ function ShowMyLocation() {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-
+                map.getLayer(tempGraphicsLayerId).clear();
                 clearTimeout(backupTimeoutTimer);
                 ShowProgressIndicator();
                 mapPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, new esri.SpatialReference({
@@ -236,7 +236,17 @@ function ShowMyLocation() {
                     imgArray = [];
                     QueryLayer(null, null, true);
                     setTimeout(function () {
-                        if (!isMobileDevice) {
+                        if (isMobileDevice) {
+                            map.centerAndZoom(selectedFeature, zoomLevel);
+                            setTimeout(function () {
+                                map.infoWindow.hide();
+                                var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
+                                var ycenter = (map.extent.ymin + map.extent.ymax) / 2;
+                                selectedFeature = new esri.geometry.Point(xcenter, ycenter, map.spatialReference);
+                                map.setExtent(GetInfoWindowMobileMapExtent(selectedFeature));
+                            }, 1000);
+                        }
+                        else {
                             map.centerAndZoom(selectedFeature, zoomLevel);
                         }
                     }, 500);
@@ -763,9 +773,19 @@ function CreateScrollbar(container, content) {
         pxTop = scrollbar_handle.offsetTop;
         var y;
         if (startPos > touch.pageY) {
-            y = pxTop + 10;
+            if (isTablet) {
+                y = pxTop + 5;
+            }
+            else {
+                y = pxTop + 10;
+            }
         } else {
-            y = pxTop - 10;
+            if (isTablet) {
+                y = pxTop - 5;
+            }
+            else {
+                y = pxTop - 10;
+            }
         }
 
         //setting scrollbar handle
@@ -775,13 +795,15 @@ function CreateScrollbar(container, content) {
         if (y < 0) {
             y = 0;
         } // Limit vertical movement
-        scrollbar_handle.style.top = y + "px";
+        setTimeout(function () {
+            scrollbar_handle.style.top = y + "px";
+            //setting content position
+            content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
 
-        //setting content position
-        content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
+            scrolling = true;
 
-        scrolling = true;
-        startPos = touch.pageY;
+            startPos = touch.pageY;
+        }, 100);
     }
 
     function touchEndHandler(e) {
@@ -911,7 +933,7 @@ function FetchComments(facilityID, isInfoView) {
     selectedFeatureID = facilityID;
     var query = new esri.tasks.Query();
     var facId;
-    primaryKeyForComments.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
+    foreignKeyforComments.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
         facId = key;
     });
 
@@ -986,7 +1008,14 @@ function FetchComments(facilityID, isInfoView) {
             ResetSlideControls();
         }
         SetHeightComments();
-        HideProgressIndicator();
+        if (routeDrawn && isMobileDevice) {
+            ShowProgressIndicator();
+        }
+        else {
+            setTimeout(function () {
+                HideProgressIndicator();
+            }, 1000);
+        }
     }, function (err) {
         alert(messages.getElementsByTagName("commentsErrorMessage")[0].childNodes[0].nodeValue);
     });
@@ -1271,7 +1300,7 @@ function DisplayInfoWindow(selectedFeature, attributes, featureSearched) {
                     }
                 }
 
-                HideProgressIndicator();
+
 
                 map.infoWindow.setTitle(header, function () {
                     if (!getDirections) {

@@ -115,8 +115,8 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divAddressContent
 {
-       background-color: #376092;
-    }
+    background-color: #376092;
+}
 
 .divAddressScrollContent
 {
@@ -134,9 +134,10 @@ input[placeholder], [placeholder], *[placeholder]
     border: 1px solid #002266;
     background-color: #4886b3;
 }
-.divAddressPlaceHolder { 
-   background-color: rgba(0, 34, 102,1);
-    -pie-background:rgba(0, 34, 102,1);
+.divAddressPlaceHolder
+{
+    background-color: rgba(0, 34, 102,1);
+    -pie-background: rgba(0, 34, 102,1);
     behavior: url("styles/PIE.htc");
 }
 .txtAddress
@@ -154,7 +155,7 @@ input[placeholder], [placeholder], *[placeholder]
     color: #F5F5DC;
     background-color: transparent;
     border: none;
-     behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 
 .bottomborder
@@ -219,10 +220,12 @@ input[placeholder], [placeholder], *[placeholder]
     box-shadow: 0 0 15px #FDDC6C;
     behavior: url("styles/PIE.htc");
 }
-.divLayerHolder{
+
+.divLayerHolder
+{
     background: rgba(55,96,146,0.90);
     -pie-background: rgba(55,96,146,0.90);
-       behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -235,15 +238,15 @@ input[placeholder], [placeholder], *[placeholder]
 }
 .divInfoContent
 {
-  background: rgba(55,96,146,0.9);
+    background: rgba(55,96,146,0.9);
     -pie-background: rgba(55,96,146,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(55,96,146,0.90);
-     -pie-background:rgba(55,96,146,0.90);
-         behavior: url("styles/PIE.htc");
+    -pie-background: rgba(55,96,146,0.90);
+    behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -255,6 +258,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divInfoWindowContainer
 {
     background: #376092;
+    behavior: url("styles/PIE.htc");
     color: #F5F5DC;
 }
 
@@ -279,7 +283,7 @@ input[placeholder], [placeholder], *[placeholder]
     color: #F5F5DC;
     background-color:  #002266;
     border-bottom: gray 1px solid;
-       behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 
 .infotblHeader
@@ -341,7 +345,7 @@ input[placeholder], [placeholder], *[placeholder]
 .divContentStyle
 {
     background-color: #376092;
-      behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 
 
@@ -397,7 +401,7 @@ input[placeholder], [placeholder], *[placeholder]
     -moz-box-shadow: 0 0 10px #fff;
     -o-box-shadow: 0 0 10px #fff;
     box-shadow: 0 0 10px #fff;
-        behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 
 .text
@@ -412,9 +416,9 @@ input[placeholder], [placeholder], *[placeholder]
 
 .nodeBackgroundColor
 {
-  background-color: #002266 !important;
- }
- .featureNameWidth
+    background-color: #002266 !important;
+}
+.featureNameWidth
 {
     border-bottom:2px #002266 solid !important;   
 }
@@ -425,9 +429,59 @@ input[placeholder], [placeholder], *[placeholder]
 .RippleColor
 {
   background-color:rgb(0, 34, 102);
- }
+}
  
- .mainLoader
- {
-  background-image:  url("./images/blue-loader.gif");
- }
+.mainLoader
+{
+    background-image: url("./images/blue-loader.gif");
+}
+
+.tblAddressResultContainer
+{
+    color: #F5F5DC;
+}
+
+.divInfoDetails
+{
+    color: #F5F5DC;
+}
+
+.divInfoComments
+{
+    color: #F5F5DC;
+}
+
+.commentError
+{
+    color: Yellow;
+}
+
+.divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
+{
+    color: #F5F5DC;
+}
+
+.divInfoWindowContainer
+{
+    color: #F5F5DC;
+}
+
+.tblComment
+{
+    color: #fff;
+}
+
+.shareText
+{
+    color: #F5F5DC;
+}
+
+.colorChange
+{
+    color: #fff !important;
+}
+
+.onBlurColorChange
+{
+    color: Gray;
+}

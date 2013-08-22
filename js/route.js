@@ -14,6 +14,7 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  */
+var routeDrawn = false;
 //Configure the route between two points
 
 function ConfigureRoute(mapPoint, feature) {
@@ -43,10 +44,8 @@ function ConfigureRoute(mapPoint, feature) {
         //If both the "to" and the "from" addresses are set, solve the route
         if (routeParams.stops.features.length === 2) {
             if (getDirections) {
+                routeDrawn = true;
                 routeTask.solve(routeParams);
-                setTimeout(function () {
-                    HideProgressIndicator();
-                }, 500);
             } else {
                 HideProgressIndicator();
                 dojo.byId("imgDirections").style.display = "block";
@@ -60,6 +59,14 @@ var drivingDirections = [];
 //Display the route between two points
 
 function ShowRoute(solveResult) {
+    if (routeParams.stops.features.length === 2) {
+        if (getDirections) {
+            setTimeout(function () {
+                HideProgressIndicator();
+                routeDrawn = false;
+            }, 500);
+        }
+    }
     drivingDirections = [];
     RemoveChildren(dojo.byId("divDirection"));
     if (!searchAddressViaPod) {
@@ -81,7 +88,10 @@ function ShowRoute(solveResult) {
     map.getLayer(routeLayerId).show();
 
     if (!map.getLayer(tempBufferLayer).graphics.length > 0) {
-        map.setExtent(directions.mergedGeometry.getExtent().expand(3));
+        setTimeout(function () {
+            var exe = directions.mergedGeometry.getExtent().expand(3);
+            map.setExtent(exe);
+        }, 500);
     }
     directionsHeaderArray = [];
     //Display the total time and distance of the route
@@ -156,6 +166,7 @@ function ShowRoute(solveResult) {
 //Display errors caught attempting to solve the route
 
 function ErrorHandler(err) {
+    routeDrawn = false;
     mapPoint = "";
     NewAddressSearch();
     HideProgressIndicator();

@@ -97,7 +97,7 @@ var locatorSettings; //variable to store locator settings
 var getDirectionsMobile; //flag to enable/disable directions for Mobile/tablet
 var getDirectionsDesktop; //flag to enable/disable directions for desktop
 
-var primaryKeyForComments; //variable to store  primary key attribute for comments
+var foreignKeyforComments; //variable to store  foreign key attribute for comments
 var facilityId; //variable to store primary key for feature layer
 
 var commentsInfoPopupFieldsCollection; //variable to store fields for adding and displaying comment
@@ -338,13 +338,36 @@ function AddCSSClass() {
     if (dojo.hasClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder")) {
         dojo.removeClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
     }
+    if (dojo.hasClass(dojo.byId("divCarouselContentInfo"), "transparentBackground")) {
+        dojo.removeClass(dojo.byId("divCarouselContentInfo"), "transparentBackground");
+    }
+    if (dojo.hasClass(dojo.byId("divSearchHeader"), "divHeader")) {
+        dojo.removeClass(dojo.byId("divSearchHeader"), "divHeader");
+    }
+    if (dojo.hasClass(dojo.byId("divPodContentStyle"), "divContentStyle")) {
+        dojo.removeClass(dojo.byId("divPodContentStyle"), "divContentStyle");
+    }
+    if (dojo.hasClass(dojo.byId("divImageBackground"), "divImageBackground")) {
+        dojo.removeClass(dojo.byId("divImageBackground"), "divImageBackground");
+    }
+    if (dojo.hasClass(dojo.byId("divApplicationHeader"), "divApplicationHeader")) {
+        dojo.removeClass(dojo.byId("divApplicationHeader"), "divApplicationHeader");
+    }
+    if (dojo.hasClass(dojo.byId("divAppHolder"), "divAppHolder")) {
+        dojo.removeClass(dojo.byId("divAppHolder"), "divAppHolder");
+    }
     dojo.addClass(dojo.byId("tdSearchAddress"), "tdSearchByAddress");
     dojo.addClass(dojo.byId("tdSearchFeature"), "tdSearchByUnSelectedFeature");
     dojo.addClass(dojo.byId("tdSearchActivity"), "tdSearchByUnSelectedActivity");
     dojo.addClass(dojo.byId("txtAddress"), "txtAddress");
     dojo.addClass(dojo.byId("txtPodAddress"), "txtPodAddress");
     dojo.addClass(dojo.byId("divAddressPodPlaceHolder"), "divAddressPodPlaceHolder");
-
+    dojo.addClass(dojo.byId("divCarouselContentInfo"), "transparentBackground");
+    dojo.addClass(dojo.byId("divSearchHeader"), "divHeader");
+    dojo.addClass(dojo.byId("divPodContentStyle"), "divContentStyle");
+    dojo.addClass(dojo.byId("divImageBackground"), "divImageBackground");
+    dojo.addClass(dojo.byId("divApplicationHeader"), "divApplicationHeader");
+    dojo.addClass(dojo.byId("divAppHolder"), "divAppHolder");
 }
 
 //this function is called to load the configurable parameters
@@ -403,6 +426,16 @@ function Initialize(responseObject) {
         preventCache: true,
         load: function (xmlResponse) {
             messages = xmlResponse;
+            var baseMapURLCount=0;
+            for (var i = 0; i < baseMapLayers.length; i++) {
+                if (baseMapLayers[i].MapURL) {
+                    baseMapURLCount++;
+                }
+            }
+            if (baseMapURLCount == 0) {
+                alert(messages.getElementsByTagName("noBaseMapURL")[0].childNodes[0].nodeValue);
+                HideProgressIndicator();
+            }
         }
     });
 
@@ -456,7 +489,7 @@ function Initialize(responseObject) {
     infoWindowWidth = responseObject.InfoPopupWidth;
     commentLayer = responseObject.CommentsLayer;
     facilityId = responseObject.PrimaryKeyForFeatures;
-    primaryKeyForComments = responseObject.PrimaryKeyForComments;
+    foreignKeyforComments = responseObject.ForeignKeyforComments;
     bufferDistance = responseObject.BufferDistance;
     order = responseObject.Order;
     routeTask = new esri.tasks.RouteTask(responseObject.RouteServiceURL);
@@ -614,7 +647,7 @@ function MapInitFunction(splashScreenVisibility) {
                     }
                 },
                 error: function (err) {
-                    alert(messages.getElementsByTagName("RefrenceOverlayError")[0].childNodes[0].nodeValue);
+                    alert(messages.getElementsByTagName("referenceOverlayError")[0].childNodes[0].nodeValue);
                 }
             });
         }
@@ -631,55 +664,57 @@ function MapInitFunction(splashScreenVisibility) {
     var routeLayer = new esri.layers.GraphicsLayer();
     routeLayer.id = routeLayerId;
     map.addLayer(routeLayer);
+    if (devPlanLayerURL) {
+        var devPlanLayer = new esri.layers.FeatureLayer(devPlanLayerURL, {
+            mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+            outFields: ["*"],
+            id: devPlanLayerID
+        });
+        map.addLayer(devPlanLayer);
 
-    var devPlanLayer = new esri.layers.FeatureLayer(devPlanLayerURL, {
-        mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
-        outFields: ["*"],
-        id: devPlanLayerID
-    });
-    map.addLayer(devPlanLayer);
+        var facilityID;
+        facilityId.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
+            facilityID = key;
+        });
 
-    var facilityID;
-    facilityId.replace(/\$\{([^\s\:\}]+)(?:\:([^\s\:\}]+))?\}/g, function (match, key) {
-        facilityID = key;
-    });
+        var handle = dojo.connect(devPlanLayer, "onUpdateEnd", function () {
+            HideProgressIndicator();
+            dojo.disconnect(handle);
+            var featureId = GetQuerystring("selectedFeatureID");
+            if (featureId !== "") {
+                var query = new esri.tasks.Query();
+                query.where = facilityID + "= '" + featureId + "'";
+                devPlanLayer.queryFeatures(query, function (results) {
+                    if (results.features.length > 0) {
+                        setTimeout(function () {
+                            searchFlag = true;
+                            addressFlag = false;
+                            defaultFeature = results.features[0];
+                            selectedFeature = results.features[0].geometry;
+                            ExecuteQueryForFeatures(results, null, null, true);
+                        }, 500);
+                    }
+                });
+            }
+        });
 
-    var handle = dojo.connect(devPlanLayer, "onUpdateEnd", function () {
-        HideProgressIndicator();
-        dojo.disconnect(handle);
-        var featureId = GetQuerystring("selectedFeatureID");
-        if (featureId !== "") {
-            var query = new esri.tasks.Query();
-            query.where = facilityID + "= '" + featureId + "'";
-            devPlanLayer.queryFeatures(query, function (results) {
-                if (results.features.length > 0) {
-                    setTimeout(function () {
-                        searchFlag = true;
-                        addressFlag = false;
-                        defaultFeature = results.features[0];
-                        selectedFeature = results.features[0].geometry;
-                        ExecuteQueryForFeatures(results, null, null, true);
-                    }, 500);
-                }
-            });
-        }
-    });
-
-    dojo.connect(devPlanLayer, "onClick", function (evtArgs) {
-
-        searchFlag = false;
-        selectedFeature = evtArgs.graphic.geometry;
-        isFeatureSearched = false;
-        selectedGraphic = null;
-        map.infoWindow.hide();
-        ShowFeatureInfoDetails(evtArgs.graphic.geometry, evtArgs.graphic.attributes);
-        evtArgs = (evtArgs) ? evtArgs : event;
-        evtArgs.cancelBubble = true;
-        if (evtArgs.stopPropagation) {
-            evtArgs.stopPropagation();
-        }
-    });
-
+        dojo.connect(devPlanLayer, "onClick", function (evtArgs) {
+            searchFlag = false;
+            selectedFeature = evtArgs.graphic.geometry;
+            isFeatureSearched = false;
+            selectedGraphic = null;
+            map.infoWindow.hide();
+            ShowFeatureInfoDetails(evtArgs.graphic.geometry, evtArgs.graphic.attributes);
+            evtArgs = (evtArgs) ? evtArgs : event;
+            evtArgs.cancelBubble = true;
+            if (evtArgs.stopPropagation) {
+                evtArgs.stopPropagation();
+            }
+        });
+    }
+    else {
+        alert(messages.getElementsByTagName("missingFacilityLayerURL")[0].childNodes[0].nodeValue);
+    }
     if (commentLayer.Visibility) {
         var commentsLayer = new esri.layers.FeatureLayer(commentLayer.URL, {
             mode: esri.layers.FeatureLayer.MODE_SELECTION,

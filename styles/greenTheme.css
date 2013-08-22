@@ -77,8 +77,8 @@ input[placeholder], [placeholder], *[placeholder]
 {
     color: #F5F5DC;
     background-color: rgb(60, 72, 36);
-        behavior: url("styles/PIE.htc");
-        -pie-background: rgba(60, 72, 36);
+    behavior: url("styles/PIE.htc");
+    -pie-background: rgba(60, 72, 36);
 }
 
 
@@ -215,10 +215,11 @@ input[placeholder], [placeholder], *[placeholder]
     behavior: url("styles/PIE.htc");
 }
 
-.divLayerHolder{
+.divLayerHolder
+{
     background: rgba(85,107,47,0.90);
     -pie-background: rgba(85,107,47,0.90);
-       behavior: url("styles/PIE.htc");
+    behavior: url("styles/PIE.htc");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*InfoWindow Styles*/
@@ -232,15 +233,15 @@ input[placeholder], [placeholder], *[placeholder]
 
 .divInfoContent
 {
-  background-color: rgba(85,107,47,0.9);
-      -pie-background: rgba(85,107,47,0.9);
+    background-color: rgba(132, 152, 102,0.9);
+    -pie-background: rgba(132, 152, 102,0.9);
 }
 
 .divAddressContainer
 {
     background: rgba(85,107,47,0.9);
-         -pie-background:rgba(85,107,47,0.9);
-         behavior: url("styles/PIE.htc");
+    -pie-background: rgba(85,107,47,0.9);
+    behavior: url("styles/PIE.htc");
 }
 
 .divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
@@ -257,6 +258,7 @@ input[placeholder], [placeholder], *[placeholder]
 {
 
     background-color: #849966;
+    behavior: url("styles/PIE.htc");
     color: #F5F5DC;
 }
 
@@ -419,8 +421,8 @@ input[placeholder], [placeholder], *[placeholder]
 
 .nodeBackgroundColor
 {
-  background-color: #3c481f !important;
- }
+    background-color: #3c481f !important;
+}
 .featureNameWidth
 {
     border-bottom:2px #3C4824 solid !important;
@@ -436,6 +438,55 @@ input[placeholder], [placeholder], *[placeholder]
 }
 
 .mainLoader
- {
-  background-image:  url("./images/green-loader.gif");
- }
+{
+    background-image: url("./images/green-loader.gif");
+}
+
+.tblAddressResultContainer
+{
+    color: #F5F5DC;
+}
+
+.divInfoDetails
+{
+    color: #F5F5DC;
+}
+
+.divInfoComments
+{
+    color: #F5F5DC;
+}
+.commentError
+{
+    color: Yellow;
+}
+
+.divCommentsContent, .divInfoDetailsScroll, .divInfoDirectionsScroll, .divInfoPhotosScroll
+{
+    color: #F5F5DC;
+}
+
+.divInfoWindowContainer
+{
+    color: #F5F5DC;
+}
+
+.tblComment
+{
+    color: #fff;
+}
+
+.shareText
+{
+    color: #F5F5DC;
+}
+
+.colorChange
+{
+    color: #fff !important;
+}
+
+.onBlurColorChange
+{
+    color: Gray;
+}

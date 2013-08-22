@@ -14,12 +14,13 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  */
- /* This file contains the mobile specific style settings for "Configurable Place Finder" template */
+/* This file contains the mobile specific style settings for "Configurable Place Finder" template */
 /* The common settings for the styles are defined in "ConfigurablePlaceFinder.css" */
 /* 1.  Set the body styles                      - { Style(s) to look for: html, body } */
 /* 2.  Set styles for printMap                  - { Style(s) to look for: divFeatureName divfullContainer mapPrint tblDirections
                                                  tdFeatureName trHeight grayBackGround}*/
-body {
+body
+{
 }
 .printMapBody
 {
@@ -49,10 +50,11 @@ body {
    height: 450px;
    border: 1px solid #000;
 }
-.tblDirections{
-width: 665px;
-border: 1px solid #000;
-color: Black;
+.tblDirections
+{
+    width: 667px;
+    border: 1px solid #000;
+    color: Black;
 }
 .tdFeatureName
 {
