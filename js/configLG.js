@@ -44,7 +44,7 @@ dojo.declare("js.Config", null, {
     // 10. Customize buffer settings                  - [ Tag(s) to look for: BufferDistance ]
     // 11. Customize directions settings              - [ Tag(s) to look for: GetDirectionsMobile, GetDirectionsDesktop, GetDirections, ApproximateValue ]
 
-    // 12a. Customize address search settings         - [ Tag(s) to look for: DefaultLocatorSymbol, MarkupSymbolSize, Locators, LocatorDefaultAddress, LocatorParameters, LocatorURL, CandidateFields, 
+    // 12a. Customize address search settings         - [ Tag(s) to look for: DefaultLocatorSymbol, MarkupSymbolSize, Locators, LocatorDefaultAddress, LocatorParameters, LocatorURL, CandidateFields,
     //                                                                        DisplayField, AddressMatchScore, LocatorFieldName, LocatorFieldValues, CountyFields, MaxResults ]
     // 12b. Customize facility search settings        - [ Tag(s) to look for: DisplayText, LocatorDefaultFeature ]
     // 12c. Customize activity search settings        - [ Tag(s) to look for: DisplayText ]
@@ -62,7 +62,7 @@ dojo.declare("js.Config", null, {
 
     // 20. Specify URLs for map sharing               - [ Tag(s) to look for: MapSharingOptions, TinyURLServiceURL, TinyURLResponseAttribute, FacebookShareURL, TwitterShareURL, ShareByMailLink ]
 
-    
+
     // ------------------------------------------------------------------------------------------------------------------------
     // GENERAL SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ dojo.declare("js.Config", null, {
         }]
     },
 
-    //Set the locator ripple size(in pixels) 
+    //Set the locator ripple size(in pixels)
     LocatorRippleSize: 40,
 
     //Set the Zoom Level
