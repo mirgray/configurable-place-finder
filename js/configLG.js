@@ -67,25 +67,25 @@ dojo.declare("js.Config", null, {
     // GENERAL SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set application title
-    ApplicationName: "Configurable Place Finder",
+    ApplicationName: "Park & Recreation Finder",
 
     // Set application icon path
-    ApplicationIcon: "images/i_hydro.png",
+    ApplicationIcon: "images/appIcon.png",
 
     // Set application Favicon path
-    ApplicationFavicon: "images/i_hydro.ico",
+    ApplicationFavicon: "images/appIcon.ico",
 
-    // Set application theme
-    ApplicationTheme: "styles/blueTheme.css",
+    // Set application theme (greenTheme.css , blueTheme.css , brownTheme.css)
+    ApplicationTheme: "styles/greenTheme.css",
 
     // Set splash window content - Message that appears when the application starts
     SplashScreen: {
-        Message: "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.",
+        Message: "<b>Welcome to Park Finder</b> <br/> <hr/> <br/> The <b>Park Finder</b> application helps citizens locate a park or recreation facility and obtain information about recreation activities in their community.  <br/><br/>To locate a park, simply enter an address or activity in the search box, or use your current location. The park(s) or recreation area(s) will then be highlighted on the map and relevant information about available recreation activities presented to the user.",
         isVisible: false
     },
 
     // Set URL of help page/portal
-    HelpURL: "help.htm",
+    HelpURL: "help_ParkFinder.htm",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // BASEMAP SETTINGS
@@ -98,14 +98,19 @@ dojo.declare("js.Config", null, {
         Name: "Topographic Map",
         MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
     }, {
+        Key: "parcelMap",
+        ThumbnailSource: "images/parcel.png",
+        Name: "Streets",
+        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/GeneralPurpose/MapServer"
+    },{
         Key: "streets",
         ThumbnailSource: "images/streets.png",
-        Name: "Street Map",
-        MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"
+        Name: "Imagery",
+        MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/ImageryHybrid/MapServer"
     }],
 
     // Initial map extent. Use comma (,) to separate values and don't delete the last comma
-    DefaultExtent: "-9991781.18961914, 4083344.0852194074, -9160146.321876464, 4494881.045506775",
+    DefaultExtent: "-9816010,5123000,-9809970,5129500",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // OPERATIONAL DATA SETTINGS
@@ -113,28 +118,28 @@ dojo.declare("js.Config", null, {
 
     // Configure operational layers:
     //URL used for doing query task on the feature layer
-    FacilityLayer: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/0",
+    FacilityLayer: "http://services.arcgis.com/b6gLrKHqgkQb393u/arcgis/rest/services/ParksTryItLive/FeatureServer/0",
     //Set the primary key attribute for features
-    PrimaryKeyForFeatures: "${OBJECTID}",
+    PrimaryKeyForFeatures: "${FACILITYID}",
 
 
     CommentsLayer: {
         //Set to true if comments need to be displayed , or false if not required
         Visibility: true,
         //URL used for doing query task on the comments layer
-        URL: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1"
+        URL: "http://services.arcgis.com/b6gLrKHqgkQb393u/arcgis/rest/services/ParksTryItLive/FeatureServer/1"
     },
     //Set the foreign key attribute for comments
-    ForeignKeyforComments: "${id}",
+    ForeignKeyforComments: "${FACILITYID}",
 
     //Set the name attribute for features
-    FeatureName: "${Name}",
+    FeatureName: "${NAME}",
 
     // ServiceUrl is the REST end point for the reference overlay layer
     // DisplayOnLoad setting is used to show or hide the reference overlay layer. Reference overlay will be shown when it is set to true
 
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://50.18.115.76:6080/arcgis/rest/services/HuntableLands/MapServer/0",
+        ServiceUrl: "http://tryitlive.arcgis.com/arcgis/rest/services/Trails/MapServer",
         DisplayOnLoad: true
     },
 
@@ -144,15 +149,15 @@ dojo.declare("js.Config", null, {
     // Info-window is a small, two line popup that gets displayed on selecting a feature
     // Set Info-window title. Configure this with text/fields
     InfoWindowHeader: [{
-        FieldName: "${Name}",
-        Alias: "Facility Name",
+        FieldName: "${NAME}",
+        Alias: "Park Name",
         InfoWindowHeaderText: "Facility Info"
     }],
 
     // Set content/fields for the callout window in Smartphone's
     InfoWindowContent: [{
-        FieldName: "${Region}",
-        Alias: "Region"
+        FieldName: "${FULLADDR}",
+        Alias: "Full Address"
     }],
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -161,85 +166,85 @@ dojo.declare("js.Config", null, {
     // Info-popup is a popup dialog that gets displayed on selecting a feature
     // Set the content to be displayed on the info-Popup. Define labels, field values, field types and field formats
     InfoPopupFieldsCollection: [{
-        DisplayText: "Region:",
-        FieldName: "${Region}"
+        DisplayText: "Address:",
+        FieldName: "${FULLADDR}"
     }, {
-        DisplayText: "Hours Open For:",
-        FieldName: "${Hours_Open}"
+        DisplayText: "Days Open:",
+        FieldName: "${OPERDAYS}"
     }, {
-        DisplayText: "Owner:",
-        FieldName: "${Owner}"
+        DisplayText: "Hours of Operation:",
+        FieldName: "${OPERHOURS}"
     }, {
-        DisplayText: "Facility Type:",
-        FieldName: "${Type}"
+        DisplayText: "Park Website:",
+        FieldName: "${PARKURL}"
     }],
 
     //Activities to be displayed in info window for a feature
     Activities: [{
-        FieldName: "${FourWheel}",
-        Alias: "FourWheel",
-        Image: "images/fourwheel.png",
+        FieldName: "${RESTROOM}",
+        Alias: "Restrooms Available",
+        Image: "images/restrooms.png",
         isSelected: true
     }, {
-        FieldName: "${HandicapPark}",
-        Alias: "Handicap Parking Available",
-        Image: "images/HandicapParking.png"
+        FieldName: "${ADACOMPLY}",
+        Alias: "ADA Compliant",
+        Image: "images/ada compliant.png"
     }, {
-        FieldName: "${LightedPark}",
-        Alias: "Lighted Park",
-        Image: "images/lightedpark.png"
+        FieldName: "${SWIMMING}",
+        Alias: "Swimming",
+        Image: "images/swimming.png"
     }, {
-        FieldName: "${OpenYearRound}",
-        Alias: "Open Year Round",
-        Image: "images/openyearround.png"
+        FieldName: "${HIKING}",
+        Alias: "Hiking",
+        Image: "images/hiking.png"
     }, {
-        FieldName: "${SunriseSunset}",
-        Alias: "Sunrise Sunset",
-        Image: "images/sunrisesunset.png"
-    }, {
-        FieldName: "${ElectricHookup}",
-        Alias: "Electric Hookup",
-        Image: "images/electrichookup.png"
-    }, {
-        FieldName: "${WaterHookup}",
-        Alias: "Water Hookup",
-        Image: "images/waterhookup.png"
-    }, {
-        FieldName: "${Restrooms}",
-        Alias: "Restrooms Available",
-        Image: "images/restrooms.png"
-    }, {
-        FieldName: "${FishingPier}",
-        Alias: "Fishing Pier",
-        Image: "images/fishingpier.png"
-    }, {
-        FieldName: "${CanoeLanding}",
-        Alias: "Canoe Landing",
-        Image: "images/canoelanding.png"
-    }, {
-        FieldName: "${WinterPool}",
-        Alias: "Winter Pool",
-        Image: "images/winterpool.png"
-    }, {
-        FieldName: "${CourtesyDock}",
-        Alias: "Courtesy Dock",
-        Image: "images/courtesydock.png"
-    }, {
-        FieldName: "${RentalAvail}",
-        Alias: "Rental Available",
-        Image: "images/rentavail.png"
-    }, {
-        FieldName: "${BoatRamp}",
-        Alias: "Boat Ramp",
-        Image: "images/boatramp.png"
-    }, {
-        FieldName: "${Marina}",
-        Alias: "Marina",
-        Image: "images/marina.png"
-    }, {
-        FieldName: "${Fishing}",
+        FieldName: "${FISHING}",
         Alias: "Fishing",
         Image: "images/fishing.png"
+    }, {
+        FieldName: "${PICNIC}",
+        Alias: "Picnic Shelters",
+        Image: "images/picnic.png"
+    }, {
+        FieldName: "${BOATING}",
+        Alias: "Boating",
+        Image: "images/boating.png"
+    }, {
+        FieldName: "${ROADCYCLE}",
+        Alias: "Road Cycling",
+        Image: "images/cycling.png"
+    }, {
+        FieldName: "${MTBCYCLE}",
+        Alias: "Mountain Biking",
+        Image: "images/mtb.png"
+    }, {
+        FieldName: "${PLAYGROUND}",
+        Alias: "Playgrounds",
+        Image: "images/playground.png"
+    }, {
+        FieldName: "${SKI}",
+        Alias: "Skiing",
+        Image: "images/skiing.png"
+    }, {
+        FieldName: "${SOCCER}",
+        Alias: "Multi-Purpose Fields",
+        Image: "images/soccer.png"
+    }, {
+        FieldName: "${CAMPING}",
+        Alias: "Camping",
+        Image: "images/camping.png"
+    }, {
+        FieldName: "${HUNTING}",
+        Alias: "Hunting",
+        Image: "images/hunting.png"
+    }, {
+        FieldName: "${BASEBALL}",
+        Alias: "Baseball Fields",
+        Image: "images/baseball.png"
+    }, {
+        FieldName: "${BASKETBALL}",
+        Alias: "Basketball Courts",
+        Image: "images/basketball.png"
     }],
 
     // Set size of the info-Popup - select maximum height and width in pixels (not applicable for tabbed info-Popup)
@@ -253,7 +258,7 @@ dojo.declare("js.Config", null, {
     FormatDateAs: "MMM dd, yyyy",
 
     //set distance in miles for drawing the buffer
-    BufferDistance: "2",
+    BufferDistance: "1",
 
     //Set this variable to true/false to enable/disable directions
     //if this master variable is set to false directions cannot be enabled for any of the devices
@@ -281,7 +286,7 @@ dojo.declare("js.Config", null, {
         },
         Locators: [{
             DisplayText: "Location",
-            LocatorDefaultAddress: "Lake Echo Rd Tracy City TN 37387",
+            LocatorDefaultAddress: "139 W Porter Ave Naperville IL 60540",
             LocatorParameters: {
                 SearchField: "text",
                 SearchResultField: "outFields",
@@ -307,7 +312,7 @@ dojo.declare("js.Config", null, {
             MaxResults: 200
         }, {
             DisplayText: "Name",
-            LocatorDefaultFeature: "Shelby Park"
+            LocatorDefaultFeature: "Knoch Park"
         }, {
             DisplayText: "Activity"
         }]
@@ -322,7 +327,7 @@ dojo.declare("js.Config", null, {
     // Note: DateFieldName refers to a date database field.
     // All other attributes refer to text database fields.
     DatabaseFields: {
-        FeatureIdFieldName: "id",
+        FeatureIdFieldName: "FACILITYID",
         CommentsFieldName: "COMMENTS",
         DateFieldName: "SUBMITDT",
         RankFieldName: "RANK"
@@ -361,7 +366,7 @@ dojo.declare("js.Config", null, {
     InfoBoxWidth: 422,
 
     // Set sequence for info pods in the bottom panel
-    Order: ["search", "facility", "directions", "photogallery", "comments"],
+    Order: ["search", "park", "directions", "photogallery", "comments"],
 
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR MAP SHARING
