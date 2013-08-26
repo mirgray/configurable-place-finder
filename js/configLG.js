@@ -81,7 +81,7 @@ dojo.declare("js.Config", null, {
     // Set splash window content - Message that appears when the application starts
     SplashScreen: {
         Message: "<b>Welcome to Park Finder</b> <br/> <hr/> <br/> The <b>Park Finder</b> application helps citizens locate a park or recreation facility and obtain information about recreation activities in their community.  <br/><br/>To locate a park, simply enter an address or activity in the search box, or use your current location. The park(s) or recreation area(s) will then be highlighted on the map and relevant information about available recreation activities presented to the user.",
-        isVisible: false
+        isVisible: true
     },
 
     // Set URL of help page/portal
@@ -95,7 +95,7 @@ dojo.declare("js.Config", null, {
     BaseMapLayers: [{
         Key: "topoMap",
         ThumbnailSource: "images/topographic.jpg",
-        Name: "Topographic Map",
+        Name: "Topographic",
         MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
     }, {
         Key: "parcelMap",
@@ -103,8 +103,8 @@ dojo.declare("js.Config", null, {
         Name: "Streets",
         MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/GeneralPurpose/MapServer"
     },{
-        Key: "streets",
-        ThumbnailSource: "images/streets.png",
+        Key: "imageMap",
+        ThumbnailSource: "images/Imagery.jpg",
         Name: "Imagery",
         MapURL: "http://tryitlive.arcgis.com/arcgis/rest/services/ImageryHybrid/MapServer"
     }],
@@ -150,7 +150,7 @@ dojo.declare("js.Config", null, {
     // Set Info-window title. Configure this with text/fields
     InfoWindowHeader: [{
         FieldName: "${NAME}",
-        Alias: "Park Name",
+        Alias: "Name of Facility",
         InfoWindowHeaderText: "Facility Info"
     }],
 
@@ -268,7 +268,7 @@ dojo.declare("js.Config", null, {
     GetDirectionsMobile: true,
 
     //Set this variable to true/false to enable/disable directions for desktop
-    GetDirectionsDesktop: true,
+    GetDirectionsDesktop: false,
 
     //Set this value to display text besides calculated distances in search results
     ApproximateValue: "approx",
@@ -366,7 +366,7 @@ dojo.declare("js.Config", null, {
     InfoBoxWidth: 422,
 
     // Set sequence for info pods in the bottom panel
-    Order: ["search", "park", "directions", "photogallery", "comments"],
+    Order: ["search", "facility", "directions", "photogallery", "comments"],
 
     // ------------------------------------------------------------------------------------------------------------------------
     // SETTINGS FOR MAP SHARING
@@ -376,8 +376,8 @@ dojo.declare("js.Config", null, {
     MapSharingOptions: {
         TinyURLServiceURL: "http://api.bit.ly/v3/shorten?login=esri&apiKey=R_65fd9891cd882e2a96b99d4bda1be00e&uri=${0}&format=json",
         TinyURLResponseAttribute: "data.url",
-        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configurable%20Place%20Finder",
-        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configurable%20Place%20Finder ${0}",
-        ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
+        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Parks%20Finder",
+        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Parks%20Finder ${0}",
+        ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map&body=${0}"
     }
 });
