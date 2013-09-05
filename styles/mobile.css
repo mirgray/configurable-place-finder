@@ -208,11 +208,14 @@ html, body
 {
     width: 20%;
 }
+.txtArea
+{
+    width: 95% !important;
+}
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*Styles for text area control*/
 
 /* Portrait */
-
 @media screen and (max-width: 320px)
 {
     html, body
@@ -221,7 +224,7 @@ html, body
     }
     .txtArea
     {
-        width: 270px !important;
+
         height: 150px !important;
     }
     .txtAddress
@@ -255,7 +258,7 @@ html, body
     }
     .txtArea
     {
-        width: 420px !important;
+
         height: 85px !important;
     }
 
