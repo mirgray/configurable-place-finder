@@ -128,7 +128,7 @@ dojo.declare("js.Config", null, {
     ForeignKeyforComments: "${id}",
 
     //Set the name attribute for features
-    FeatureName: "${Name}",
+    FeatureName: "${NAME}",
 
     // ServiceUrl is the REST end point for the reference overlay layer
     // DisplayOnLoad setting is used to show or hide the reference overlay layer. Reference overlay will be shown when it is set to true
@@ -144,15 +144,15 @@ dojo.declare("js.Config", null, {
     // Info-window is a small, two line popup that gets displayed on selecting a feature
     // Set Info-window title. Configure this with text/fields
     InfoWindowHeader: [{
-        FieldName: "${Name}",
+        FieldName: "${NAME}",
         Alias: "Facility Name",
         InfoWindowHeaderText: "Facility Info"
     }],
 
     // Set content/fields for the callout window in Smartphone's
     InfoWindowContent: [{
-        FieldName: "${Region}",
-        Alias: "Region"
+        FieldName: "${MANAGEUNIT}",
+        Alias: "Manage Unit"
     }],
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -161,14 +161,14 @@ dojo.declare("js.Config", null, {
     // Info-popup is a popup dialog that gets displayed on selecting a feature
     // Set the content to be displayed on the info-Popup. Define labels, field values, field types and field formats
     InfoPopupFieldsCollection: [{
-        DisplayText: "Region:",
-        FieldName: "${Region}"
+        DisplayText: "Access Fee:",
+        FieldName: "${ACCESSFEE}"
     }, {
         DisplayText: "Hours Open For:",
-        FieldName: "${Hours_Open}"
+        FieldName: "${OPERHOURS}"
     }, {
-        DisplayText: "Owner:",
-        FieldName: "${Owner}"
+        DisplayText: "Management Unit:",
+        FieldName: "${MANAGEUNIT}"
     }, {
         DisplayText: "Facility Type:",
         FieldName: "${Type}"
@@ -176,68 +176,52 @@ dojo.declare("js.Config", null, {
 
     //Activities to be displayed in info window for a feature
     Activities: [{
-        FieldName: "${FourWheel}",
+        FieldName: "${FOURWHEEL}",
         Alias: "FourWheel",
         Image: "images/fourwheel.png",
         isSelected: true
     }, {
-        FieldName: "${HandicapPark}",
-        Alias: "Handicap Parking Available",
-        Image: "images/HandicapParking.png"
-    }, {
-        FieldName: "${LightedPark}",
-        Alias: "Lighted Park",
-        Image: "images/lightedpark.png"
-    }, {
-        FieldName: "${OpenYearRound}",
-        Alias: "Open Year Round",
-        Image: "images/openyearround.png"
-    }, {
-        FieldName: "${SunriseSunset}",
-        Alias: "Sunrise Sunset",
-        Image: "images/sunrisesunset.png"
-    }, {
-        FieldName: "${ElectricHookup}",
+        FieldName: "${ELEHOOKUP}",
         Alias: "Electric Hookup",
         Image: "images/electrichookup.png"
     }, {
-        FieldName: "${WaterHookup}",
+        FieldName: "${WTRHOOKUP}",
         Alias: "Water Hookup",
         Image: "images/waterhookup.png"
     }, {
-        FieldName: "${Restrooms}",
+        FieldName: "${RESTROOM}",
         Alias: "Restrooms Available",
         Image: "images/restrooms.png"
     }, {
-        FieldName: "${FishingPier}",
+        FieldName: "${FISHPIER}",
         Alias: "Fishing Pier",
         Image: "images/fishingpier.png"
     }, {
-        FieldName: "${CanoeLanding}",
+        FieldName: "${CANOELAND}",
         Alias: "Canoe Landing",
         Image: "images/canoelanding.png"
     }, {
-        FieldName: "${WinterPool}",
+        FieldName: "${WINTERPOOL}",
         Alias: "Winter Pool",
         Image: "images/winterpool.png"
     }, {
-        FieldName: "${CourtesyDock}",
+        FieldName: "${COURTDOCK}",
         Alias: "Courtesy Dock",
         Image: "images/courtesydock.png"
     }, {
-        FieldName: "${RentalAvail}",
+        FieldName: "${BOATRENT}",
         Alias: "Rental Available",
         Image: "images/rentavail.png"
     }, {
-        FieldName: "${BoatRamp}",
+        FieldName: "${BOATRAMP}",
         Alias: "Boat Ramp",
         Image: "images/boatramp.png"
     }, {
-        FieldName: "${Marina}",
+        FieldName: "${MARINA}",
         Alias: "Marina",
         Image: "images/marina.png"
     }, {
-        FieldName: "${Fishing}",
+        FieldName: "${FISHING}",
         Alias: "Fishing",
         Image: "images/fishing.png"
     }],
@@ -273,6 +257,29 @@ dojo.declare("js.Config", null, {
     // ------------------------------------------------------------------------------------------------------------------------
 
     // Set locator settings such as locator symbol, size, display fields, match score
+
+    //DefaultLocatorSymbol:Set the image path for locator symbol. e.g. pushpin.
+    //MarkupSymbolSize:Set the image dimensions in pixels for locator symbol.
+    //DisplayText: Set the title for type of search e.g. 'Location', 'Name', 'Activity'
+    //LocatorDefaultAddress: Set the default address to search.
+    //LocatorDefaultFeature: Set the default facility to search.
+    //LocatorParameters: Required parameters to search the address candidates.
+    //                SearchField: The name of geocode service input field that accepts the search address. e.g. 'SingleLine' or 'Address'.
+    //                SearchBoundaryField: The name of geocode service input field that accepts an extent to search an input address within. e.g."searchExtent"
+    //LocatorURL: Specify URL for geocode service.
+    //LocatorOutFields: The list of outfields to be included in the result set provided by geocode service.
+    //DisplayField: Specify the outfield of geocode service. The value in this field will be displayed for search results in the application.
+    //AddressMatchScore: Required parameters to specify the accuracy of address match.
+    //                Field: Set the outfield of geocode service that contains the Address Match Score.
+    //                Value: Set the minimum score value for filtering the candidate results. The value should be a number between 0-100.
+    //AddressSearch: Candidates based on which the address search will be performed.
+    //                FilterFieldName: Set the outfield that contains the match level for geocode request. e.g. For World GeoCode, the field that contains the match level is 'Addr_type'.
+    //                FilterFieldValues: Specify the desired match levels to filter address search results. e.g. 'StreetAddress', 'StreetName' etc.
+    //PlaceNameSearch: Attributes based on which the layers will be queried when a location search is performed.
+    //                LocatorFieldValue: Set the match level for county/place search. e.g. 'POI' will contain all administrative boundary
+    //                FilterFieldName: Set the feature type for results returned by the geocode request. e.g. For World GeoCode, the field that contains the feature type is 'Type'.
+    //                FilterFieldValues: Specify the feature types to filter search results. e.g. 'county', 'city' etc.
+    //                Enabled: Sets whether the PlaceNameSearch results should be displayed or not.
     LocatorSettings: {
         DefaultLocatorSymbol: "images/RedPushpin.png",
         MarkupSymbolSize: {
@@ -283,28 +290,26 @@ dojo.declare("js.Config", null, {
             DisplayText: "Location",
             LocatorDefaultAddress: "Lake Echo Rd Tracy City TN 37387",
             LocatorParameters: {
-                SearchField: "text",
-                SearchResultField: "outFields",
-                SearchCountField: "maxLocations",
-                SearchBoundaryField: "bbox",
-                SpatialReferenceField: "outSR"
+                SearchField: "SingleLine",
+                SearchBoundaryField: "searchExtent"
             },
-            LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find",
-            CandidateFields: "Addr_type,Type,Score, Match_addr",
-            DisplayField: "${Match_addr}",
+            LocatorURL: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+            LocatorOutFields: ["Addr_Type", "Type", "Score", "Match_Addr", "xmin", "xmax", "ymin", "ymax"],
+            DisplayField: "${Match_Addr}",
             AddressMatchScore: {
                 Field: "Score",
                 Value: 80
             },
-            LocatorFieldName: 'Addr_type',
-            LocatorFieldValues: ["StreetAddress", "StreetName", "PointAddress"],
-            CountyFields: {
-                LocatorFieldValue: 'POI',
-                FieldName: 'Type',
-                Value: 'county',
-                CountySearch: true
+            AddressSearch: {
+                FilterFieldName: 'Addr_Type',
+                FilterFieldValues: ["StreetAddress", "StreetName", "PointAddress"]
             },
-            MaxResults: 200
+            PlaceNameSearch: {
+                LocatorFieldValue: "POI",
+                FilterFieldName: "Type",
+                FilterFieldValues: ["county"],
+                Enabled: true
+            }
         }, {
             DisplayText: "Name",
             LocatorDefaultFeature: "Shelby Park"

@@ -216,24 +216,9 @@ function Init() {
             CutAndPasteTimeout();
         });
 
-        function CutAndPasteTimeout() {
-            searchAddressViaPod = false;
-            setTimeout(function () {
-                LocateFeatureAndAddress();
-            }, 100);
-        }
         dojo.connect(dojo.byId("txtAddress"), "oncut", function () {
             CutAndPasteTimeout();
         });
-
-        function LocateFeatureAndAddress() {
-            if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
-                LocateAddress();
-            } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
-                LocateFeaturebyName();
-            }
-        }
-
         dojo.connect(dojo.byId("txtAddress"), "onkeyup", function (evt) {
             searchAddressViaPod = false;
             if (evt) {
@@ -317,6 +302,21 @@ function Init() {
 
         Initialize(responseObject);
     });
+}
+
+function LocateFeatureAndAddress() {
+    if (dojo.byId("tdSearchAddress").className === "tdSearchByAddress") {
+        LocateAddress();
+    } else if (dojo.byId("tdSearchFeature").className === "tdSearchByFeature") {
+        LocateFeaturebyName();
+    }
+}
+
+function CutAndPasteTimeout() {
+    searchAddressViaPod = false;
+    setTimeout(function () {
+        LocateFeatureAndAddress();
+    }, 100);
 }
 
 function AddCSSClass() {
@@ -512,26 +512,26 @@ function Initialize(responseObject) {
     dojo.byId("tdSearchFeature").innerHTML = locatorSettings.Locators[1].DisplayText;
     dojo.byId("tdSearchActivity").innerHTML = locatorSettings.Locators[2].DisplayText;
 
-    var tr = dojo.byId("tblCarousel").insertRow(0);
+    var trCarousel = dojo.byId("tblCarousel").insertRow(0);
     for (var i in order) {
         dojo.query("[type=" + order[i] + "]").forEach(function (node) {
-            var td = tr.insertCell(i);
+            var tdCarousel = trCarousel.insertCell(i);
             if (order[i] === "photogallery") {
-                td.id = "tdPhotoGallery";
+                tdCarousel.id = "tdPhotoGallery";
             }
             if (order[i] === "directions") {
-                td.id = "tdDirectionsPod";
+                tdCarousel.id = "tdDirectionsPod";
                 if (!getDirections) {
-                    td.style.display = "none";
+                    tdCarousel.style.display = "none";
                 }
             }
             if (order[i] === "comments") {
-                td.id = "tdCommentsPod";
+                tdCarousel.id = "tdCommentsPod";
                 if (!commentLayer.Visibility) {
                     dojo.byId("divComments").style.display = "none";
                 }
             }
-            td.appendChild(node);
+            tdCarousel.appendChild(node);
             node.style.width = infoBoxWidth + "px";
         });
     }

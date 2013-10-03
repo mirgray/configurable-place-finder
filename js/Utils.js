@@ -1038,13 +1038,13 @@ String.prototype.getWidth = function (fontSize) {
 //Create comment record
 
 function CreateCommentRecord(attributes, i) {
-    var table = document.createElement("table");
-    table.className = "tdRating";
-    table.cellSpacing = "0";
-    var tbody = document.createElement("tbody");
+    var tableComments = document.createElement("table");
+    tableComments.className = "tdRating";
+    tableComments.cellSpacing = "0";
+    var tBodyComments = document.createElement("tbody");
 
     var trRating = document.createElement("tr");
-    tbody.appendChild(trRating);
+    tBodyComments.appendChild(trRating);
 
     var tdRating = document.createElement("td");
     tdRating.className = "tdRating";
@@ -1052,49 +1052,49 @@ function CreateCommentRecord(attributes, i) {
     tdRating.appendChild(CreateRatingControl(true, "commentRating" + i, 0, 5));
     trRating.appendChild(tdRating);
 
-    var tr = document.createElement("tr");
-    tbody.appendChild(tr);
+    var trCaption = document.createElement("tr");
+    tBodyComments.appendChild(trCaption);
 
-    var td = document.createElement("td");
-    td.style.width = "80px";
+    var tdResult = document.createElement("td");
+    tdResult.style.width = "80px";
 
     var trDate = document.createElement("tr");
-    tbody.appendChild(trDate);
+    tBodyComments.appendChild(trDate);
 
-    var td1 = document.createElement("td");
+    var tdCaption = document.createElement("td");
     var date = new js.date();
     try {
         if (!dojo.string.substitute(commentsInfoPopupFieldsCollection.SubmitDate, attributes)) {
             dojo.string.substitute(commentsInfoPopupFieldsCollection.SubmitDate, attributes) = showNullValueAs;
-            td1.innerHTML = "Date: " + showNullValueAs;
+            tdCaption.innerHTML = "Date: " + showNullValueAs;
         } else {
 
             var utcMilliseconds = Number(dojo.string.substitute(commentsInfoPopupFieldsCollection.SubmitDate, attributes));
-            td1.innerHTML = "Date: " + dojo.date.locale.format(date.utcToLocal(date.utcTimestampFromMs(utcMilliseconds)), {
+            tdCaption.innerHTML = "Date: " + dojo.date.locale.format(date.utcToLocal(date.utcTimestampFromMs(utcMilliseconds)), {
                 datePattern: formatDateAs,
                 selector: "date"
             });
         }
     } catch (err) {
         alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
-        td1.innerHTML = "Date: " + showNullValueAs;
+        tdCaption.innerHTML = "Date: " + showNullValueAs;
     }
 
-    td1.align = "left";
-    td1.colSpan = 2;
+    tdCaption.align = "left";
+    tdCaption.colSpan = 2;
 
-    tr.appendChild(td);
-    trDate.appendChild(td1);
+    trCaption.appendChild(tdResult);
+    trDate.appendChild(tdCaption);
 
-    var tr1 = document.createElement("tr");
-    var td2 = document.createElement("td");
-    td2.id = "tdComment";
+    var trCommentsInput = document.createElement("tr");
+    var tdValue = document.createElement("td");
+    tdValue.id = "tdComment";
     if (isMobileDevice) {
-        td2.style.width = "95%";
+        tdValue.style.width = "95%";
     } else {
-        td2.style.width = (infoWindowWidth - 40) + "px";
+        tdValue.style.width = (infoWindowWidth - 40) + "px";
     }
-    td2.colSpan = 2;
+    tdValue.colSpan = 2;
     try {
         if (dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes) !== "null" || dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes)) {
             var wordCount = dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes).split(/\n/).length;
@@ -1112,33 +1112,33 @@ function CreateCommentRecord(attributes, i) {
             } else {
                 value = dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes);
             }
-            td2.innerHTML += value;
+            tdValue.innerHTML += value;
 
             if (CheckMailFormat(dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes)) || dojo.string.substitute(dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes)).match("http:") || dojo.string.substitute(dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes)).match("https:")) {
-                td2.className = "tdBreakWord";
+                tdValue.className = "tdBreakWord";
             } else {
-                td2.className = "tdBreak";
+                tdValue.className = "tdBreak";
             }
             var x = dojo.string.substitute(commentsInfoPopupFieldsCollection.Comments, attributes).split(" ");
             for (var i in x) {
                 w = x[i].getWidth(15);
                 var boxWidth = (isMobileDevice) ? (dojo.window.getBox().w - 23) : (infoWindowWidth - 40);
                 if (boxWidth < w) {
-                    td2.className = "tdBreakWord";
+                    tdValue.className = "tdBreakWord";
                     continue;
                 }
             }
         } else {
-            td2.innerHTML = showNullValueAs;
+            tdValue.innerHTML = showNullValueAs;
         }
     } catch (err) {
         alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
     }
-    tr1.appendChild(td2);
-    tbody.appendChild(tr1);
+    trCommentsInput.appendChild(tdValue);
+    tBodyComments.appendChild(trCommentsInput);
 
-    table.appendChild(tbody);
-    return table;
+    tableComments.appendChild(tBodyComments);
+    return tableComments;
 }
 
 //Create rating control
@@ -1438,22 +1438,22 @@ function AddComment() {
 
         map.getLayer(commentsLayerId).applyEdits([commentGraphic], null, null, function (msg) {
             if (!msg[0].error) {
-                var table = dojo.query("table", dojo.byId("divCommentsContent"));
-                if (table.length > 0) {
-                    var x = dojo.query("tr[noComments = 'true']", table[0]);
+                var tableCommentsContent = dojo.query("table", dojo.byId("divCommentsContent"));
+                if (tableCommentsContent.length > 0) {
+                    var x = dojo.query("tr[noComments = 'true']", tableCommentsContent[0]);
                     if (x.length > 0) {
-                        RemoveChildren(table[0]);
+                        RemoveChildren(tableCommentsContent[0]);
                     }
-                    var tr = table[0].insertRow(0);
+                    var trCommentsContent = tableCommentsContent[0].insertRow(0);
                     var commentsCell = document.createElement("td");
                     commentsCell.className = "bottomborder";
-                    var index = dojo.query("tr", table[0]).length;
+                    var index = dojo.query("tr", tableCommentsContent[0]).length;
                     if (index) {
                         index = 0;
                     }
                     var controlId = "info_" + index;
                     commentsCell.appendChild(CreateCommentRecord(attr, controlId));
-                    tr.appendChild(commentsCell);
+                    trCommentsContent.appendChild(commentsCell);
                     CreateRatingWidget(dojo.byId("commentRating" + controlId));
                     SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
                     if (defaultFeature) {
@@ -1466,7 +1466,7 @@ function AddComment() {
                                 }
                                 dojo.byId("divComments").style.display = "block";
                                 ResetSlideControls();
-                                var tr = commentsTable[0].insertRow(0);
+                                var trCommentsContent = commentsTable[0].insertRow(0);
                                 var commentsCell = document.createElement("td");
                                 commentsCell.className = "bottomborder";
                                 var index = dojo.query("tr", dojo.byId("tblComment")).length;
@@ -1475,7 +1475,7 @@ function AddComment() {
                                 }
                                 var controlId = index;
                                 commentsCell.appendChild(CreateCommentRecord(attr, controlId));
-                                tr.appendChild(commentsCell);
+                                trCommentsContent.appendChild(commentsCell);
                                 CreateRatingWidget(dojo.byId("commentRating" + controlId));
                                 SetRating(dojo.byId("commentRating" + controlId), attr[databaseFields.RankFieldName]);
                             }
@@ -1828,7 +1828,7 @@ function NewAddressSearch() {
         }
         lastPodSearchString = dojo.byId("txtPodAddress").value;
 
-        dojo.byId("txtPodAddress").onkeyup = function (evt) {
+        dojo.connect(dojo.byId("txtPodAddress"), "onkeyup", function (evt) {
             searchAddressViaPod = true;
 
             if (evt) {
@@ -1882,17 +1882,24 @@ function NewAddressSearch() {
                     CreateScrollbar(dojo.byId("divPodAddressScrollContainer"), dojo.byId("divPodAddressScrollContent"));
                 }
             }
-        };
+        });
 
         dojo.connect(dojo.byId("txtPodAddress"), "onpaste", function () {
-            CutAndPasteTimeout();
+            searchAddressViaPod = true;
+            setTimeout(function () {
+                LocateAddress();
+            }, 100);
         });
 
         dojo.connect(dojo.byId("txtPodAddress"), "oncut", function () {
-            CutAndPasteTimeout();
+            searchAddressViaPod = true;
+            setTimeout(function () {
+                LocateAddress();
+            }, 100);
         });
 
         dojo.byId("imgPodSearchLocate").onclick = function () {
+            searchAddressViaPod = true;
             if (dojo.byId("txtPodAddress").value.trim() === "") {
                 alert(messages.getElementsByTagName("addressToLocate")[0].childNodes[0].nodeValue);
                 return;
