@@ -1,4 +1,4 @@
-﻿/*global dojo */
+/*global dojo */
 /** @license
  | Version 10.2
  | Copyright 2012 Esri
@@ -134,8 +134,8 @@ dojo.declare("js.Config", null, {
     // DisplayOnLoad setting is used to show or hide the reference overlay layer. Reference overlay will be shown when it is set to true
 
     ReferenceOverlayLayer: {
-        ServiceUrl: "http://50.18.115.76:6080/arcgis/rest/services/HuntableLands/MapServer/0",
-        DisplayOnLoad: true
+        ServiceUrl: "",
+        DisplayOnLoad: false
     },
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -302,12 +302,12 @@ dojo.declare("js.Config", null, {
             },
             AddressSearch: {
                 FilterFieldName: 'Addr_Type',
-                FilterFieldValues: ["StreetAddress", "StreetName", "PointAddress"]
+                FilterFieldValues: ["StreetAddress", "StreetName", "PointAddress", "POI"]
             },
             PlaceNameSearch: {
                 LocatorFieldValue: "POI",
                 FilterFieldName: "Type",
-                FilterFieldValues: ["county"],
+                FilterFieldValues: ["county", "city", "park","lake", "mountain", "state or province", "state capital"],
                 Enabled: true
             }
         }, {
