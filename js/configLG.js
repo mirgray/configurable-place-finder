@@ -262,7 +262,7 @@ dojo.declare("js.Config", null, {
 
     //Set this variable to true/false to enable/disable directions
     //if this master variable is set to false directions cannot be enabled for any of the devices
-    GetDirections: true,
+    GetDirections: false,
 
     //Set this variable to true/false to enable/disable directions for Mobile/tablet
     GetDirectionsMobile: true,
