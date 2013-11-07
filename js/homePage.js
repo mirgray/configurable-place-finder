@@ -491,6 +491,7 @@ function Initialize(responseObject) {
     facilityId = responseObject.PrimaryKeyForFeatures;
     foreignKeyforComments = responseObject.ForeignKeyforComments;
     bufferDistance = responseObject.BufferDistance;
+    textForGeoLocation = responseObject.TextForGeoLocation;
     order = responseObject.Order;
     routeTask = new esri.tasks.RouteTask(responseObject.RouteServiceURL);
     dojo.connect(routeTask, "onSolveComplete", ShowRoute);

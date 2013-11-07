@@ -340,7 +340,7 @@ function CreateExtentForCounty(ext) {
 }
 //Locate searched address on map with pushpin graphic
 
-function LocateAddressOnMap(countySearch, countyExtent) {
+function LocateAddressOnMap(countySearch, countyExtent, currentAddress) {
     map.infoWindow.hide();
     map.getLayer(tempGraphicsLayerId).clear();
     for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
@@ -389,7 +389,7 @@ function LocateAddressOnMap(countySearch, countyExtent) {
     }
 
     var attr = {
-        Address: dojo.byId("txtAddress").value
+        Address: currentAddress ? currentAddress: dojo.byId("txtAddress").value
     };
     var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
     map.getLayer(tempGraphicsLayerId).add(graphic);

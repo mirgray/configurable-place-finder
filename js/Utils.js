@@ -203,14 +203,14 @@ function ShowMyLocation() {
                         imgArray = [];
                         var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.DefaultLocatorSymbol, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
                         var attr = {
-                            Address: "My Location"
+                            Address: textForGeoLocation
                         };
                         var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
                         map.getLayer(tempGraphicsLayerId).add(graphic);
                         QueryLayer(null, mapPoint, true);
                         isFeatureSearched = false;
                     } else {
-                        LocateAddressOnMap(null);
+                        LocateAddressOnMap(null, null, textForGeoLocation);
                     }
                 });
             },
