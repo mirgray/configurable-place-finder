@@ -24,7 +24,7 @@ var index = 0; // variable to store index of the image
 var imgFiles = []; // variable to store image files
 var fromInfoWindow = false; //flag set to true if the attachments are from info window
 var lastPodSearchString;
-
+var currentLocation = false;
 //Refresh address container div
 
 function RemoveChildren(parentNode) {
@@ -203,14 +203,15 @@ function ShowMyLocation() {
                         imgArray = [];
                         var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.DefaultLocatorSymbol, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
                         var attr = {
-                            Address: "My Location"
+                            Address: textForGeoLocation
                         };
                         var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
                         map.getLayer(tempGraphicsLayerId).add(graphic);
                         QueryLayer(null, mapPoint, true);
                         isFeatureSearched = false;
                     } else {
-                        LocateAddressOnMap(null);
+                        currentLocation = true;
+                        LocateAddressOnMap(null, null, textForGeoLocation);
                     }
                 });
             },

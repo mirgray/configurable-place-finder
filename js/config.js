@@ -53,14 +53,15 @@ dojo.declare("js.Config", null, {
     // 14. Customize zoom level settings              - [ Tag(s) to look for: ZoomLevel ]
     // 15. Customize database fields settings         - [ Tag(s) to look for: DatabaseFields ]
     // 16. Customize Comments infoPopup settings      - [ Tag(s) to look for: CommentsInfoPopupFieldsCollection ]
-    // 17. Set URL for geometry service               - [ Tag(s) to look for: GeometryService ]
+    // 17. Customize text for GeoLocation             - [ Tag(s) to look for: TextForGeoLocation ]
+    // 18. Set URL for geometry service               - [ Tag(s) to look for: GeometryService ]
 
-    // 18. Customize routing settings for directions  - [ Tag(s) to look for: RouteServiceURL, RouteColor, RouteWidth ]
+    // 19. Customize routing settings for directions  - [ Tag(s) to look for: RouteServiceURL, RouteColor, RouteWidth ]
 
-    // 19. Configure data to be displayed on the bottom panel
+    // 20. Configure data to be displayed on the bottom panel
     //                                                - [ Tag(s) to look for: InfoBoxWidth, Order]
 
-    // 20. Specify URLs for map sharing               - [ Tag(s) to look for: MapSharingOptions, TinyURLServiceURL, TinyURLResponseAttribute, FacebookShareURL, TwitterShareURL, ShareByMailLink ]
+    // 21. Specify URLs for map sharing               - [ Tag(s) to look for: MapSharingOptions, TinyURLServiceURL, TinyURLResponseAttribute, FacebookShareURL, TwitterShareURL, ShareByMailLink ]
 
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -339,6 +340,9 @@ dojo.declare("js.Config", null, {
         SubmitDate: "${SUBMITDT}",
         Comments: "${COMMENTS}"
     },
+
+    // Set default text for geolocation
+    TextForGeoLocation: "My Location",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // GEOMETRY SERVICE SETTINGS

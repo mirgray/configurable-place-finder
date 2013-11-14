@@ -340,7 +340,7 @@ function CreateExtentForCounty(ext) {
 }
 //Locate searched address on map with pushpin graphic
 
-function LocateAddressOnMap(countySearch, countyExtent) {
+function LocateAddressOnMap(countySearch, countyExtent, currentAddress) {
     map.infoWindow.hide();
     map.getLayer(tempGraphicsLayerId).clear();
     for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
@@ -389,7 +389,7 @@ function LocateAddressOnMap(countySearch, countyExtent) {
     }
 
     var attr = {
-        Address: dojo.byId("txtAddress").value
+        Address: currentAddress ? currentAddress: dojo.byId("txtAddress").value
     };
     var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
     map.getLayer(tempGraphicsLayerId).add(graphic);
@@ -738,9 +738,10 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
                     screenPoint.y = map.height - screenPoint.y;
                     map.infoWindow.show(screenPoint);
                     map.setExtent(GetInfoWindowMobileMapExtent(mapPoint));
-                    map.infoWindow.setTitle(dojo.byId("txtAddress").value.trimString(18), function () {
+                    map.infoWindow.setTitle((currentLocation) ? textForGeoLocation : dojo.byId("txtAddress").value.trimString(18), function () {
                         ShowSearchResultsContainer();
                     });
+                    currentLocation = false;
                     map.infoWindow.setContent("");
                 } else {
                     ShowSearchResultsContainer();
