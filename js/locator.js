@@ -738,9 +738,10 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
                     screenPoint.y = map.height - screenPoint.y;
                     map.infoWindow.show(screenPoint);
                     map.setExtent(GetInfoWindowMobileMapExtent(mapPoint));
-                    map.infoWindow.setTitle(dojo.byId("txtAddress").value.trimString(18), function () {
+                    map.infoWindow.setTitle((currentLocation) ? textForGeoLocation : dojo.byId("txtAddress").value.trimString(18), function () {
                         ShowSearchResultsContainer();
                     });
+                    currentLocation = false;
                     map.infoWindow.setContent("");
                 } else {
                     ShowSearchResultsContainer();
