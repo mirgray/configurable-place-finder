@@ -68,7 +68,7 @@ dojo.declare("js.Config", null, {
     // GENERAL SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set application title
-    ApplicationName: "Water Access Locator",
+    ApplicationName: "Configurable Place Finder",
 
     // Set application icon path
     ApplicationIcon: "images/i_hydro.png",
@@ -81,7 +81,7 @@ dojo.declare("js.Config", null, {
 
     // Set splash window content - Message that appears when the application starts
     SplashScreen: {
-        Message: "The Water Access Locator helps you locate a boat ramp, marina, or fishing site within the state. When you click on a boat ramp, marina or fishing site you will see the amenities offered at each site and activities supported at each site.",
+        Message: "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.",
         isVisible: false
     },
 
@@ -94,10 +94,10 @@ dojo.declare("js.Config", null, {
     // Set baseMap layers
     // Please note: All base-maps need to use the same spatial reference. By default, on application start the first base-map will be loaded
     BaseMapLayers: [{
-        Key: "natMap",
-        ThumbnailSource: "images/nationalgeo.png",
-        Name: "National Topographic Map",
-        MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer"
+        Key: "topoMap",
+        ThumbnailSource: "images/topographic.jpg",
+        Name: "Topographic Map",
+        MapURL: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
     }, {
         Key: "streets",
         ThumbnailSource: "images/streets.png",
@@ -114,16 +114,16 @@ dojo.declare("js.Config", null, {
 
     // Configure operational layers:
     //URL used for doing query task on the feature layer
-    FacilityLayer: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/0",
+    FacilityLayer: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/0",
     //Set the primary key attribute for features
-    PrimaryKeyForFeatures: "${SITEID}",
+    PrimaryKeyForFeatures: "${OBJECTID}",
 
 
     CommentsLayer: {
         //Set to true if comments need to be displayed , or false if not required
         Visibility: true,
         //URL used for doing query task on the comments layer
-        URL: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/1"
+        URL: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1"
     },
     //Set the foreign key attribute for comments
     ForeignKeyforComments: "${id}",
@@ -152,8 +152,8 @@ dojo.declare("js.Config", null, {
 
     // Set content/fields for the callout window in Smartphone's
     InfoWindowContent: [{
-        FieldName: "${COUNTY}",
-        Alias: "County"
+        FieldName: "${MANAGEUNIT}",
+        Alias: "Manage Unit"
     }],
 
     // ------------------------------------------------------------------------------------------------------------------------
@@ -162,45 +162,33 @@ dojo.declare("js.Config", null, {
     // Info-popup is a popup dialog that gets displayed on selecting a feature
     // Set the content to be displayed on the info-Popup. Define labels, field values, field types and field formats
     InfoPopupFieldsCollection: [{
-        DisplayText: "County:",
-        FieldName: "${COUNTY}"
+        DisplayText: "Access Fee:",
+        FieldName: "${ACCESSFEE}"
     }, {
         DisplayText: "Hours Open For:",
         FieldName: "${OPERHOURS}"
     }, {
-        DisplayText: "Access Fee:",
-        FieldName: "${ACCESSFEE}"
+        DisplayText: "Management Unit:",
+        FieldName: "${MANAGEUNIT}"
     }, {
-        DisplayText: "Ramp Type:",
-        FieldName: "${RAMPTYPE}"
+        DisplayText: "Facility Type:",
+        FieldName: "${Type}"
     }],
 
     //Activities to be displayed in info window for a feature
     Activities: [{
         FieldName: "${FOURWHEEL}",
-        Alias: "Four Wheel",
-        Image: "images/all_terrain_trail.png",
+        Alias: "FourWheel",
+        Image: "images/fourwheel.png",
         isSelected: true
-    }, {
-        FieldName: "${ADACOMPLY}",
-        Alias: "Handicap Parking Available",
-        Image: "images/HandicapParking.png"
-    }, {
-        FieldName: "${PARKLIGHTS}",
-        Alias: "Lighted Park",
-        Image: "images/lightedpark.png"
-    }, {
-        FieldName: "${ACCESSFEE}",
-        Alias: "Access Fee",
-        Image: "images/atm.png"
-    }, {
-        FieldName: "${WTRHOOKUP}",
-        Alias: "Water Hookup",
-        Image: "images/waterhookup.png"
     }, {
         FieldName: "${ELEHOOKUP}",
         Alias: "Electric Hookup",
         Image: "images/electrichookup.png"
+    }, {
+        FieldName: "${WTRHOOKUP}",
+        Alias: "Water Hookup",
+        Image: "images/waterhookup.png"
     }, {
         FieldName: "${RESTROOM}",
         Alias: "Restrooms Available",
@@ -224,19 +212,15 @@ dojo.declare("js.Config", null, {
     }, {
         FieldName: "${BOATRENT}",
         Alias: "Rental Available",
-        Image: "images/boat_tour.png"
+        Image: "images/rentavail.png"
     }, {
         FieldName: "${BOATRAMP}",
         Alias: "Boat Ramp",
-        Image: "images/boat_launch.png"
+        Image: "images/boatramp.png"
     }, {
         FieldName: "${MARINA}",
         Alias: "Marina",
         Image: "images/marina.png"
-    }, {
-        FieldName: "${TRAILPARK}",
-        Alias: "Trailer Parking",
-        Image: "images/boat_launch.png"
     }, {
         FieldName: "${FISHING}",
         Alias: "Fishing",
@@ -339,7 +323,7 @@ dojo.declare("js.Config", null, {
     LocatorRippleSize: 40,
 
     //Set the Zoom Level
-    ZoomLevel: 15,
+    ZoomLevel: 12,
     // Define the database field names
     // Note: DateFieldName refers to a date database field.
     // All other attributes refer to text database fields.
