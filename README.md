@@ -36,7 +36,7 @@ Esri's sample services can be used with this repository to extend the applicatio
 
 ## Resources
 
-Learn more about Esri's [ArcGIS for State and Local Government maps and apps](http://resources.arcgis.com/en/communities/state-government/).
+Learn more about Esri's [ArcGIS for State Government maps and apps](http://solutions.arcgis.com/state-government/).
 
 Show me a list of other [Government GitHub repositories](http://esri.github.io/#Government).
 
