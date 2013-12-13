@@ -81,7 +81,7 @@ dojo.declare("js.Config", null, {
 
     // Set splash window content - Message that appears when the application starts
     SplashScreen: {
-        Message: "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.",
+        Message: "<center>Welcome to the <b> Water Access Locator</b></center><hr><br> The <b> Water Access Locator</b> helps you locate a boat ramp, marina, or fishing site within the state.<br><br> To locate a site, simply enter an address, name, select activities, or use your current location. The water access sites  will then be highlighted on the map and relevant information about each site will be presented to the user.",
         isVisible: false
     },
 
@@ -114,7 +114,7 @@ dojo.declare("js.Config", null, {
 
     // Configure operational layers:
     //URL used for doing query task on the feature layer
-    FacilityLayer: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/0",
+    FacilityLayer: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/0",
     //Set the primary key attribute for features
     PrimaryKeyForFeatures: "${OBJECTID}",
 
@@ -123,7 +123,7 @@ dojo.declare("js.Config", null, {
         //Set to true if comments need to be displayed , or false if not required
         Visibility: true,
         //URL used for doing query task on the comments layer
-        URL: "http://50.18.115.76:6080/arcgis/rest/services/WaterAccess/FeatureServer/1"
+        URL: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/0"
     },
     //Set the foreign key attribute for comments
     ForeignKeyforComments: "${id}",
