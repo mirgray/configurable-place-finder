@@ -3,7 +3,7 @@
 The Configurable Place Finder application is a configuration of ArcGIS for Server and a JavaScript application
 that allows the public to locate parks, recreational opportunities boat ramps etc. in their community.
 
-![Image of Configurable Place Finder application](https://raw.github.com/Esri/configurable-place-finder/master/configurable-place-finder.png "Configurable Place Finder application")
+![Image of Configurable Place Finder application](configurable-place-finder.png "Configurable Place Finder application")
 
 ## Features
 
