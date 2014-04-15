@@ -1,5 +1,6 @@
-﻿/** @license
- | Version 10.2
+﻿/*global */
+/*jslint browser:true,sloppy:true,nomen:true,unparam:true,plusplus:true */
+/*
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -883,7 +884,7 @@ function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {
                     parent.location = "mailto:" + this.getAttribute("email");
                 };
                 tdFieldName.appendChild(mail);
-            } else if (fieldValue.match("http:" || "https:")) {
+            } else if (fieldValue.match("http:") || fieldValue.match("https:")) {
                 tdFieldName.innerHTML = "";
                 var link = document.createElement("u");
                 link.className = "mailLink";

@@ -1,6 +1,6 @@
 ﻿/*global dojo */
-/** @license
- | Version 10.2
+/*jslint browser:true,sloppy:true,nomen:true,unparam:true,plusplus:true */
+/*
  | Copyright 2012 Esri
  |
  | Licensed under the Apache License, Version 2.0 (the "License");
@@ -301,7 +301,7 @@ dojo.declare("js.Config", null, {
     //                LocatorFieldValue: Set the match level for county/place search. e.g. 'POI' will contain all administrative boundary
     //                FilterFieldName: Set the feature type for results returned by the geocode request. e.g. For World GeoCode, the field that contains the feature type is 'Type'.
     //                FilterFieldValues: Specify the feature types to filter search results. e.g. 'county', 'city' etc.
-    //                Enabled: Sets whether the PlaceNameSearch results should be displayed or not. 
+    //                Enabled: Sets whether the PlaceNameSearch results should be displayed or not.
     LocatorSettings: {
         DefaultLocatorSymbol: "images/RedPushpin.png",
         MarkupSymbolSize: {
