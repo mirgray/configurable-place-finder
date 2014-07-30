@@ -37,11 +37,11 @@
     <numberOfFeaturesFoundNearCounty>Found ${0} facility(ies) in the Searched county</numberOfFeaturesFoundNearCounty>
     <numberOfFeaturesFoundBySearch>Found ${0} facility(ies) matching the searched criteria</numberOfFeaturesFoundBySearch>
     <noPhotosAvailable>There are no photos available.</noPhotosAvailable>
-    <commentsErrorMessage>Unable to add comments. Comments table is either absent or doesnot have write access.</commentsErrorMessage>
-    <falseConfigParams>Required configuration key values are either null or not exactly matching with layer attributes, This message may appear multiple times.</falseConfigParams>
+    <commentsErrorMessage>Unable to add comments. Comments table is either absent or does not have write access.</commentsErrorMessage>
+    <falseConfigParams>Required configuration key values are either null or not exactly matching with layer attributes. This message may appear multiple times.</falseConfigParams>
     <referenceOverlayError>Unable to load reference overlay layer.</referenceOverlayError>
-	<missingFacilityLayerURL>Please add facility layer URL in config file.</missingFacilityLayerURL>
-	<blankInfoPopupFields>Info-Popup fields are blank. Please configure Info-Popup fields.</blankInfoPopupFields>
-	<noBaseMapURL>Basemap URLs are not configured. Please configure base map URLs.</noBaseMapURL>
-	<serviceError>Service is taking too long to respond. Please contact Website Admin.</serviceError>
+    <missingFacilityLayerURL>Please add facility layer URL in config file.</missingFacilityLayerURL>
+    <blankInfoPopupFields>Info-Popup fields are blank. Please configure Info-Popup fields.</blankInfoPopupFields>
+    <noBaseMapURL>Basemap URLs are not configured. Please configure base map URLs.</noBaseMapURL>
+    <serviceError>Service is taking too long to respond. Please contact Website Admin.</serviceError>
 </Messages>
