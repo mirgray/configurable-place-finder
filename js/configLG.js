@@ -261,8 +261,11 @@ dojo.declare("js.Config", null, {
     //set distance in miles for drawing the buffer
     BufferDistance: "1",
 
-    //Set this variable to true/false to enable/disable directions
+    //Set this variable to true/false to enable/disable directions and will consume credits
+    //Enabling the "GetDirections" parameter will draw routes and provide directions using the ArcGIS Online World Route Service. 
+    //The World Route Service is an ArcGIS Online for organizations subscription service that uses credits when routes are generated.
     //if this master variable is set to false directions cannot be enabled for any of the devices
+    
     GetDirections: false,
 
     //Set this variable to true/false to enable/disable directions for Mobile/tablet
