@@ -123,7 +123,7 @@ dojo.declare("js.Config", null, {
         //Set to true if comments need to be displayed , or false if not required
         Visibility: true,
         //URL used for doing query task on the comments layer
-        URL: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/0"
+        URL: "http://arcgis-gov-1244222493.us-west-2.elb.amazonaws.com/arcgis/rest/services/WaterAccess/FeatureServer/1"
     },
     //Set the foreign key attribute for comments
     ForeignKeyforComments: "${id}",
