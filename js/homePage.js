@@ -515,6 +515,7 @@ function Initialize(responseObject) {
     dojo.byId("tdSearchActivity").innerHTML = locatorSettings.Locators[2].DisplayText;
 
     esri.addProxyRule({proxyUrl: esri.config.defaults.io.proxyUrl, urlPrefix: commentLayer.URL});
+    esri.addProxyRule({proxyUrl: esri.config.defaults.io.proxyUrl, urlPrefix: responseObject.RouteServiceURL});
 
     var trCarousel = dojo.byId("tblCarousel").insertRow(0);
     for (var i in order) {
