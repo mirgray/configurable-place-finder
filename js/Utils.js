@@ -1019,6 +1019,7 @@ function FetchComments(facilityID, isInfoView) {
             }, 1000);
         }
     }, function (err) {
+        HideProgressIndicator();
         alert(messages.getElementsByTagName("commentsErrorMessage")[0].childNodes[0].nodeValue);
     });
 }
