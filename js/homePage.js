@@ -124,7 +124,7 @@ var androidTouchIcon; //variable to store Android touch icon object
 function Init() {
 
     esri.config.defaults.io.proxyUrl = "proxy.ashx"; //relative path
-    esriConfig.defaults.io.alwaysUseProxy = true;
+    esriConfig.defaults.io.alwaysUseProxy = false;
     esriConfig.defaults.io.timeout = 180000; // milliseconds
 
     var userAgent = window.navigator.userAgent;
@@ -513,6 +513,9 @@ function Initialize(responseObject) {
     dojo.byId("tdSearchAddress").innerHTML = locatorSettings.Locators[0].DisplayText;
     dojo.byId("tdSearchFeature").innerHTML = locatorSettings.Locators[1].DisplayText;
     dojo.byId("tdSearchActivity").innerHTML = locatorSettings.Locators[2].DisplayText;
+
+    esri.addProxyRule({proxyUrl: esri.config.defaults.io.proxyUrl, urlPrefix: commentLayer.URL});
+    esri.addProxyRule({proxyUrl: esri.config.defaults.io.proxyUrl, urlPrefix: responseObject.RouteServiceURL});
 
     var trCarousel = dojo.byId("tblCarousel").insertRow(0);
     for (var i in order) {
