@@ -188,76 +188,91 @@ function ShowMyLocation() {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                map.getLayer(tempGraphicsLayerId).clear();
-                clearTimeout(backupTimeoutTimer);
-                ShowProgressIndicator();
-                mapPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, new esri.SpatialReference({
-                    wkid: 4326
-                }));
-                var graphicCollection = new esri.geometry.Multipoint(new esri.SpatialReference({
-                    wkid: 4326
-                }));
-                graphicCollection.addPoint(mapPoint);
-                geometryService.project([graphicCollection], map.spatialReference, function (newPointCollection) {
-                    mapPoint = newPointCollection[0].getPoint(0);
-                    if (isFeatureSearched) {
-                        imgArray = [];
-                        var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.DefaultLocatorSymbol, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
-                        var attr = {
-                            Address: textForGeoLocation
-                        };
-                        var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
-                        map.getLayer(tempGraphicsLayerId).add(graphic);
-                        QueryLayer(null, mapPoint, true);
-                        isFeatureSearched = false;
-                    } else {
-                        currentLocation = true;
-                        LocateAddressOnMap(null, null, textForGeoLocation);
-                    }
-                });
+                // Only use the position if the browser has given us one that at least has the potential
+                // of being correct
+                if (Math.round(position.coords.longitude) !== 0 || Math.round(position.coords.latitude) !== 0) {
+                    map.getLayer(tempGraphicsLayerId).clear();
+                    clearTimeout(backupTimeoutTimer);
+                    ShowProgressIndicator();
+                    mapPoint = new esri.geometry.Point(position.coords.longitude, position.coords.latitude, new esri.SpatialReference({
+                        wkid: 4326
+                    }));
+                    var graphicCollection = new esri.geometry.Multipoint(new esri.SpatialReference({
+                        wkid: 4326
+                    }));
+                    graphicCollection.addPoint(mapPoint);
+                    geometryService.project([graphicCollection], map.spatialReference, function (newPointCollection) {
+                        mapPoint = newPointCollection[0].getPoint(0);
+                        if (isFeatureSearched) {
+                            imgArray = [];
+                            var symbol = new esri.symbol.PictureMarkerSymbol(locatorSettings.DefaultLocatorSymbol, locatorSettings.MarkupSymbolSize.width, locatorSettings.MarkupSymbolSize.height);
+                            var attr = {
+                                Address: textForGeoLocation
+                            };
+                            var graphic = new esri.Graphic(mapPoint, symbol, attr, null);
+                            map.getLayer(tempGraphicsLayerId).add(graphic);
+                            QueryLayer(null, mapPoint, true);
+                            isFeatureSearched = false;
+                        } else {
+                            currentLocation = true;
+                            LocateAddressOnMap(null, null, textForGeoLocation);
+                        }
+                    });
+                } else {
+                    reportGeolocationError();
+                }
             },
 
             function (error) {
-                clearTimeout(backupTimeoutTimer);
-                HideProgressIndicator();
-                switch (error.code) {
-                    case error.TIMEOUT:
-                        alert(messages.getElementsByTagName("geolocationTimeout")[0].childNodes[0].nodeValue);
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert(messages.getElementsByTagName("geolocationPositionUnavailable")[0].childNodes[0].nodeValue);
-                        break;
-                    case error.PERMISSION_DENIED:
-                        alert(messages.getElementsByTagName("geolocationPermissionDenied")[0].childNodes[0].nodeValue);
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        alert(messages.getElementsByTagName("geolocationUnKnownError")[0].childNodes[0].nodeValue);
-                        break;
-                }
-                if (isFeatureSearched) {
-                    imgArray = [];
-                    QueryLayer(null, null, true);
-                    setTimeout(function () {
-                        if (isMobileDevice) {
-                            map.centerAndZoom(selectedFeature, zoomLevel);
-                            setTimeout(function () {
-                                map.infoWindow.hide();
-                                var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
-                                var ycenter = (map.extent.ymin + map.extent.ymax) / 2;
-                                selectedFeature = new esri.geometry.Point(xcenter, ycenter, map.spatialReference);
-                                map.setExtent(GetInfoWindowMobileMapExtent(selectedFeature));
-                            }, 1000);
-                        }
-                        else {
-                            map.centerAndZoom(selectedFeature, zoomLevel);
-                        }
-                    }, 500);
-                }
+                reportGeolocationError(error);
             }, {
                 timeout: 10000
             });
     }
 }
+
+function reportGeolocationError(error) {
+    clearTimeout(backupTimeoutTimer);
+    HideProgressIndicator();
+    if (error) {
+        switch (error.code) {
+            case error.TIMEOUT:
+                alert(messages.getElementsByTagName("geolocationTimeout")[0].childNodes[0].nodeValue);
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert(messages.getElementsByTagName("geolocationPositionUnavailable")[0].childNodes[0].nodeValue);
+                break;
+            case error.PERMISSION_DENIED:
+                alert(messages.getElementsByTagName("geolocationPermissionDenied")[0].childNodes[0].nodeValue);
+                break;
+            case error.UNKNOWN_ERROR:
+                alert(messages.getElementsByTagName("geolocationUnKnownError")[0].childNodes[0].nodeValue);
+                break;
+        }
+    } else {
+        alert(messages.getElementsByTagName("geolocationPositionUnavailable")[0].childNodes[0].nodeValue);
+    }
+    if (isFeatureSearched) {
+        imgArray = [];
+        QueryLayer(null, null, true);
+        setTimeout(function () {
+            if (isMobileDevice) {
+                map.centerAndZoom(selectedFeature, zoomLevel);
+                setTimeout(function () {
+                    map.infoWindow.hide();
+                    var xcenter = (map.extent.xmin + map.extent.xmax) / 2;
+                    var ycenter = (map.extent.ymin + map.extent.ymax) / 2;
+                    selectedFeature = new esri.geometry.Point(xcenter, ycenter, map.spatialReference);
+                    map.setExtent(GetInfoWindowMobileMapExtent(selectedFeature));
+                }, 1000);
+            }
+            else {
+                map.centerAndZoom(selectedFeature, zoomLevel);
+            }
+        }, 500);
+    }
+}
+
 
 //Handle orientation change event
 
