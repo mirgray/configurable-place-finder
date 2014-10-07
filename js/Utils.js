@@ -759,7 +759,6 @@ function CreateScrollbar(container, content) {
     };
 
     var startPos;
-    var scrollingTimer;
 
     dojo.connect(container, "touchstart", function (evt) {
         touchStartHandler(evt);
@@ -769,8 +768,12 @@ function CreateScrollbar(container, content) {
         touchMoveHandler(evt);
     });
 
-    dojo.connect(container, "touchend", function (evt) {
-        touchEndHandler(evt);
+    dojo.connect(content, "touchstart", function (evt) {
+        // Needed for iOS 8
+    });
+
+    dojo.connect(content, "touchmove", function (evt) {
+        // Needed for iOS 8
     });
 
     //Handlers for Touch Events
@@ -781,55 +784,26 @@ function CreateScrollbar(container, content) {
 
     function touchMoveHandler(e) {
         var touch = e.touches[0];
-        e.cancelBubble = true;
-        if (e.stopPropagation) {
-            e.stopPropagation();
-        }
+        if (e.cancelBubble) e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
         e.preventDefault();
 
-        pxTop = scrollbar_handle.offsetTop;
-        var y;
-        if (startPos > touch.pageY) {
-            if (isTablet) {
-                y = pxTop + 5;
-            }
-            else {
-                y = pxTop + 10;
-            }
-        } else {
-            if (isTablet) {
-                y = pxTop - 5;
-            }
-            else {
-                y = pxTop - 10;
-            }
-        }
+        var change = startPos - touch.pageY;
+        if (change !== 0) {
+            pxTop = scrollbar_handle.offsetTop;
+            var y = pxTop + change;
 
-        //setting scrollbar handle
-        if (y > yMax) {
-            y = yMax;
-        } // Limit vertical movement
-        if (y < 0) {
-            y = 0;
-        } // Limit vertical movement
-        setTimeout(function () {
+            //setting scrollbar handle
+            if (y > yMax) y = yMax // Limit vertical movement
+            if (y < 0) y = 0 // Limit vertical movement
             scrollbar_handle.style.top = y + "px";
+
             //setting content position
             content.scrollTop = Math.round(scrollbar_handle.offsetTop / yMax * (content.scrollHeight - content.offsetHeight));
 
-            scrolling = true;
-
             startPos = touch.pageY;
-        }, 100);
+        }
     }
-
-    function touchEndHandler(e) {
-        scrollingTimer = setTimeout(function () {
-            clearTimeout(scrollingTimer);
-            scrolling = false;
-        }, 100);
-    }
-    //touch scrollbar end
 }
 
 //Validate Email
