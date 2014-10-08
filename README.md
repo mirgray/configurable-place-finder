@@ -45,7 +45,7 @@ Show me a list of other [Government GitHub repositories](http://esri.github.io/#
 Additional [information and sample data](http://www.arcgis.com/home/item.html?id=a57e96b9240e4311b7fd863b80a6d389)
 are available for the application.
 
-This application uses the 3.5 version of
+This application uses the 3.11 version of
 [Esri's ArcGIS API for JavaScript](http://help.arcgis.com/en/webapi/javascript/arcgis/);
 see the site for concepts, samples, and a reference for using the API to create mapping web sites.
 
