@@ -903,6 +903,7 @@ function ShowFeatureInfoDetails(selectedFeature, attributes) {
     ShowProgressIndicator();
     var featureID = attributes[map.getLayer(devPlanLayerID).objectIdField];
     RelationshipQuery(selectedFeature, featureID, attributes, isFeatureSearched);
+    HideProgressIndicator();
 }
 
 //Sort comments according to date
