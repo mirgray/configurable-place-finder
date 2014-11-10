@@ -110,6 +110,14 @@ input[placeholder], [placeholder], *[placeholder]
     behavior: url("styles/PIE.htc");
 }
 
+.esriSignInDialog
+{
+    background: rgba(55,96,146,0.90);
+    -pie-background: rgba(55,96,146,0.90);
+    behavior: url("styles/PIE.htc");
+    padding: 10px;
+}
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*AddressContainer Styles*/
 

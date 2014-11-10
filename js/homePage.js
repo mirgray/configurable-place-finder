@@ -123,7 +123,7 @@ var androidTouchIcon; //variable to store Android touch icon object
 
 function Init() {
 
-    esri.config.defaults.io.proxyUrl = "proxy.ashx"; //relative path
+    esri.config.defaults.io.proxyUrl = "proxy/proxy.ashx"; //relative path
     esriConfig.defaults.io.alwaysUseProxy = false;
     esriConfig.defaults.io.timeout = 180000; // milliseconds
 
