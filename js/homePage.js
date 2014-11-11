@@ -20,7 +20,6 @@ dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
 dojo.require("esri.tasks.locator");
 dojo.require("dojo.date.locale");
-dojo.require("dojox.mobile");
 dojo.require("js.Config");
 dojo.require("dojo.window");
 dojo.require("js.date");
