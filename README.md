@@ -77,5 +77,5 @@ limitations under the License.
 A copy of the license is available in the repository's
 [LICENSE.txt](LICENSE.txt) file.
 
-[](Esri Tags: State-Government Local-Government State Local Government Configurable Place Finder)
+[](Esri Tags: ArcGISSolutions State-Government Local-Government State Local Government Configurable Place Finder)
 [](Esri Language: JavaScript)
