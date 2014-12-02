@@ -505,6 +505,7 @@ function QueryLayer(geometry, mapPoint, isFeatureSearched) {
             if (featureset.features.length > 0) {
                 dojo.byId("imgToggleResults").setAttribute("disable", false);
                 ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearched);
+                HideProgressIndicator();
             } else {
                 HideProgressIndicator();
                 alert(messages.getElementsByTagName("noFeaturesFound")[0].childNodes[0].nodeValue);
@@ -665,9 +666,9 @@ function ExecuteQueryForFeatures(featureset, geometry, mapPoint, isFeatureSearch
                 if (map.getLayer(tempBufferLayer).graphics.length > 0) {
                     dojo.byId("imgList").style.display = "block";
                 }
-                HideProgressIndicator();
             }
 
+            HideProgressIndicator();
         };
     }
     try {
@@ -792,9 +793,6 @@ function RelationshipQuery(selectedFeature, featureID, attributes, isFeatureSear
         alert(messages.getElementsByTagName("falseConfigParams")[0].childNodes[0].nodeValue);
     }
     CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched);
-    if (!commentLayer.Visibility) {
-        HideProgressIndicator();
-    }
 }
 
 function CreateFeatureDetails(selectedFeature, attributes, isFeatureSearched) {

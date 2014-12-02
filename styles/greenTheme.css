@@ -71,8 +71,6 @@ input[placeholder], [placeholder], *[placeholder]
     behavior: url("styles/PIE.htc");
 }
 
-
-
 .customButton
 {
     color: #F5F5DC;
@@ -108,6 +106,14 @@ input[placeholder], [placeholder], *[placeholder]
     background: rgba(85,107,47,0.90);
     -pie-background: rgba(85,107,47,0.90);
     behavior: url("styles/PIE.htc");
+}
+
+.esriSignInDialog
+{
+    background: rgba(85,107,47,0.90);
+    -pie-background: rgba(85,107,47,0.90);
+    behavior: url("styles/PIE.htc");
+    padding: 10px;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

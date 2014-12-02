@@ -148,13 +148,13 @@ html, body
     position: absolute;
     top: 60px;
     right: 15px;
-    width: 225px;
+    width: 240px;
     z-index: 1000;
 }
 
 .divLayerHolder
 {
-    width: 225px;
+    width: 240px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -168,7 +168,13 @@ html, body
 
 .baseMapContainerNode
 {
-    width: 85px;
+    width: 90px;
+    height: 100px;
+}
+
+.basemapLabel
+{
+    width: 90px;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

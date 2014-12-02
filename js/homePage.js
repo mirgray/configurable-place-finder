@@ -20,7 +20,6 @@ dojo.require("esri.tasks.geometry");
 dojo.require("esri.layers.FeatureLayer");
 dojo.require("esri.tasks.locator");
 dojo.require("dojo.date.locale");
-dojo.require("dojox.mobile");
 dojo.require("js.Config");
 dojo.require("dojo.window");
 dojo.require("js.date");
@@ -123,7 +122,7 @@ var androidTouchIcon; //variable to store Android touch icon object
 
 function Init() {
 
-    esri.config.defaults.io.proxyUrl = "proxy.ashx"; //relative path
+    esri.config.defaults.io.proxyUrl = "proxy/proxy.ashx"; //relative path
     esriConfig.defaults.io.alwaysUseProxy = false;
     esriConfig.defaults.io.timeout = 180000; // milliseconds
 
