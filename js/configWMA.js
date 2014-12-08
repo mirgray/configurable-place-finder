@@ -344,11 +344,11 @@ dojo.declare("js.Config", null, {
     // SETTINGS FOR MAP SHARING
     // ------------------------------------------------------------------------------------------------------------------------
 
-    // Set URL for TinyURL service, and URLs for social media
+    // Set URL for TinyURL service, and URLs for social media ( Wildlife Management Area Locator)
     MapSharingOptions: {
         TinyURLServiceURL: "https://api-ssl.bitly.com/v3/shorten?longUrl=${0}",
-        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configurable%20Place%20Finder",
-        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configurable%20Place%20Finder ${0}",
+        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Wildlife%20Management%20Area%20Locator",
+        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Wildlife%20Management%20Area%20Locator ${0}",
         ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     }
 });
