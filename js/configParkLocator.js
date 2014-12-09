@@ -428,8 +428,8 @@ dojo.declare("js.Config", null, {
     // Set URL for TinyURL service, and URLs for social media
     MapSharingOptions: {
         TinyURLServiceURL: "https://api-ssl.bitly.com/v3/shorten?longUrl=${0}",
-        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Configurable%20Place%20Finder",
-        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Configurable%20Place%20Finder ${0}",
+        FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=Parks%20Locator",
+        TwitterShareURL: "http://mobile.twitter.com/compose/tweet?status=Parks%20Locator ${0}",
         ShareByMailLink: "mailto:%20?subject=Check%20out%20this%20map!&body=${0}"
     }
 });
