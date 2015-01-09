@@ -4,11 +4,8 @@ The Configurable Place Finder application is a configuration of ArcGIS for Serve
 that allows the public to locate parks, recreational opportunities boat ramps etc. in their community.
 
 [Try the Parks Finder application](http://links.esri.com/localgovernment/tryit/ParksFinder/)
-
 [Try the Parks Locator application](http://links.esri.com/stategovernment/tryit/ParksLocator/)
-
 [Try the Water Access application](http://links.esri.com/stategovernment/tryit/WaterAccess/)
-
 [Try the Wildlife Access Managment application](http://links.esri.com/stategovernment/tryit/WMA/)
 
 [![Image of Configurable Place Finder application](configurable-place-finder.png "Configurable Place Finder application")](http://tryitlive.arcgis.com/ParksFinder/)
