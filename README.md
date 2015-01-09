@@ -5,20 +5,11 @@ that allows the public to locate parks, recreational opportunities boat ramps et
 
 **Park and Recreation Finder** is a configuration of ArcGIS Server and a JavaScript application that allows citizens to locate park and recreation opportunities in their community.[Try the Parks Finder application](http://links.esri.com/localgovernment/tryit/ParksFinder/)
 
-**Water Access Locator** is a configuration of ArcGIS for Server and a JavaScript API application that allows the public to locate boat ramps, and marinas, fishing sites in the state. 
+**Water Access Locator** is a configuration of ArcGIS for Server and a JavaScript API application that allows the public to locate boat ramps, and marinas, fishing sites in the state.[Try the Water Access application](http://links.esri.com/stategovernment/tryit/WaterAccess/)
 
-**Wildlife Management Area Locator** is a configuration of ArcGIS and a JavaScript application that allows the public to locate Wildlife Management Areas (WMA) and huntable land in their state.
+**Wildlife Management Area Locator** is a configuration of ArcGIS and a JavaScript application that allows the public to locate Wildlife Management Areas (WMA) and huntable land in their state.[Try the Wildlife Access Managment application](http://links.esri.com/stategovernment/tryit/WMA/)
 
-**Park and Recreation Locator** is a configuration of ArcGIS and JavaScript API application that allows the public to locate park and recreational opportunities in their state.. 
-
-
-[Try the Parks Finder application](http://links.esri.com/localgovernment/tryit/ParksFinder/)
-
-[Try the Parks Locator application](http://links.esri.com/stategovernment/tryit/ParksLocator/)
-
-[Try the Water Access application](http://links.esri.com/stategovernment/tryit/WaterAccess/)
-
-[Try the Wildlife Access Managment application](http://links.esri.com/stategovernment/tryit/WMA/)
+**Park and Recreation Locator** is a configuration of ArcGIS and JavaScript API application that allows the public to locate park and recreational opportunities in their state.[Try the Parks Locator application](http://links.esri.com/stategovernment/tryit/ParksLocator/)
 
 [![Image of Configurable Place Finder application](configurable-place-finder.png "Configurable Place Finder application")](http://tryitlive.arcgis.com/ParksFinder/)
 
