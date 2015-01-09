@@ -1,7 +1,7 @@
 # configurable-place-finder
 
 The Configurable Place Finder application is a configuration of ArcGIS for Server and a JavaScript application
-that allows the public to locate parks, recreational opportunities boat ramps etc. in their community. This repo contains four unique configurations of the application Parks Finder, Parks Locator, Water Access Locator, and Wildlife Management Access Locator.
+that allows the public to locate parks, recreational opportunities boat ramps etc. in their community. This repo contains four unique application configurations: Parks Finder, Parks Locator, Water Access Locator, and Wildlife Management Access Locator.
 
 **Park and Recreation Finder** is a configuration of ArcGIS Server and a JavaScript application that allows citizens to locate park and recreation opportunities in their community
 **Water Access Locator** is a configuration of ArcGIS for Server and a JavaScript API application that allows the public to locate boat ramps, and marinas, fishing sites in the state. 
@@ -48,6 +48,12 @@ are available for the application.
 This application uses the 3.11 version of
 [Esri's ArcGIS API for JavaScript](http://help.arcgis.com/en/webapi/javascript/arcgis/);
 see the site for concepts, samples, and a reference for using the API to create mapping web sites.
+
+##Selecting Your Configuration
+
+The configurable-place-finder repo contains four unique application configurations: Parks Finder, Parks Locator, Water Access Locator, and Wildlife Management Access Locator.
+
+To get the Parks Finder configuration rename configParkFinder.js to config.js. To get the Parks Locator configuration rename configParkLocator.js to config.js and rename defaultParkLocator.htm to default.htm. To get the Water Access Locator configuration rename configWaterAccess.js to config.js and rename defaultWaterAccess.htm to default.htm. To get the Wildlife Management Access configuration rename configWMA.js to config.js and rename defaultWMA.htm to default.htm.
 
 ## Issues
 
