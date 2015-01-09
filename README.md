@@ -3,7 +3,10 @@
 The Configurable Place Finder application is a configuration of ArcGIS for Server and a JavaScript application
 that allows the public to locate parks, recreational opportunities boat ramps etc. in their community.
 
-[Try the Configurable Place Finder application](http://tryitlive.arcgis.com/ParksFinder/)
+[Try the Parks Finder application](http://links.esri.com/localgovernment/tryit/ParksFinder/)
+[Try the Parks Locator application](http://links.esri.com/stategovernment/tryit/ParksLocator/)
+[Try the Water Access application](http://links.esri.com/stategovernment/tryit/WaterAccess/)
+[Try the Wildlife Access Managment application](http://links.esri.com/stategovernment/tryit/WMA/)
 
 [![Image of Configurable Place Finder application](configurable-place-finder.png "Configurable Place Finder application")](http://tryitlive.arcgis.com/ParksFinder/)
 
@@ -13,36 +16,24 @@ that allows the public to locate parks, recreational opportunities boat ramps et
 * Review activities at a given place and get directions to a place
 * Share place information using social media
 
-## Instructions
-
-### Esri Sample Services
-
-Esri's sample services can be used with this repository to extend the application.
-
-
-### General Help
-[New to Github? Get started here.](http://htmlpreview.github.com/?https://github.com/Esri/esri.github.com/blob/master/help/esri-getting-to-know-github.html)
-
 ## Requirements
 
-### Esri Sample Services
+**Start now using Esri-supplied sample services**
 
-* Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+You can start using the application now by setting it up on a web server running Microsoft Internet Information Services (IIS) and using sample services supplied by Esri.
+You'll need to convert to an application in IIS and use the ASP .NET 4.0. application pool.
 
-### Your Services
+**Start now using your own services**
 
-* ArcGIS for Desktop 10.2 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgis-for-desktop)
-* ArcGIS for Server 10.2 - Standard or Advanced - [About](http://www.esri.com/software/arcgis/arcgisserver)
-* Local Government Information Model for Local Government Implementations - [About](http://www.arcgis.com/home/item.html?id=ae175b36c4154dda987127dff879350d)
-* Microsoft ASP.NET Framework 4.0 available from the [Microsoft website](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+For more information on requirements and publication steps, see [Parks Locator](http://links.esri.com/stategovernment/help/10.2/ParkandRecreationLocator) help or [Water Access Locator](http://links.esri.com/stategovernment/help/10.2/WaterAccessLocator) help or [Wildlife Management Access](http://links.esri.com/stategovernment/help/10.2/WildlifeManagementAreaLocator) help or [Parks Finder](http://links.esri.com/localgovernment/help/10.2/ParksandRecreationFinder) help 
 
 ## Resources
 
-Learn more about Esri's [ArcGIS for State Government maps and apps](http://solutions.arcgis.com/state-government/).
+Learn more about Esri's [ArcGIS for State and Local Government maps and apps](http://solutions.arcgis.com).
 
-Show me a list of other [Government GitHub repositories](http://esri.github.io/#Government).
+Show me a list of other [State and Local Government GitHub repositories](http://esri.github.io/#Government).
 
-Additional [information and sample data](http://www.arcgis.com/home/item.html?id=a57e96b9240e4311b7fd863b80a6d389)
+Additional [information and sample data](http://www.arcgis.com/home/item.html?id=e0b7b8889be24b60aed3455331eb25a6)
 are available for the application.
 
 This application uses the 3.11 version of
